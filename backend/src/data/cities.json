@@ -1,0 +1,72 @@
+[
+  {
+    "id": "city_coorg",
+    "name": "Coorg",
+    "state": "Karnataka",
+    "description": "Known as the Scotland of India, Coorg is a misty hill station famous for coffee plantations, lush greenery, and waterfalls.",
+    "highlights": ["Coffee Plantations", "Abbey Falls", "Raja's Seat", "Dubare Elephant Camp", "Talacauvery"]
+  },
+  {
+    "id": "city_wayanad",
+    "name": "Wayanad",
+    "state": "Kerala",
+    "description": "A lush green hill district in Kerala known for its wildlife sanctuaries, ancient caves, and spice plantations.",
+    "highlights": ["Edakkal Caves", "Banasura Sagar Dam", "Chembra Peak", "Soochipara Falls", "Kuruva Island"]
+  },
+  {
+    "id": "city_munnar",
+    "name": "Munnar",
+    "state": "Kerala",
+    "description": "A stunning hill station surrounded by rolling tea plantations and misty mountains in the Western Ghats.",
+    "highlights": ["Tea Gardens", "Eravikulam National Park", "Mattupetty Dam", "Top Station", "Attukal Waterfalls"]
+  },
+  {
+    "id": "city_ooty",
+    "name": "Ooty",
+    "state": "Tamil Nadu",
+    "description": "The Queen of Hill Stations, Ooty offers scenic beauty with its botanical gardens, lakes, and the famous Nilgiri Mountain Railway.",
+    "highlights": ["Botanical Gardens", "Ooty Lake", "Nilgiri Mountain Railway", "Doddabetta Peak", "Rose Garden"]
+  },
+  {
+    "id": "city_goa",
+    "name": "Goa",
+    "state": "Goa",
+    "description": "India's premier beach destination known for its vibrant nightlife, Portuguese heritage architecture, and coastal cuisine.",
+    "highlights": ["Baga Beach", "Old Goa Churches", "Dudhsagar Falls", "Fort Aguada", "Spice Plantations"]
+  },
+  {
+    "id": "city_jaipur",
+    "name": "Jaipur",
+    "state": "Rajasthan",
+    "description": "The Pink City, known for its grand forts, palaces, vibrant bazaars, and rich Rajasthani culture.",
+    "highlights": ["Amber Fort", "Hawa Mahal", "City Palace", "Jantar Mantar", "Nahargarh Fort"]
+  },
+  {
+    "id": "city_udaipur",
+    "name": "Udaipur",
+    "state": "Rajasthan",
+    "description": "The City of Lakes, known for its romantic setting, magnificent palaces, and lakeside hotels.",
+    "highlights": ["Lake Pichola", "City Palace", "Jag Mandir", "Saheliyon Ki Bari", "Fateh Sagar Lake"]
+  },
+  {
+    "id": "city_manali",
+    "name": "Manali",
+    "state": "Himachal Pradesh",
+    "description": "A popular hill station in the mountains of Himachal Pradesh, known for adventure sports, hot springs, and snow-capped peaks.",
+    "highlights": ["Rohtang Pass", "Solang Valley", "Hadimba Temple", "Old Manali", "Jogini Waterfall"]
+  },
+  {
+    "id": "city_rishikesh",
+    "name": "Rishikesh",
+    "state": "Uttarakhand",
+    "description": "The Yoga Capital of the World, situated on the banks of the Ganges, known for adventure activities and spiritual retreats.",
+    "highlights": ["Laxman Jhula", "Ram Jhula", "River Rafting", "Triveni Ghat", "Beatles Ashram"]
+  },
+  {
+    "id": "city_pondicherry",
+    "name": "Pondicherry",
+    "state": "Puducherry",
+    "description": "A charming coastal city with French colonial architecture, serene beaches, and spiritual centres.",
+    "highlights": ["Promenade Beach", "Auroville", "French Quarter", "Paradise Beach", "Sri Aurobindo Ashram"]
+  }
+]

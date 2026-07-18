@@ -1,4 +1,4 @@
- # TripWay - AI Agentic Travel Planner
+# 🌍 TripWay - AI Agentic Travel Planner
 
 <div align="center">
 
