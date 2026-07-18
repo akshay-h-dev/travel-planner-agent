@@ -1,4 +1,4 @@
-# 🌍 BudgetWise Local - AI Agentic Travel Planner
+# 🌍 TripWay - AI Agentic Travel Planner
 
 <div align="center">
 
@@ -65,7 +65,7 @@ Current solutions address only parts of these problems—they either help organi
 
 # 💡 Our Solution
 
-BudgetWise Local is an **Agentic AI Travel Planner** built using **LangGraph** that continuously plans, evaluates, and adjusts itineraries while keeping users within their specified budget.
+TripWay is an **Agentic AI Travel Planner** built using **LangGraph** that continuously plans, evaluates, and adjusts itineraries while keeping users within their specified budget.
 
 The planner prioritizes **verified local businesses** before considering larger commercial alternatives.
 

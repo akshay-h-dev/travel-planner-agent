@@ -1,0 +1,36 @@
+[
+  { "id": "tr_coorg_01", "name": "Local Auto-Rickshaw", "city": "Coorg", "pricePerDay": 500, "type": "auto-rickshaw", "description": "Auto-rickshaw with a local driver for short-distance sightseeing.", "isLocal": true },
+  { "id": "tr_coorg_02", "name": "Jeep Rental", "city": "Coorg", "pricePerDay": 1500, "type": "cab", "description": "4x4 jeep with driver for off-road and hill terrain.", "isLocal": true },
+  { "id": "tr_coorg_03", "name": "OLA/Uber Cab", "city": "Coorg", "pricePerDay": 2000, "type": "cab", "description": "App-based cab service for comfortable point-to-point travel.", "isLocal": false },
+
+  { "id": "tr_wayanad_01", "name": "Local Jeep Service", "city": "Wayanad", "pricePerDay": 1200, "type": "cab", "description": "Local jeep driver familiar with plantation routes and viewpoints.", "isLocal": true },
+  { "id": "tr_wayanad_02", "name": "KSRTC Bus Pass", "city": "Wayanad", "pricePerDay": 200, "type": "bus", "description": "Kerala state bus day pass for budget travel between towns.", "isLocal": true },
+  { "id": "tr_wayanad_03", "name": "Shared Shuttle", "city": "Wayanad", "pricePerDay": 400, "type": "shared-shuttle", "description": "Shared tourist shuttle connecting major attractions.", "isLocal": true },
+
+  { "id": "tr_munnar_01", "name": "Local Auto-Rickshaw", "city": "Munnar", "pricePerDay": 600, "type": "auto-rickshaw", "description": "Auto-rickshaw for getting around Munnar town and nearby spots.", "isLocal": true },
+  { "id": "tr_munnar_02", "name": "Tourist Cab", "city": "Munnar", "pricePerDay": 1800, "type": "cab", "description": "Sedan cab with experienced local driver for full-day sightseeing.", "isLocal": true },
+
+  { "id": "tr_ooty_01", "name": "Ooty Bus Service", "city": "Ooty", "pricePerDay": 150, "type": "bus", "description": "Tamil Nadu state bus for budget travel around Ooty and Coonoor.", "isLocal": true },
+  { "id": "tr_ooty_02", "name": "Bike Rental", "city": "Ooty", "pricePerDay": 500, "type": "bike-rental", "description": "Royal Enfield or scooter rental from a local shop.", "isLocal": true },
+  { "id": "tr_ooty_03", "name": "Private Cab", "city": "Ooty", "pricePerDay": 2200, "type": "cab", "description": "Air-conditioned cab with driver for comfortable touring.", "isLocal": false },
+
+  { "id": "tr_goa_01", "name": "Scooter Rental", "city": "Goa", "pricePerDay": 350, "type": "bike-rental", "description": "Activa/scooter rental — the most popular way to explore Goa.", "isLocal": true },
+  { "id": "tr_goa_02", "name": "Local Pilot (Motorcycle Taxi)", "city": "Goa", "pricePerDay": 400, "type": "auto-rickshaw", "description": "Goa's iconic motorcycle taxi service for quick rides.", "isLocal": true },
+  { "id": "tr_goa_03", "name": "Self-Drive Car", "city": "Goa", "pricePerDay": 1500, "type": "cab", "description": "Self-drive car rental from a local agency.", "isLocal": true },
+
+  { "id": "tr_jaipur_01", "name": "Auto-Rickshaw", "city": "Jaipur", "pricePerDay": 600, "type": "auto-rickshaw", "description": "Jaipur's classic auto-rickshaw for bazaar hopping.", "isLocal": true },
+  { "id": "tr_jaipur_02", "name": "AC Cab Full Day", "city": "Jaipur", "pricePerDay": 1800, "type": "cab", "description": "AC sedan with driver covering all major fort circuits.", "isLocal": true },
+
+  { "id": "tr_udaipur_01", "name": "E-Rickshaw", "city": "Udaipur", "pricePerDay": 400, "type": "auto-rickshaw", "description": "Electric rickshaw for eco-friendly lakeside touring.", "isLocal": true },
+  { "id": "tr_udaipur_02", "name": "Local Cab", "city": "Udaipur", "pricePerDay": 1400, "type": "cab", "description": "Local cab service with a knowledgeable driver-guide.", "isLocal": true },
+
+  { "id": "tr_manali_01", "name": "Local Bus", "city": "Manali", "pricePerDay": 200, "type": "bus", "description": "HRTC local bus for travel between Manali, Solang, and Old Manali.", "isLocal": true },
+  { "id": "tr_manali_02", "name": "Bike Rental", "city": "Manali", "pricePerDay": 800, "type": "bike-rental", "description": "Royal Enfield rental for mountain road exploration.", "isLocal": true },
+  { "id": "tr_manali_03", "name": "Innova Cab", "city": "Manali", "pricePerDay": 2500, "type": "cab", "description": "Toyota Innova with driver for Rohtang and valley excursions.", "isLocal": false },
+
+  { "id": "tr_rishikesh_01", "name": "Shared Jeep", "city": "Rishikesh", "pricePerDay": 300, "type": "shared-shuttle", "description": "Shared jeep service between Rishikesh, Laxman Jhula, and camps.", "isLocal": true },
+  { "id": "tr_rishikesh_02", "name": "Auto-Rickshaw", "city": "Rishikesh", "pricePerDay": 500, "type": "auto-rickshaw", "description": "Auto-rickshaw for town travel and ghat visits.", "isLocal": true },
+
+  { "id": "tr_pondi_01", "name": "Cycle Rental", "city": "Pondicherry", "pricePerDay": 100, "type": "bike-rental", "description": "Bicycle rental — the best way to explore the French Quarter.", "isLocal": true },
+  { "id": "tr_pondi_02", "name": "Scooter Rental", "city": "Pondicherry", "pricePerDay": 300, "type": "bike-rental", "description": "Scooter rental for reaching Auroville and nearby beaches.", "isLocal": true }
+]
