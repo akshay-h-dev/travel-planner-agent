@@ -1,0 +1,139 @@
+{
+  "destinations": [
+    {
+      "city": "Goa",
+      "stays": [
+        {
+          "id": "stay_local_homestay",
+          "name": "Uncle Joe's Beach Homestay",
+          "type": "local",
+          "costPerNight": 1200,
+          "description": "Authentic Goan homestay right by the beach, hosted by a local family."
+        },
+        {
+          "id": "stay_local_villa",
+          "name": "Fontainhas Heritage Villa",
+          "type": "local",
+          "costPerNight": 2500,
+          "description": "Charming boutique guest house in the Latin Quarter run by local curators."
+        },
+        {
+          "id": "stay_chain_resort",
+          "name": "Taj Exotica Resort & Spa",
+          "type": "chain",
+          "costPerNight": 8500,
+          "description": "Luxury commercial resort with 5-star amenities."
+        },
+        {
+          "id": "stay_chain_hotel",
+          "name": "ibis Styles Goa",
+          "type": "chain",
+          "costPerNight": 4500,
+          "description": "Standard business and leisure hotel from the Accor chain."
+        }
+      ],
+      "guides": [
+        {
+          "id": "guide_local_ramesh",
+          "name": "Ramesh (Heritage & History Expert)",
+          "type": "local",
+          "costPerDay": 800,
+          "description": "Certified local historian specializing in Portuguese-era churches and hidden forts."
+        },
+        {
+          "id": "guide_local_maria",
+          "name": "Maria (Spice Plantation & Nature)",
+          "type": "local",
+          "costPerDay": 1200,
+          "description": "Local naturalist guide for spice plantation tours and Salim Ali Bird Sanctuary."
+        },
+        {
+          "id": "guide_chain_agency",
+          "name": "Thomas Cook Guided Services",
+          "type": "chain",
+          "costPerDay": 3000,
+          "description": "Standard outsourced commercial guide agency booking."
+        }
+      ],
+      "transport": [
+        {
+          "id": "trans_local_scooter",
+          "name": "Local Bike/Scooter Rental",
+          "type": "local",
+          "costPerDay": 350,
+          "description": "Local rental scooter (Activa), supporting local rental shop owners."
+        },
+        {
+          "id": "trans_local_taxi",
+          "name": "GoaMiles Local Taxi Operator",
+          "type": "local",
+          "costPerDay": 1800,
+          "description": "Independently owned local driver taxi service."
+        },
+        {
+          "id": "trans_chain_cab",
+          "name": "Uber/Ola Premium Cab Service",
+          "type": "chain",
+          "costPerDay": 3200,
+          "description": "Aggregator booked private cab service."
+        }
+      ],
+      "activities": [
+        {
+          "id": "act_local_heritage_walk",
+          "name": "Fontainhas Latin Quarter Walking Tour",
+          "type": "local",
+          "cost": 300,
+          "durationHours": 2,
+          "category": "heritage",
+          "description": "Guided walking tour through Fontainhas, led by a resident."
+        },
+        {
+          "id": "act_local_spices",
+          "name": "Sahakari Spice Farm Tour & Lunch",
+          "type": "local",
+          "cost": 500,
+          "durationHours": 3,
+          "category": "nature",
+          "description": "Traditional organic spice farm tour with authentic Goan buffet lunch."
+        },
+        {
+          "id": "act_local_feni_tasting",
+          "name": "Local Cazulo Feni Cellar Tasting",
+          "type": "local",
+          "cost": 1500,
+          "durationHours": 2,
+          "category": "food",
+          "description": "Traditional cashew feni distillation tour and tasting by local brewers."
+        },
+        {
+          "id": "act_local_boat_fishing",
+          "name": "Traditional Fishing Trip with local fishermen",
+          "type": "local",
+          "cost": 1000,
+          "durationHours": 4,
+          "category": "adventure",
+          "description": "Go deep-sea or river fishing on a traditional wooden boat with local fishermen."
+        },
+        {
+          "id": "act_chain_water_sports",
+          "name": "Aggregator Water Sports Package at Calangute",
+          "type": "chain",
+          "cost": 2500,
+          "durationHours": 3,
+          "category": "adventure",
+          "description": "Standard parasailing, jet ski, and banana ride sold by large agencies."
+        },
+        {
+          "id": "act_chain_cruise",
+          "name": "Casino Pride Entry & Dinner Cruise",
+          "type": "chain",
+          "cost": 3500,
+          "durationHours": 5,
+          "category": "entertainment",
+          "description": "Offshore casino cruise entry with dinner buffet."
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# TripWay - AI Agentic Travel Planner
+ # TripWay - AI Agentic Travel Planner
 
 <div align="center">
 
@@ -21,21 +21,36 @@ Unlike traditional travel planners, the system continuously monitors the budget 
 
 # 📑 Table of Contents
 
+- [TripWay - AI Agentic Travel Planner](#tripway---ai-agentic-travel-planner)
+    - [**An AI-powered Travel Planning Agent that creates personalized, budget-friendly itineraries while prioritizing verified local guides, homestays, and small tour operators.**](#an-ai-powered-travel-planning-agent-that-creates-personalized-budget-friendly-itineraries-while-prioritizing-verified-local-guides-homestays-and-small-tour-operators)
+- [📑 Table of Contents](#-table-of-contents)
 - [📖 Problem Statement](#-problem-statement)
 - [💡 Our Solution](#-our-solution)
 - [🤖 Agent Workflow](#-agent-workflow)
 - [✨ Features](#-features)
 - [🛠 Tech Stack](#-tech-stack)
+  - [🎨 Frontend](#-frontend)
+  - [⚙ Backend](#-backend)
+  - [🗄 Data Layer](#-data-layer)
+  - [☁ Deployment](#-deployment)
+- [🤖 Agent Workflow (Detailed)](#-agent-workflow-detailed)
+  - [1️⃣ Plan](#1️⃣-plan)
+  - [2️⃣ Allocate](#2️⃣-allocate)
+  - [3️⃣ Check](#3️⃣-check)
+  - [4️⃣ Re-plan](#4️⃣-re-plan)
+  - [5️⃣ Generate](#5️⃣-generate)
 - [📥 Inputs](#-inputs)
 - [📤 Outputs](#-outputs)
 - [🔍 Existing Alternatives](#-existing-alternatives)
 - [🌱 SDG Alignment](#-sdg-alignment)
+  - [🌍 United Nations Sustainable Development Goal 8](#-united-nations-sustainable-development-goal-8)
 - [🎯 Target Users](#-target-users)
 - [💰 Business Model](#-business-model)
+  - [👤 B2C](#-b2c)
+  - [🏢 B2B](#-b2b)
+  - [💵 Additional Revenue](#-additional-revenue)
 - [🎯 Project Goals](#-project-goals)
 - [🚀 Future Enhancements](#-future-enhancements)
-- [📂 Repository Structure](#-repository-structure)
-- [👨‍💻 Contributors](#-contributors)
 - [📜 License](#-license)
 
 ---
