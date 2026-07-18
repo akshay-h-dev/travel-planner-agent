@@ -1,0 +1,27 @@
+[
+  { "id": "gd_coorg_01", "name": "Ramesh Kodava", "city": "Coorg", "pricePerDay": 800, "rating": 4.7, "specialties": ["Coffee Plantations", "Trekking", "Wildlife"], "languages": ["Kannada", "English", "Hindi"], "isLocal": true },
+  { "id": "gd_coorg_02", "name": "Kaveri Naturalist", "city": "Coorg", "pricePerDay": 1200, "rating": 4.9, "specialties": ["Bird Watching", "Nature Trails", "Photography"], "languages": ["English", "Kannada"], "isLocal": true },
+
+  { "id": "gd_wayanad_01", "name": "Suresh Nair", "city": "Wayanad", "pricePerDay": 700, "rating": 4.5, "specialties": ["Tribal Culture", "Trekking", "Spice Gardens"], "languages": ["Malayalam", "English", "Hindi"], "isLocal": true },
+  { "id": "gd_wayanad_02", "name": "Maya Tribal Guide", "city": "Wayanad", "pricePerDay": 500, "rating": 4.6, "specialties": ["Edakkal Caves", "Tribal History", "Nature"], "languages": ["Malayalam", "English"], "isLocal": true },
+
+  { "id": "gd_munnar_01", "name": "Thomas Joseph", "city": "Munnar", "pricePerDay": 900, "rating": 4.6, "specialties": ["Tea Plantations", "Trekking", "Wildlife"], "languages": ["Malayalam", "English", "Tamil"], "isLocal": true },
+
+  { "id": "gd_ooty_01", "name": "Selvam Kumar", "city": "Ooty", "pricePerDay": 750, "rating": 4.4, "specialties": ["Botanical Gardens", "Toda Culture", "Nature"], "languages": ["Tamil", "English", "Kannada"], "isLocal": true },
+
+  { "id": "gd_goa_01", "name": "Anthony Fernandes", "city": "Goa", "pricePerDay": 1000, "rating": 4.7, "specialties": ["Heritage Walks", "Portuguese Architecture", "Local Cuisine"], "languages": ["Konkani", "English", "Hindi", "Portuguese"], "isLocal": true },
+  { "id": "gd_goa_02", "name": "Priya D'Souza", "city": "Goa", "pricePerDay": 800, "rating": 4.5, "specialties": ["Beaches", "Nightlife", "Markets"], "languages": ["Konkani", "English", "Hindi"], "isLocal": true },
+
+  { "id": "gd_jaipur_01", "name": "Rajveer Singh", "city": "Jaipur", "pricePerDay": 1000, "rating": 4.8, "specialties": ["Forts", "Rajput History", "Architecture"], "languages": ["Hindi", "English", "Rajasthani"], "isLocal": true },
+  { "id": "gd_jaipur_02", "name": "Meena Artisan Guide", "city": "Jaipur", "pricePerDay": 600, "rating": 4.6, "specialties": ["Handicrafts", "Block Printing", "Bazaar Tours"], "languages": ["Hindi", "English"], "isLocal": true },
+
+  { "id": "gd_udaipur_01", "name": "Lakshman Mewar", "city": "Udaipur", "pricePerDay": 900, "rating": 4.7, "specialties": ["Lake Tours", "Mewar History", "Painting"], "languages": ["Hindi", "English", "Mewari"], "isLocal": true },
+
+  { "id": "gd_manali_01", "name": "Tenzing Norbu", "city": "Manali", "pricePerDay": 1100, "rating": 4.8, "specialties": ["Mountain Trekking", "Snow Activities", "Local Culture"], "languages": ["Hindi", "English", "Tibetan"], "isLocal": true },
+
+  { "id": "gd_rishikesh_01", "name": "Yogi Deepak", "city": "Rishikesh", "pricePerDay": 600, "rating": 4.9, "specialties": ["Yoga", "Meditation", "Spiritual Tours"], "languages": ["Hindi", "English", "Sanskrit"], "isLocal": true },
+  { "id": "gd_rishikesh_02", "name": "Adventure Arjun", "city": "Rishikesh", "pricePerDay": 800, "rating": 4.6, "specialties": ["Rafting", "Cliff Jumping", "Camping"], "languages": ["Hindi", "English"], "isLocal": true },
+
+  { "id": "gd_pondi_01", "name": "Pierre Rajan", "city": "Pondicherry", "pricePerDay": 800, "rating": 4.7, "specialties": ["French Quarter", "History", "Art"], "languages": ["Tamil", "English", "French"], "isLocal": true },
+  { "id": "gd_pondi_02", "name": "Auro Guide Collective", "city": "Pondicherry", "pricePerDay": 500, "rating": 4.5, "specialties": ["Auroville", "Spirituality", "Sustainability"], "languages": ["English", "Tamil", "Hindi"], "isLocal": true }
+]

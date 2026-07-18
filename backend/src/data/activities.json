@@ -1,0 +1,47 @@
+[
+  { "id": "act_coorg_01", "name": "Coffee Plantation Walk", "city": "Coorg", "price": 300, "duration": "2 hours", "rating": 4.6, "category": "Nature", "description": "Guided walk through a working coffee plantation learning about the bean-to-cup process.", "isLocal": true },
+  { "id": "act_coorg_02", "name": "Abbey Falls Trek", "city": "Coorg", "price": 200, "duration": "3 hours", "rating": 4.5, "category": "Trekking", "description": "Scenic trek through spice plantations to the magnificent Abbey Falls.", "isLocal": true },
+  { "id": "act_coorg_03", "name": "Raja's Seat Sunset", "city": "Coorg", "price": 50, "duration": "1.5 hours", "rating": 4.3, "category": "Sightseeing", "description": "Watch the sunset from the famous Raja's Seat garden and viewpoint.", "isLocal": true },
+  { "id": "act_coorg_04", "name": "Dubare Elephant Camp", "city": "Coorg", "price": 500, "duration": "3 hours", "rating": 4.4, "category": "Wildlife", "description": "Bathe and feed elephants at the Dubare Elephant Camp on the Cauvery River.", "isLocal": false },
+  { "id": "act_coorg_05", "name": "Coorgi Cuisine Cooking Class", "city": "Coorg", "price": 600, "duration": "3 hours", "rating": 4.8, "category": "Food", "description": "Learn to cook authentic Coorgi pork curry and akki roti with a local family.", "isLocal": true },
+  { "id": "act_coorg_06", "name": "Mandalpatti Jeep Ride", "city": "Coorg", "price": 800, "duration": "4 hours", "rating": 4.5, "category": "Adventure", "description": "Off-road jeep ride to the Mandalpatti viewpoint above the clouds.", "isLocal": true },
+
+  { "id": "act_wayanad_01", "name": "Edakkal Caves Trek", "city": "Wayanad", "price": 100, "duration": "3 hours", "rating": 4.5, "category": "Trekking", "description": "Trek to ancient caves with prehistoric petroglyphs dating back 6,000 years.", "isLocal": true },
+  { "id": "act_wayanad_02", "name": "Bamboo Rafting", "city": "Wayanad", "price": 400, "duration": "2 hours", "rating": 4.3, "category": "Adventure", "description": "Bamboo rafting through serene backwaters with a local guide.", "isLocal": true },
+  { "id": "act_wayanad_03", "name": "Spice Garden Tour", "city": "Wayanad", "price": 250, "duration": "2 hours", "rating": 4.6, "category": "Nature", "description": "Walk through an organic spice garden and learn about Kerala's spice heritage.", "isLocal": true },
+  { "id": "act_wayanad_04", "name": "Chembra Peak Trek", "city": "Wayanad", "price": 350, "duration": "5 hours", "rating": 4.7, "category": "Trekking", "description": "Trek to the highest peak in Wayanad with a heart-shaped lake at the summit.", "isLocal": true },
+
+  { "id": "act_munnar_01", "name": "Tea Factory Visit", "city": "Munnar", "price": 200, "duration": "2 hours", "rating": 4.4, "category": "Sightseeing", "description": "Tour a working tea factory and learn about tea processing from plucking to packaging.", "isLocal": true },
+  { "id": "act_munnar_02", "name": "Eravikulam Trek", "city": "Munnar", "price": 300, "duration": "4 hours", "rating": 4.7, "category": "Trekking", "description": "Trek through Eravikulam National Park and spot the endangered Nilgiri Tahr.", "isLocal": false },
+  { "id": "act_munnar_03", "name": "Shola Forest Walk", "city": "Munnar", "price": 150, "duration": "2 hours", "rating": 4.3, "category": "Nature", "description": "Guided nature walk through the ancient Shola forests with a tribal guide.", "isLocal": true },
+  { "id": "act_munnar_04", "name": "Mattupetty Boating", "city": "Munnar", "price": 250, "duration": "1.5 hours", "rating": 4.2, "category": "Sightseeing", "description": "Speedboat and pedal boat rides on the scenic Mattupetty Dam reservoir.", "isLocal": false },
+
+  { "id": "act_ooty_01", "name": "Nilgiri Mountain Railway", "city": "Ooty", "price": 400, "duration": "4 hours", "rating": 4.8, "category": "Sightseeing", "description": "Ride the UNESCO World Heritage Nilgiri Mountain Railway through tunnels and bridges.", "isLocal": false },
+  { "id": "act_ooty_02", "name": "Botanical Gardens Walk", "city": "Ooty", "price": 50, "duration": "2 hours", "rating": 4.3, "category": "Nature", "description": "Explore the 22-hectare Government Botanical Gardens with over 1,000 plant species.", "isLocal": true },
+  { "id": "act_ooty_03", "name": "Toda Village Visit", "city": "Ooty", "price": 350, "duration": "3 hours", "rating": 4.6, "category": "Culture", "description": "Visit an indigenous Toda tribal village and learn about their unique culture.", "isLocal": true },
+
+  { "id": "act_goa_01", "name": "Old Goa Heritage Walk", "city": "Goa", "price": 300, "duration": "3 hours", "rating": 4.5, "category": "Culture", "description": "Guided walk through Portuguese-era churches and convents of Old Goa.", "isLocal": true },
+  { "id": "act_goa_02", "name": "Kayaking in Backwaters", "city": "Goa", "price": 500, "duration": "2 hours", "rating": 4.4, "category": "Adventure", "description": "Kayak through mangrove-lined backwaters with a certified local instructor.", "isLocal": true },
+  { "id": "act_goa_03", "name": "Sunset Cruise", "city": "Goa", "price": 700, "duration": "2 hours", "rating": 4.3, "category": "Sightseeing", "description": "Evening cruise on the Mandovi River with live Goan music and snacks.", "isLocal": false },
+  { "id": "act_goa_04", "name": "Spice Plantation Tour", "city": "Goa", "price": 400, "duration": "3 hours", "rating": 4.6, "category": "Nature", "description": "Tour a tropical spice plantation with a traditional Goan lunch included.", "isLocal": true },
+
+  { "id": "act_jaipur_01", "name": "Amber Fort Tour", "city": "Jaipur", "price": 500, "duration": "3 hours", "rating": 4.7, "category": "Culture", "description": "Explore the magnificent Amber Fort with a certified local history guide.", "isLocal": true },
+  { "id": "act_jaipur_02", "name": "Block Printing Workshop", "city": "Jaipur", "price": 600, "duration": "3 hours", "rating": 4.8, "category": "Culture", "description": "Learn traditional Rajasthani block printing from master artisans.", "isLocal": true },
+  { "id": "act_jaipur_03", "name": "Street Food Tour", "city": "Jaipur", "price": 400, "duration": "2.5 hours", "rating": 4.6, "category": "Food", "description": "Taste pyaaz kachori, lassi, and chaat at Jaipur's best local food stalls.", "isLocal": true },
+  { "id": "act_jaipur_04", "name": "Hot Air Balloon Ride", "city": "Jaipur", "price": 8000, "duration": "1 hour", "rating": 4.5, "category": "Adventure", "description": "Sunrise hot air balloon flight over Jaipur's forts and Aravalli hills.", "isLocal": false },
+
+  { "id": "act_udaipur_01", "name": "Lake Pichola Boat Ride", "city": "Udaipur", "price": 400, "duration": "1.5 hours", "rating": 4.6, "category": "Sightseeing", "description": "Boat ride on Lake Pichola with views of City Palace and Jag Mandir.", "isLocal": true },
+  { "id": "act_udaipur_02", "name": "Miniature Painting Class", "city": "Udaipur", "price": 500, "duration": "3 hours", "rating": 4.7, "category": "Culture", "description": "Learn the art of Mewar miniature painting with a local master painter.", "isLocal": true },
+
+  { "id": "act_manali_01", "name": "Solang Valley Paragliding", "city": "Manali", "price": 1500, "duration": "30 minutes", "rating": 4.5, "category": "Adventure", "description": "Tandem paragliding over Solang Valley with certified local pilots.", "isLocal": true },
+  { "id": "act_manali_02", "name": "Old Manali Cafe Hopping", "city": "Manali", "price": 300, "duration": "3 hours", "rating": 4.3, "category": "Food", "description": "Explore quirky cafes in Old Manali with river views and local bakes.", "isLocal": true },
+  { "id": "act_manali_03", "name": "Jogini Waterfall Trek", "city": "Manali", "price": 200, "duration": "4 hours", "rating": 4.6, "category": "Trekking", "description": "Trek through deodar forests to the stunning Jogini Waterfall.", "isLocal": true },
+
+  { "id": "act_rishikesh_01", "name": "White Water Rafting", "city": "Rishikesh", "price": 1000, "duration": "3 hours", "rating": 4.7, "category": "Adventure", "description": "Grade III-IV white water rafting on the Ganges with trained local guides.", "isLocal": true },
+  { "id": "act_rishikesh_02", "name": "Sunrise Yoga Session", "city": "Rishikesh", "price": 200, "duration": "2 hours", "rating": 4.8, "category": "Wellness", "description": "Early morning yoga and meditation on the Ganges riverbank.", "isLocal": true },
+  { "id": "act_rishikesh_03", "name": "Bungee Jumping", "city": "Rishikesh", "price": 3500, "duration": "1 hour", "rating": 4.4, "category": "Adventure", "description": "83-metre bungee jump at Mohan Chatti — India's highest bungee.", "isLocal": false },
+
+  { "id": "act_pondi_01", "name": "French Quarter Cycle Tour", "city": "Pondicherry", "price": 250, "duration": "2.5 hours", "rating": 4.6, "category": "Culture", "description": "Cycle through the charming French Quarter with a local storyteller guide.", "isLocal": true },
+  { "id": "act_pondi_02", "name": "Auroville Visit", "city": "Pondicherry", "price": 100, "duration": "3 hours", "rating": 4.4, "category": "Culture", "description": "Visit the Matrimandir and learn about this universal township.", "isLocal": false },
+  { "id": "act_pondi_03", "name": "Scuba Diving", "city": "Pondicherry", "price": 3000, "duration": "3 hours", "rating": 4.5, "category": "Adventure", "description": "Introductory scuba dive in the clear waters off Pondicherry coast.", "isLocal": true }
+]
