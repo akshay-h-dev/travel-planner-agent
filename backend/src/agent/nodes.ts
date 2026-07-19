@@ -1,5 +1,4 @@
 import { ChatOpenAI } from "@langchain/openai";
-import dotenv from "dotenv";
 import { TravelState } from "./state.js";
 import { DayPlan, ProgressLog } from "./types.js";
 import {
@@ -9,19 +8,12 @@ import {
   getActivities,
   Activity,
 } from "../data/dataService.js";
-
-dotenv.config();
+import { env } from "../config/env.js";
 
 // Initialize the ChatOpenAI client pointing to Groq's API endpoint
-// Use a secure environment variable for the API key to prevent hardcoding secrets.
-const apiKey = process.env.GROQ_API_KEY;
-
-if (!apiKey) {
-  console.warn("WARNING: GROQ_API_KEY is not defined in the environment variables.");
-}
-
+// Uses the validated GROQ_API_KEY from the env config singleton.
 const llm = new ChatOpenAI({
-  apiKey: apiKey,
+  apiKey: env.GROQ_API_KEY,
   configuration: {
     baseURL: "https://api.groq.com/openai/v1",
   },
@@ -98,6 +90,11 @@ Your selection guidelines:
 3. You must select exactly one transport option from the available list.
 4. You can select one or more activities from the available list.
 5. CRITICAL: You must prefer verified local options (type: 'local') over aggregator/chain options (type: 'chain'). Only choose a chain option if no local option fits the user's budget.
+6. CRITICAL BUDGET CONSTRAINT: The sum of costs for the selected items (Stay + Guide + Transport + Activities) MUST NOT exceed the target budget of $${targetBudget.toFixed(2)}. Staying under budget is your HIGHEST priority, even if it means you cannot fulfill all user preferences or cannot hire a guide.
+7. OPERATIONAL BUDGET RULES:
+   - If the target budget is under $3,000: You MUST NOT select a guide (set "guideId": null).
+   - If the target budget is under $2,000: Select at most 1 cheap activity (cost $500 or less) to stay under budget.
+   - If the target budget is under $1,600: Select 0 activities (set "activityIds": []) because Stay + Transport alone will consume the entire budget.
 
 Available stays:
 ${JSON.stringify(stays, null, 2)}
@@ -114,9 +111,14 @@ ${JSON.stringify(activities, null, 2)}
 You must return a valid JSON object matching the following structure:
 {
   "stayId": "id_of_selected_stay",
+  "stayCost": 1200,
   "guideId": "id_of_selected_guide_or_null",
+  "guideCost": 0,
   "transportId": "id_of_selected_transport",
+  "transportCost": 350,
   "activityIds": ["id_of_selected_activity_1", "id_of_selected_activity_2"],
+  "activitiesCost": 300,
+  "totalComputedCost": 1850,
   "note": "Reason for selection, explaining how it fits budget and preferences, and why local options were selected."
 }`;
 
@@ -332,6 +334,7 @@ Replacement Guidelines:
 1. Select a cheaper stay or transport option, or remove/swap activities, or remove the guide entirely.
 2. CRITICAL local-first constraint: You must prefer verified local options (type: 'local') over chain options (type: 'chain'). Do NOT swap a local option for a more expensive chain option just to fit budget.
 3. The new plan MUST cost significantly less than the current plan (aiming to reduce cost by at least $${state.overBudgetBy.toFixed(2)}).
+4. CRITICAL BUDGET CONSTRAINT: The new plan for this day must fit within the reduced budget limits. If needed to meet the reduction target of $${state.overBudgetBy.toFixed(2)}, set guideId to null, choose the cheapest stay, cheapest transport, and/or choose fewer or no activities.
 
 Available stays:
 ${JSON.stringify(stays, null, 2)}
@@ -348,9 +351,14 @@ ${JSON.stringify(activities, null, 2)}
 You must return a valid JSON object matching the following structure:
 {
   "stayId": "id_of_selected_stay",
+  "stayCost": 1200,
   "guideId": "id_of_selected_guide_or_null",
+  "guideCost": 0,
   "transportId": "id_of_selected_transport",
+  "transportCost": 350,
   "activityIds": ["id_of_selected_activity_1", "id_of_selected_activity_2"],
+  "activitiesCost": 300,
+  "totalComputedCost": 1850,
   "note": "Explain how you reduced costs for this day and how it affects the user's experience while keeping the local-first rule."
 }`;
 

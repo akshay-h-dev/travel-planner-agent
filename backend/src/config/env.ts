@@ -30,7 +30,11 @@ const envSchema = z.object({
 
   OPENAI_API_KEY: z
     .string()
-    .min(1, "OPENAI_API_KEY is required"),
+    .optional(),
+
+  GROQ_API_KEY: z
+    .string()
+    .min(1, "GROQ_API_KEY is required"),
 
   ALLOWED_ORIGINS: z
     .string()

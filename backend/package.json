@@ -5,7 +5,7 @@
   "description": "Backend API for TripWay — Agentic AI Travel Planner",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --exit-child src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "tsc && node scripts/copy-data.js",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
