@@ -3,14 +3,10 @@ import dotenv from "dotenv";
 import { TravelState } from "./state.js";
 import { DayPlan, ProgressLog } from "./types.js";
 import {
-  getDestination,
   getStays,
   getGuides,
   getTransport,
   getActivities,
-  Stay,
-  Guide,
-  Transport,
   Activity,
 } from "../data/dataService.js";
 
@@ -133,9 +129,19 @@ You must return a valid JSON object matching the following structure:
     const result = JSON.parse(response.content as string);
 
     // Resolve selections from DB (safeguard against hallucination)
-    const selectedStay = stays.find((s) => s.id === result.stayId) || stays[0];
+    const defaultStay = stays[0];
+    if (!defaultStay) {
+      throw new Error("No stays available");
+    }
+    const selectedStay = stays.find((s) => s.id === result.stayId) || defaultStay;
+
     const selectedGuide = guides.find((g) => g.id === result.guideId) || null;
-    const selectedTransport = transport.find((t) => t.id === result.transportId) || transport[0];
+
+    const defaultTransport = transport[0];
+    if (!defaultTransport) {
+      throw new Error("No transport options available");
+    }
+    const selectedTransport = transport.find((t) => t.id === result.transportId) || defaultTransport;
     const selectedActivities: Activity[] = [];
     if (Array.isArray(result.activityIds)) {
       for (const id of result.activityIds) {
@@ -265,7 +271,6 @@ export async function checkBudgetNode(state: TravelState): Promise<Partial<Trave
 export async function replanDayNode(state: TravelState): Promise<Partial<TravelState>> {
   const day = state.currentDay;
   const city = state.city;
-  const preferences = state.preferences;
   const currentAttempts = state.replanAttempts[day] || 0;
   const newAttempts = currentAttempts + 1;
 
@@ -358,9 +363,19 @@ You must return a valid JSON object matching the following structure:
     const result = JSON.parse(response.content as string);
 
     // Resolve selections from DB (safeguard against hallucination)
-    const selectedStay = stays.find((s) => s.id === result.stayId) || stays[0];
+    const defaultStay = stays[0];
+    if (!defaultStay) {
+      throw new Error("No stays available");
+    }
+    const selectedStay = stays.find((s) => s.id === result.stayId) || defaultStay;
+
     const selectedGuide = guides.find((g) => g.id === result.guideId) || null;
-    const selectedTransport = transport.find((t) => t.id === result.transportId) || transport[0];
+
+    const defaultTransport = transport[0];
+    if (!defaultTransport) {
+      throw new Error("No transport options available");
+    }
+    const selectedTransport = transport.find((t) => t.id === result.transportId) || defaultTransport;
     const selectedActivities: Activity[] = [];
     if (Array.isArray(result.activityIds)) {
       for (const id of result.activityIds) {

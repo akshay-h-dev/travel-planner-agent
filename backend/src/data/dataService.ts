@@ -2,6 +2,9 @@ import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Define TypeScript interfaces for raw data
 export interface Stay {
   id: string;
@@ -58,8 +61,7 @@ function getDb(): MockDatabase {
 
   try {
     // Standard ESM or CommonJS path resolution
-    const currentDir = __dirname;
-    const dbPath = path.join(currentDir, "mockDb.json");
+    const dbPath = path.join(__dirname, "mockDb.json");
     const rawData = fs.readFileSync(dbPath, "utf-8");
     dbCache = JSON.parse(rawData) as MockDatabase;
     return dbCache;
