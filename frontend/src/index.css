@@ -1,0 +1,228 @@
+/* ============================================
+   TripWay — Tailwind v4 CSS Config + Design System
+   ============================================ */
+
+@import "tailwindcss";
+
+/* ── Theme Tokens (replaces tailwind.config.js in v4) ─── */
+@theme {
+  /* Brand Colors */
+  --color-primary:        #2563EB;
+  --color-primary-light:  #3B82F6;
+  --color-primary-dark:   #1D4ED8;
+  --color-secondary:      #14B8A6;
+  --color-secondary-light:#2DD4BF;
+  --color-secondary-dark: #0F766E;
+  --color-accent:         #F59E0B;
+  --color-accent-light:   #FBBF24;
+  --color-accent-dark:    #D97706;
+  --color-success:        #22C55E;
+  --color-danger:         #EF4444;
+
+  /* Dark Mode Surfaces */
+  --color-dark:           #0F172A;
+  --color-dark-card:      #1E293B;
+  --color-dark-border:    #334155;
+
+  /* Background */
+  --color-background:     #F8FAFC;
+
+  /* Font Families */
+  --font-sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  /* Custom Shadows */
+  --shadow-premium:       0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  --shadow-premium-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+  --shadow-glass:         0 8px 32px 0 rgba(31, 38, 135, 0.04);
+}
+
+/* ── Dark Mode Strategy ─── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Base Styles ─── */
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-dark);
+    font-family: var(--font-sans);
+  }
+  .dark body {
+    background-color: var(--color-dark);
+    color: #F1F5F9;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* ── Component classes ─── */
+@layer components {
+  .glass-card {
+    background-color: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: var(--shadow-glass);
+  }
+  .dark .glass-card {
+    background-color: rgba(30, 41, 59, 0.75);
+    border-color: rgba(51, 65, 85, 0.8);
+  }
+
+  .glass-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(255,255,255,0.6);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.4);
+  }
+  .dark .glass-navbar {
+    background-color: rgba(15, 23, 42, 0.6);
+    border-color: rgba(51, 65, 85, 0.5);
+  }
+
+  .input-premium {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #E2E8F0;
+    background-color: rgba(255,255,255,0.5);
+    backdrop-filter: blur(4px);
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    outline: none;
+    color: #0F172A;
+  }
+  .dark .input-premium {
+    border-color: #334155;
+    background-color: rgba(30, 41, 59, 0.5);
+    color: #F1F5F9;
+  }
+  .input-premium:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+  .input-premium::placeholder { color: #94A3B8; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(to right, var(--color-primary), #2563eb);
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2);
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(to right, var(--color-primary-dark), #1e40af);
+    box-shadow: 0 10px 15px -3px rgba(37,99,235,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(to right, var(--color-secondary), #0d9488);
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 6px -1px rgba(20,184,166,0.2);
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-secondary:hover {
+    background: linear-gradient(to right, var(--color-secondary-dark), #115e59);
+    box-shadow: 0 10px 15px -3px rgba(20,184,166,0.3);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #E2E8F0;
+    color: #475569;
+    font-weight: 500;
+    font-size: 0.875rem;
+    background: transparent;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .dark .btn-outline {
+    border-color: #334155;
+    color: #CBD5E1;
+  }
+  .btn-outline:hover {
+    background-color: #F8FAFC;
+  }
+  .dark .btn-outline:hover {
+    background-color: rgba(51,65,85,0.5);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    color: #64748B;
+    font-weight: 500;
+    font-size: 0.875rem;
+    background: transparent;
+    border: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-ghost:hover {
+    background-color: #F1F5F9;
+    color: #0F172A;
+  }
+  .dark .btn-ghost:hover {
+    background-color: rgba(30,41,59,0.8);
+    color: white;
+  }
+}
+
+/* ── Custom gradient background ─── */
+.gradient-bg {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.05) 0%, transparent 40%);
+}
+.dark .gradient-bg {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.1) 0%, transparent 40%);
+}
+
+/* ── Scrollbar ─── */
+::-webkit-scrollbar        { width: 8px; height: 8px; }
+::-webkit-scrollbar-track  { background: #F1F5F9; }
+::-webkit-scrollbar-thumb  { background: #CBD5E1; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+.dark ::-webkit-scrollbar-track { background: #0F172A; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+/* ── Local operator pulse animation ─── */
+@keyframes local-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
+  50%       { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
+}
+.local-glow { animation: local-pulse 2s infinite; }
