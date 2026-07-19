@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
           <p>© {new Date().getFullYear()} TripWay Inc. All rights reserved.</p>
           <p className="flex items-center gap-1 mt-4 sm:mt-0">
-            Made with <Heart className="h-3.5 w-3.5 text-danger fill-danger" /> by Akshay H for travel communities worldwide.
+            Made with <Heart className="h-3.5 w-3.5 text-danger fill-danger" />Made with ❤️ by Neural Nexus SJEC for travel communities worldwide.
           </p>
         </div>
       </div>
