@@ -12,7 +12,7 @@ interface DayCardProps {
 }
 
 export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
-  const { replaceActivity, replaceStay, replaceGuide } = useTrip();
+  const { replaceActivity, replaceStay, replaceGuide, currentItinerary, confirmBooking } = useTrip();
   const [activeSlot, setActiveSlot] = useState<{ activityId: string } | null>(null);
   const [isStayModalOpen, setIsStayModalOpen] = useState(false);
   const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
@@ -96,6 +96,8 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
                   activity={act}
                   travelers={travelers}
                   onSwap={() => setActiveSlot({ activityId: act.id })}
+                  bookingStatus={currentItinerary?.bookingStatus?.[act.id]}
+                  onConfirm={() => confirmBooking(act.id)}
                 />
               </div>
             ))}
@@ -127,11 +129,25 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
                   <span className="font-semibold text-xs text-slate-800 dark:text-white line-clamp-1">
                     {dayPlan.stay.name}
                   </span>
-                  {dayPlan.stay.isLocal && (
-                    <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-teal-50 dark:bg-teal-900/30 text-secondary border border-teal-200/30">
-                      LOCAL
-                    </span>
-                  )}
+                  <div className="flex gap-1 shrink-0">
+                    {dayPlan.stay.isLocal && (
+                      <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-teal-50 dark:bg-teal-900/30 text-secondary border border-teal-200/30">
+                        LOCAL
+                      </span>
+                    )}
+                    {currentItinerary?.bookingStatus?.[dayPlan.stay.id] === "confirmed" ? (
+                      <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                        CONFIRMED
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => confirmBooking(dayPlan.stay!.id)}
+                        className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-primary text-white hover:bg-primary/90 transition-colors"
+                      >
+                        BOOK
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p className="text-[10px] text-slate-450 line-clamp-1">{dayPlan.stay.description}</p>
                 <div className="flex justify-between items-center pt-1 text-[10px] font-bold">
@@ -153,13 +169,27 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
                 <Navigation className="h-3.5 w-3.5" /> Transport Model
               </span>
               <div className="p-3 bg-white dark:bg-dark-card border border-slate-150 dark:border-slate-800 rounded-xl space-y-1">
-                <div className="flex justify-between items-center">
-                  <span className="font-semibold text-xs text-slate-800 dark:text-white">
+                <div className="flex justify-between items-center gap-1">
+                  <span className="font-semibold text-xs text-slate-800 dark:text-white line-clamp-1">
                     {dayPlan.transport.name}
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[8px] bg-slate-100 dark:bg-slate-800 text-slate-500">
-                    {dayPlan.transport.type}
-                  </span>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <span className="px-1.5 py-0.5 rounded text-[8px] bg-slate-100 dark:bg-slate-800 text-slate-500">
+                      {dayPlan.transport.type}
+                    </span>
+                    {currentItinerary?.bookingStatus?.[dayPlan.transport.id] === "confirmed" ? (
+                      <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                        CONFIRMED
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => confirmBooking(dayPlan.transport!.id)}
+                        className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-primary text-white hover:bg-primary/90 transition-colors"
+                      >
+                        BOOK
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p className="text-[10px] text-slate-500">{dayPlan.transport.provider}</p>
                 <div className="text-[10px] font-bold text-slate-600 dark:text-slate-400">
@@ -191,10 +221,24 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
                 />
                 <div className="flex-1 space-y-0.5">
                   <div className="flex justify-between items-center">
-                    <span className="font-semibold text-xs text-slate-800 dark:text-white hover:underline">
+                    <span className="font-semibold text-xs text-slate-800 dark:text-white hover:underline line-clamp-1">
                       {dayPlan.guide.name}
                     </span>
-                    <span className="text-[9px] text-[#F59E0B]">★ {dayPlan.guide.rating}</span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[9px] text-[#F59E0B]">★ {dayPlan.guide.rating}</span>
+                      {currentItinerary?.bookingStatus?.[dayPlan.guide.id] === "confirmed" ? (
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                          CONFIRMED
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => confirmBooking(dayPlan.guide!.id)}
+                          className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-primary text-white hover:bg-primary/90 transition-colors"
+                        >
+                          BOOK
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <div className="flex justify-between items-center text-[10px] text-slate-450 leading-none">
                     <span>₹{dayPlan.guide.pricePerDay} / day</span>

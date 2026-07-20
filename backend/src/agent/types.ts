@@ -1,8 +1,8 @@
-import { Stay, Guide, Transport, Activity } from "../data/dataService.js";
+import type { Homestay, Guide, Transport, Activity } from "../types/index.js";
 
 export interface DayPlan {
   day: number;
-  stay: Stay | null;
+  stay: Homestay | null;
   guide: Guide | null;
   transport: Transport | null;
   activities: Activity[];

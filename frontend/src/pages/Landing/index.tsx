@@ -8,22 +8,6 @@ export const Landing: React.FC = () => {
   const navigate = useNavigate();
   const { planTrip } = useTrip();
 
-  // Search card state
-  const [destination, setDestination] = useState("goa");
-  const [budget, setBudget] = useState(15000);
-  const [days, setDays] = useState(3);
-  const [travelers, setTravelers] = useState(2);
-
-  const handleQuickSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    planTrip(destination, budget, days, travelers, "Adventure", ["Nature", "Adventure"], {
-      prioritizeLocal: true,
-      keepUnderBudget: true,
-      ecoFriendly: true
-    });
-    navigate("/results");
-  };
-
   const partners = ["IIT Delhi", "BITS Pilani", "Delhi University", "VIT University", "Manipal Academy"];
 
   return (
@@ -37,10 +21,10 @@ export const Landing: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/40 to-slate-950/70 z-0"></div>
 
         {/* Hero Content Container */}
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 text-white">
+        <div className="max-w-7xl mx-auto w-full flex flex-col items-center text-center relative z-10 text-white">
           
           {/* Main slogans title */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="max-w-3xl space-y-6 flex flex-col items-center">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary/20 text-secondary border border-secondary/30 backdrop-blur-sm text-xs font-bold font-mono tracking-wide animate-pulse">
               <Sparkles className="h-3.5 w-3.5" />
               AI DYNAMIC REPLANNING ITINERARIES
@@ -53,11 +37,11 @@ export const Landing: React.FC = () => {
               </span>
             </h1>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg font-medium">
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-lg font-medium mx-auto">
               TripWay is the only AI-powered itinerary engine that automatically adjusts items when costs change while prioritising high-rated local guides, homestays, and small family operators.
             </p>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center">
               <button
                 onClick={() => navigate("/planner")}
                 className="btn-primary py-3 px-6 text-sm font-semibold rounded-xl"
@@ -70,96 +54,6 @@ export const Landing: React.FC = () => {
               >
                 Watch Video Demo
               </a>
-            </div>
-          </div>
-
-          {/* Interactive Search Card */}
-          <div className="lg:col-span-5">
-            <div className="glass-card bg-slate-900/60 dark:bg-slate-900/80 border border-white/10 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-2xl text-slate-800 space-y-4">
-              <h2 className="font-heading font-extrabold text-lg text-white mb-2 flex items-center gap-1">
-                <Compass className="h-5 w-5 text-secondary animate-pulse" />
-                Configure AI Trip Settings
-              </h2>
-              
-              <form onSubmit={handleQuickSearch} className="space-y-4 text-slate-200">
-                {/* Destination Dropdown */}
-                <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold tracking-wider text-slate-350 block">Destination</label>
-                  <select
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                    className="w-full bg-slate-850/80 border border-slate-700/80 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-primary text-sm"
-                  >
-                    {MOCK_CITIES.map(c => (
-                      <option key={c.id} value={c.id} className="bg-slate-900 text-white">{c.name}, {c.state}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Budget input slider */}
-                <div className="space-y-1">
-                  <div className="flex justify-between text-[10px] uppercase font-bold tracking-wider text-slate-350">
-                    <label>Total Budget Limit</label>
-                    <span className="text-secondary font-mono">₹{budget.toLocaleString()}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="5000"
-                    max="60000"
-                    step="1000"
-                    value={budget}
-                    onChange={(e) => setBudget(Number(e.target.value))}
-                    className="w-full h-1 bg-slate-800 rounded-lg cursor-pointer accent-secondary"
-                  />
-                  <span className="text-[9px] text-slate-450 block">TripWay automatically keeps guides/stays under this cost.</span>
-                </div>
-
-                {/* Grid Inputs */}
-                <div className="grid grid-cols-2 gap-4">
-                  
-                  {/* Days count */}
-                  <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-bold tracking-wider text-slate-350 block flex items-center gap-1">
-                      <Calendar className="h-3 w-3" /> Duration (Days)
-                    </label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="14"
-                      value={days}
-                      onChange={(e) => setDays(Number(e.target.value))}
-                      className="w-full bg-slate-850/80 border border-slate-700/80 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-primary text-xs"
-                      required
-                    />
-                  </div>
-
-                  {/* Travelers density */}
-                  <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-bold tracking-wider text-slate-350 block flex items-center gap-1">
-                      <Users className="h-3 w-3" /> Travelers
-                    </label>
-                    <input
-                      type="number"
-                      min="1"
-                      max="10"
-                      value={travelers}
-                      onChange={(e) => setTravelers(Number(e.target.value))}
-                      className="w-full bg-slate-850/80 border border-slate-700/80 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-primary text-xs"
-                      required
-                    />
-                  </div>
-
-                </div>
-
-                {/* Generate Action Button */}
-                <button
-                  type="submit"
-                  className="w-full btn-secondary py-3 text-sm font-semibold rounded-xl text-white flex justify-center items-center gap-2 mt-4"
-                >
-                  <Sparkles className="h-4.5 w-4.5 animate-pulse" />
-                  Generate AI Trip Plan
-                </button>
-              </form>
             </div>
           </div>
 

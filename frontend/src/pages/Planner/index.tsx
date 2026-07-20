@@ -10,16 +10,20 @@ export const Planner: React.FC = () => {
   const navigate = useNavigate();
 
   // Form State variables
-  const [cityId, setCityId] = useState("goa");
-  const [budget, setBudget] = useState(25000);
-  const [days, setDays] = useState(4);
-  const [travelers, setTravelers] = useState(2);
-  const [travelStyle, setTravelStyle] = useState("Backpacking");
+  const [cityId, setCityId] = useState("");
+  const [budget, setBudget] = useState<number | "">("");
+  const [days, setDays] = useState<number | "">("");
+  const [travelers, setTravelers] = useState<number | "">("");
+  const [travelStyle, setTravelStyle] = useState("");
+  
+  const [startPlace, setStartPlace] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [transitTypes, setTransitTypes] = useState<string[]>([]);
   
   // Array structures
-  const [selectedInterests, setSelectedInterests] = useState<string[]>(["Nature", "Adventure"]);
-  const [selectedStays, setSelectedStays] = useState<string[]>(["Homestay"]);
-  const [selectedTransports, setSelectedTransports] = useState<string[]>(["bike-rental", "auto-rickshaw"]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedStays, setSelectedStays] = useState<string[]>([]);
+  const [selectedTransports, setSelectedTransports] = useState<string[]>([]);
 
   // Option toggles
   const [prioritizeLocal, setPrioritizeLocal] = useState(true);
@@ -30,6 +34,12 @@ export const Planner: React.FC = () => {
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
       prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    );
+  };
+
+  const toggleTransitType = (transit: string) => {
+    setTransitTypes((prev) =>
+      prev.includes(transit) ? prev.filter((t) => t !== transit) : [...prev, transit]
     );
   };
 
@@ -47,8 +57,16 @@ export const Planner: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!cityId) {
-      showToast("Please choose a valid destination hub.", "error");
+    if (!cityId || !startPlace || !startDate) {
+      showToast("Please enter departure, destination, and start date.", "error");
+      return;
+    }
+    if (!budget || !days || !travelers) {
+      showToast("Please fill in all budget, duration, and traveler fields.", "error");
+      return;
+    }
+    if (!travelStyle) {
+      showToast("Please select a travel style.", "error");
       return;
     }
     if (selectedInterests.length === 0) {
@@ -56,14 +74,16 @@ export const Planner: React.FC = () => {
       return;
     }
 
-    // Call planning execution
-    await planTrip(cityId, budget, days, travelers, travelStyle, selectedInterests, {
+    // Call planning execution — only navigate on success
+    const success = await planTrip(cityId, budget as number, days as number, travelers as number, travelStyle, selectedInterests, {
       prioritizeLocal,
       keepUnderBudget,
       ecoFriendly
-    });
-    
-    navigate("/results");
+    }, startPlace, startDate, transitTypes);
+
+    if (success) {
+      navigate("/results");
+    }
   };
 
   const stylesList = ["Budget", "Luxury", "Adventure", "Backpacking", "Family", "Solo"];
@@ -100,43 +120,64 @@ export const Planner: React.FC = () => {
           {/* Section 1: Basic Parameters */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
             
+            {/* Start Location Selection */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350">
+                Departure City
+              </label>
+              <input
+                type="text"
+                value={startPlace}
+                onChange={(e) => setStartPlace(e.target.value)}
+                placeholder="e.g. Bangalore, Delhi..."
+                className="input-premium py-3"
+                required
+              />
+            </div>
+
             {/* Destination Selection */}
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350">
                 Choose Destination Hub
               </label>
-              <select
+              <input
+                type="text"
                 value={cityId}
                 onChange={(e) => setCityId(e.target.value)}
+                placeholder="e.g. Goa, Paris, Tokyo..."
                 className="input-premium py-3"
-              >
-                {MOCK_CITIES.map((c) => (
-                  <option key={c.id} value={c.id} className="dark:bg-dark dark:text-white">
-                    {c.name} ({c.state})
-                  </option>
-                ))}
-              </select>
+                required
+              />
             </div>
 
-            {/* Budget Limit Slider */}
+            {/* Budget Limit */}
             <div className="space-y-2">
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-550 dark:text-slate-300">
-                <span>Total Budget Limit</span>
-                <span className="text-primary dark:text-teal-400 font-mono text-sm font-extrabold">₹{budget.toLocaleString()}</span>
-              </div>
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-550 dark:text-slate-300 block">
+                Total Budget Limit (₹)
+              </label>
               <input
-                type="range"
-                min="5000"
-                max="100000"
-                step="1000"
-                value={budget}
-                onChange={(e) => setBudget(Number(e.target.value))}
-                className="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg cursor-pointer accent-primary"
+                type="number"
+                min="1000"
+                value={budget || ""}
+                onChange={(e) => setBudget(e.target.value ? Number(e.target.value) : 0)}
+                placeholder="e.g. 25000"
+                className="input-premium py-3"
+                required
               />
-              <div className="text-[10px] text-slate-400 flex justify-between">
-                <span>Min: ₹5K</span>
-                <span>Max: ₹100K</span>
-              </div>
+            </div>
+
+            {/* Start Date */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-505 dark:text-slate-350">
+                Start Date
+              </label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="input-premium py-3 text-slate-700 dark:text-white"
+                required
+              />
             </div>
 
             {/* Duration Days */}
@@ -148,9 +189,10 @@ export const Planner: React.FC = () => {
                 type="number"
                 min="1"
                 max="14"
-                value={days}
-                onChange={(e) => setDays(Number(e.target.value))}
-                className="input-premium"
+                value={days || ""}
+                onChange={(e) => setDays(e.target.value ? Number(e.target.value) : 0)}
+                placeholder="e.g. 4"
+                className="input-premium py-3"
                 required
               />
             </div>
@@ -164,9 +206,10 @@ export const Planner: React.FC = () => {
                 type="number"
                 min="1"
                 max="10"
-                value={travelers}
-                onChange={(e) => setTravelers(Number(e.target.value))}
-                className="input-premium"
+                value={travelers || ""}
+                onChange={(e) => setTravelers(e.target.value ? Number(e.target.value) : 0)}
+                placeholder="e.g. 2"
+                className="input-premium py-3"
                 required
               />
             </div>
@@ -175,6 +218,37 @@ export const Planner: React.FC = () => {
 
           {/* Section 2: Preferences */}
           <div className="space-y-4 pb-6 border-b border-slate-105 dark:border-slate-800">
+            {/* Transit Options */}
+            <div className="space-y-2">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350 block mb-1">
+                Long-Distance Transit
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { label: "Flight", val: "flight" },
+                  { label: "Train", val: "train" },
+                  { label: "Intercity Bus", val: "bus" }
+                ].map((tr) => {
+                  const selected = transitTypes.includes(tr.val);
+                  return (
+                    <button
+                      key={tr.val}
+                      type="button"
+                      onClick={() => toggleTransitType(tr.val)}
+                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${
+                        selected
+                          ? "border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400"
+                          : "border-slate-205 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                      }`}
+                    >
+                      {selected && <Check className="w-3.5 h-3.5" />}
+                      {tr.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Travel Style */}
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350 block mb-1">

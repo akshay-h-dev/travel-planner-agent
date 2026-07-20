@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { Itinerary, Activity, Homestay, Guide } from "../types";
-import { generateItinerary, MOCK_HOMESTAYS } from "../services/mockData";
+import { MOCK_HOMESTAYS } from "../services/mockData";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 interface UserProfile {
   name: string;
@@ -36,14 +38,19 @@ interface TripContextType {
     travelers: number,
     travelStyle: string,
     interests: string[],
-    options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean }
-  ) => Promise<void>;
+    options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean },
+    startPlace: string,
+    startDate: string,
+    transitTypes: string[]
+  ) => Promise<boolean>;
   saveTrip: (itinerary: Itinerary) => void;
   deleteTrip: (id: string) => void;
   replaceActivity: (dayNumber: number, activityIdToReplace: string, newActivity: Activity) => void;
   replaceStay: (dayNumber: number, newStay: Homestay) => void;
   replaceGuide: (dayNumber: number, newGuide: Guide | null) => void;
   replanBudget: (targetBudget: number) => void;
+  confirmBooking: (itemId: string) => void;
+  confirmAllBookings: () => void;
   setCurrentItinerary: (itinerary: Itinerary | null) => void;
   login: (email: string, name?: string) => void;
   signup: (userData: Partial<UserProfile>) => void;
@@ -101,7 +108,10 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     travelers: number,
     travelStyle: string,
     interests: string[],
-    options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean }
+    _options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean },
+    startPlace: string,
+    startDate: string,
+    transitTypes: string[]
   ) => {
     setIsGenerating(true);
     setGenerationStep(0);
@@ -117,26 +127,62 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
       "Polishing final day-by-day plans..."
     ];
 
-    for (let i = 0; i < steps.length; i++) {
-      setGenerationStep(i + 1);
-      setGenerationLogs(prev => [...prev, steps[i]]);
-      await new Promise(resolve => setTimeout(resolve, 800));
-    }
+    // Run progress animation in parallel with the real agent call
+    const progressPromise = (async () => {
+      for (let i = 0; i < steps.length; i++) {
+        setGenerationStep(i + 1);
+        setGenerationLogs(prev => [...prev, steps[i]]);
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+    })();
 
     try {
-      const generated = generateItinerary(
-        cityId,
-        budget,
-        days,
-        travelers,
-        travelStyle,
-        interests,
-        options
-      );
-      setCurrentItinerary(generated);
+      const response = await fetch(`${API_BASE_URL}/api/plan`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          city: cityId,
+          budget: Number(budget),
+          days: Number(days),
+          preferences: interests,
+          travelers: Number(travelers),
+          travelStyle,
+          startPlace,
+          startDate,
+          transitTypes,
+        }),
+      });
+
+      const result = await response.json();
+
+      // Wait for progress animation to finish so UX feels complete
+      await progressPromise;
+
+      if (!response.ok || result.success === false) {
+        const message =
+          result.error?.message ||
+          result.message ||
+          "Generation failed. Please try again.";
+        throw new Error(message);
+      }
+
+      const fetchedItinerary = result.data;
+      fetchedItinerary.bookingStatus = {};
+      fetchedItinerary.startPlace = startPlace;
+      fetchedItinerary.startDate = startDate;
+      fetchedItinerary.transitTypes = transitTypes;
+
+      setCurrentItinerary(fetchedItinerary);
       showToast("Itinerary generated successfully by TripWay AI!", "success");
+      return true;
     } catch (e) {
-      showToast("Error generating itinerary. Please try again.", "error");
+      await progressPromise.catch(() => undefined);
+      const message = e instanceof Error ? e.message : "Error generating itinerary. Please try again.";
+      showToast(message, "error");
+      setCurrentItinerary(null);
+      return false;
     } finally {
       setIsGenerating(false);
     }
@@ -291,7 +337,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     showToast(newGuide ? `Booked guide ${newGuide.name}` : "Guide removed", "success");
   };
 
-  const replanBudget = (targetBudget: number) => {
+  const replanBudget = async (targetBudget: number) => {
     if (!currentItinerary) return;
 
     // Simulate AI replanning state triggers
@@ -299,63 +345,71 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setGenerationStep(1);
     setGenerationLogs(["AI triggered dynamic replanning due to budget threshold scan...", "Analyzing current accommodation variables..."]);
     
-    setTimeout(() => {
-      setGenerationLogs(prev => [...prev, "Swapping premium commercial events with high-rated local operators...", "Applying eco-friendly transportation discounts..."]);
-      
-      setTimeout(() => {
-        // Run replan parameters
-        const cheaperStayOptions = MOCK_HOMESTAYS.filter(
-          s => s.city.toLowerCase() === currentItinerary.city.toLowerCase().replace("north ", "") && s.pricePerNight < (currentItinerary.days[0].stay?.pricePerNight || 9999)
-        );
-        
-        let newStay = currentItinerary.days[0].stay;
-        if (cheaperStayOptions.length > 0) {
-          newStay = cheaperStayOptions.reduce((prev, curr) => prev.pricePerNight < curr.pricePerNight ? prev : curr);
-        }
-
-        const updatedDays = currentItinerary.days.map(d => {
-          // Remove guide on alternate days if extremely tight
-          const finalGuide = targetBudget < currentItinerary.totalCost * 0.8 ? null : d.guide;
-          
-          const stayCost = newStay ? newStay.pricePerNight : 0;
-          const transportCost = d.transport ? d.transport.pricePerDay : 0;
-          const guideCost = finalGuide ? finalGuide.pricePerDay : 0;
-          const actsCost = d.activities.reduce((acc, a) => acc + a.price, 0) * currentItinerary.travelers;
-
-          return {
-            ...d,
-            stay: newStay,
-            guide: finalGuide,
-            dailyCost: stayCost + transportCost + guideCost + actsCost
-          };
-        });
-
-        const totalCost = updatedDays.reduce((acc, d) => acc + d.dailyCost, 0);
-        
-        let localCost = 0;
-        updatedDays.forEach(day => {
-          if (day.stay?.isLocal) localCost += day.stay.pricePerNight;
-          if (day.transport?.isLocal) localCost += day.transport.pricePerDay;
-          if (day.guide?.isLocal) localCost += day.guide.pricePerDay;
-          day.activities.forEach(a => {
-            if (a.isLocal) localCost += a.price * currentItinerary.travelers;
-          });
-        });
-
-        setCurrentItinerary({
-          ...currentItinerary,
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/plan`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          city: currentItinerary.city,
           budget: targetBudget,
-          days: updatedDays,
-          totalCost,
-          remainingBudget: Math.max(0, targetBudget - totalCost),
-          localOperatorPercentage: Math.min(100, Math.round((localCost / totalCost) * 105))
-        });
-        
-        setIsGenerating(false);
+          days: currentItinerary.totalDays,
+          preferences: currentItinerary.preferences,
+          travelers: currentItinerary.travelers,
+          travelStyle: currentItinerary.travelStyle,
+          startPlace: currentItinerary.startPlace,
+          startDate: currentItinerary.startDate,
+          transitTypes: currentItinerary.transitTypes,
+        })
+      });
+      const result = await response.json();
+      if (result.success) {
+        const newItin = result.data;
+        newItin.bookingStatus = currentItinerary.bookingStatus || {};
+        newItin.startPlace = currentItinerary.startPlace;
+        newItin.startDate = currentItinerary.startDate;
+        newItin.transitTypes = currentItinerary.transitTypes;
+        setCurrentItinerary(newItin);
         showToast("AI replanned your itinerary successfully to match budget!", "success");
-      }, 1000);
+      } else {
+        throw new Error(result.error?.message || "Failed to replan");
+      }
+    } catch (err: any) {
+      showToast(err.message || "Replanning failed", "error");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
-    }, 1000);
+  const confirmBooking = (itemId: string) => {
+    if (!currentItinerary) return;
+    setCurrentItinerary(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        bookingStatus: {
+          ...(prev.bookingStatus || {}),
+          [itemId]: "confirmed"
+        }
+      };
+    });
+    showToast("Booking confirmed successfully!", "success");
+  };
+
+  const confirmAllBookings = () => {
+    if (!currentItinerary) return;
+    const newStatus: Record<string, "pending" | "confirmed"> = { ...(currentItinerary.bookingStatus || {}) };
+    
+    currentItinerary.days.forEach(d => {
+      if (d.stay) newStatus[d.stay.id] = "confirmed";
+      if (d.transport) newStatus[d.transport.id] = "confirmed";
+      if (d.guide) newStatus[d.guide.id] = "confirmed";
+      d.activities.forEach(a => newStatus[a.id] = "confirmed");
+    });
+    newStatus["transit-outbound"] = "confirmed";
+    newStatus["transit-inbound"] = "confirmed";
+
+    setCurrentItinerary(prev => prev ? { ...prev, bookingStatus: newStatus } : null);
+    showToast("All items have been booked and confirmed!", "success");
   };
 
   const login = (email: string, name: string = "Akshay H") => {
@@ -407,6 +461,8 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
         replaceStay,
         replaceGuide,
         replanBudget,
+        confirmBooking,
+        confirmAllBookings,
         setCurrentItinerary,
         login,
         signup,

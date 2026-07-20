@@ -6,9 +6,11 @@ interface ActivityCardProps {
   activity: Activity;
   onSwap: () => void;
   travelers: number;
+  bookingStatus?: "pending" | "confirmed";
+  onConfirm?: () => void;
 }
 
-export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, onSwap, travelers }) => {
+export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, onSwap, travelers, bookingStatus, onConfirm }) => {
   return (
     <div className="glass-card hover:bg-slate-50/50 dark:hover:bg-slate-800/40 rounded-2xl p-4 transition-all duration-200 border border-slate-100 dark:border-slate-800 flex gap-4 items-start relative group">
       
@@ -66,13 +68,27 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, onSwap, tr
       </div>
 
       {/* Hover actions swap activity */}
-      <button
-        onClick={onSwap}
-        className="absolute top-3 right-3 p-1.5 rounded-lg bg-white dark:bg-dark-card border border-slate-205 dark:border-slate-800 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-100 dark:hover:bg-slate-800 text-primary"
-        title="Swap Activity"
-      >
-        <ArrowLeftRight className="h-3.5 w-3.5" />
-      </button>
+      <div className="absolute top-3 right-3 flex items-center gap-2">
+        {bookingStatus === "confirmed" ? (
+          <span className="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-[10px] font-bold rounded-lg border border-green-200 dark:border-green-800">
+            Confirmed
+          </span>
+        ) : (
+          <button
+            onClick={onConfirm}
+            className="px-2 py-1 bg-primary text-white text-[10px] font-bold rounded-lg shadow-sm hover:opacity-90 transition-opacity"
+          >
+            Book
+          </button>
+        )}
+        <button
+          onClick={onSwap}
+          className="p-1.5 rounded-lg bg-white dark:bg-dark-card border border-slate-205 dark:border-slate-800 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-100 dark:hover:bg-slate-800 text-primary"
+          title="Swap Activity"
+        >
+          <ArrowLeftRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
 
     </div>
   );

@@ -15,6 +15,7 @@ import { env } from "./config/env.js";
 import { applySecurityMiddleware } from "./middleware/security.js";
 import { globalErrorHandler } from "./middleware/errorHandler.js";
 import { healthRouter } from "./routes/health.js";
+import { plannerRouter } from "./routes/planner.js";
 import { logger } from "./utils/logger.js";
 
 const app = express();
@@ -38,10 +39,7 @@ app.use((req, _res, next) => {
 
 // ── Routes ──────────────────────────────────────────────────
 app.use("/api", healthRouter);
-
-// Planner route will be registered here once the LangGraph
-// workflow is implemented:
-// app.use("/api", plannerRouter);
+app.use("/api", plannerRouter);
 
 // ── 404 handler ─────────────────────────────────────────────
 app.use((_req, res) => {

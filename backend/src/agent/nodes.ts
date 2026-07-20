@@ -1,13 +1,8 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { TravelState } from "./state.js";
 import { DayPlan, ProgressLog } from "./types.js";
-import {
-  getStays,
-  getGuides,
-  getTransport,
-  getActivities,
-  Activity,
-} from "../data/dataService.js";
+import { dataService } from "../services/dataService.js";
+import type { Activity } from "../types/index.js";
 import { env } from "../config/env.js";
 
 // Initialize the ChatOpenAI client pointing to Groq's API endpoint
@@ -52,11 +47,11 @@ export async function planDayNode(state: TravelState): Promise<Partial<TravelSta
   const city = state.city;
   const day = state.currentDay;
   const preferences = state.preferences;
-  
-  const stays = getStays(city);
-  const guides = getGuides(city);
-  const transport = getTransport(city);
-  const activities = getActivities(city);
+
+  const stays = dataService.getHomestaysByCity(city);
+  const guides = dataService.getGuidesByCity(city);
+  const transport = dataService.getTransportByCity(city);
+  const activities = dataService.getActivitiesByCity(city);
 
   if (stays.length === 0) {
     const errorLog: ProgressLog = {
@@ -76,12 +71,12 @@ export async function planDayNode(state: TravelState): Promise<Partial<TravelSta
   const planLog: ProgressLog = {
     step: "plan_day",
     day,
-    message: `Planning Day ${day} for ${city}. Target budget: $${targetBudget.toFixed(2)}. Preferences: [${preferences.join(", ")}]`,
+    message: `Planning Day ${day} for ${city}. Target budget: ₹${targetBudget.toFixed(2)}. Preferences: [${preferences.join(", ")}]`,
     timestamp: Date.now(),
   };
 
   const systemPrompt = `You are TripWay's AI travel planner. Your task is to plan the itinerary for Day ${day} in ${city}.
-Target budget for this day: $${targetBudget.toFixed(2)}.
+Target budget for this day: ₹${targetBudget.toFixed(2)}.
 User preferences: ${preferences.join(", ")}.
 
 Your selection guidelines:
@@ -89,12 +84,12 @@ Your selection guidelines:
 2. You can optionally select one guide from the available list (or null if not needed).
 3. You must select exactly one transport option from the available list.
 4. You can select one or more activities from the available list.
-5. CRITICAL: You must prefer verified local options (type: 'local') over aggregator/chain options (type: 'chain'). Only choose a chain option if no local option fits the user's budget.
-6. CRITICAL BUDGET CONSTRAINT: The sum of costs for the selected items (Stay + Guide + Transport + Activities) MUST NOT exceed the target budget of $${targetBudget.toFixed(2)}. Staying under budget is your HIGHEST priority, even if it means you cannot fulfill all user preferences or cannot hire a guide.
+5. CRITICAL: You must prefer verified local options (isLocal: true) over aggregator/chain options (isLocal: false). Only choose a chain option if no local option fits the user's budget.
+6. CRITICAL BUDGET CONSTRAINT: The sum of costs for the selected items (Stay pricePerNight + Guide pricePerDay + Transport pricePerDay + Activities price) MUST NOT exceed the target budget of ₹${targetBudget.toFixed(2)}. Staying under budget is your HIGHEST priority, even if it means you cannot fulfill all user preferences or cannot hire a guide.
 7. OPERATIONAL BUDGET RULES:
-   - If the target budget is under $3,000: You MUST NOT select a guide (set "guideId": null).
-   - If the target budget is under $2,000: Select at most 1 cheap activity (cost $500 or less) to stay under budget.
-   - If the target budget is under $1,600: Select 0 activities (set "activityIds": []) because Stay + Transport alone will consume the entire budget.
+   - If the target budget is under ₹3,000: You MUST NOT select a guide (set "guideId": null).
+   - If the target budget is under ₹2,000: Select at most 1 cheap activity (price ₹500 or less) to stay under budget.
+   - If the target budget is under ₹1,600: Select 0 activities (set "activityIds": []) because Stay + Transport alone will consume the entire budget.
 
 Available stays:
 ${JSON.stringify(stays, null, 2)}
@@ -152,11 +147,11 @@ You must return a valid JSON object matching the following structure:
       }
     }
 
-    // Compute costs
-    const stayCost = selectedStay.costPerNight;
-    const guideCost = selectedGuide ? selectedGuide.costPerDay : 0;
-    const transCost = selectedTransport.costPerDay;
-    const actCost = selectedActivities.reduce((sum, a) => sum + a.cost, 0);
+    // Compute costs from production dataset field names
+    const stayCost = selectedStay.pricePerNight;
+    const guideCost = selectedGuide ? selectedGuide.pricePerDay : 0;
+    const transCost = selectedTransport.pricePerDay;
+    const actCost = selectedActivities.reduce((sum, a) => sum + a.price, 0);
     const totalDayCost = stayCost + guideCost + transCost + actCost;
 
     const dayPlan: DayPlan = {
@@ -187,7 +182,7 @@ You must return a valid JSON object matching the following structure:
         {
           step: "plan_day",
           day,
-          message: `Day ${day} planned. Selection: Stay: ${selectedStay.name}, Transport: ${selectedTransport.name}, Guide: ${selectedGuide ? selectedGuide.name : "None"}, Activities Count: ${selectedActivities.length}. Cost: $${totalDayCost}`,
+          message: `Day ${day} planned. Selection: Stay: ${selectedStay.name}, Transport: ${selectedTransport.name}, Guide: ${selectedGuide ? selectedGuide.name : "None"}, Activities Count: ${selectedActivities.length}. Cost: ₹${totalDayCost}`,
           timestamp: Date.now(),
         },
       ],
@@ -217,7 +212,7 @@ export async function checkBudgetNode(state: TravelState): Promise<Partial<Trave
     return { status: "budget_exceeded_failure" };
   }
   const currentDay = state.currentDay;
-  
+
   // Always compute spentSoFar fresh from the array to avoid incremental math double-counting bugs
   let totalSpent = 0;
   for (const d of state.days) {
@@ -227,7 +222,7 @@ export async function checkBudgetNode(state: TravelState): Promise<Partial<Trave
   const checkLog: ProgressLog = {
     step: "check_budget",
     day: currentDay,
-    message: `Checking budget: spent $${totalSpent.toFixed(2)} of $${state.totalBudget.toFixed(2)} so far.`,
+    message: `Checking budget: spent ₹${totalSpent.toFixed(2)} of ₹${state.totalBudget.toFixed(2)} so far.`,
     timestamp: Date.now(),
   };
 
@@ -244,7 +239,7 @@ export async function checkBudgetNode(state: TravelState): Promise<Partial<Trave
         {
           step: "check_budget",
           day: currentDay,
-          message: `Budget Exceeded by $${overBudgetBy.toFixed(2)}. Initiating replanning node...`,
+          message: `Budget Exceeded by ₹${overBudgetBy.toFixed(2)}. Initiating replanning node...`,
           timestamp: Date.now(),
         },
       ],
@@ -297,7 +292,7 @@ export async function replanDayNode(state: TravelState): Promise<Partial<TravelS
   const replanLog: ProgressLog = {
     step: "replan_day",
     day,
-    message: `Replanning Day ${day} (Attempt ${newAttempts}/3). Need to reduce costs. Over budget by: $${state.overBudgetBy.toFixed(2)}`,
+    message: `Replanning Day ${day} (Attempt ${newAttempts}/3). Need to reduce costs. Over budget by: ₹${state.overBudgetBy.toFixed(2)}`,
     timestamp: Date.now(),
   };
 
@@ -316,25 +311,25 @@ export async function replanDayNode(state: TravelState): Promise<Partial<TravelS
     };
   }
 
-  const stays = getStays(city);
-  const guides = getGuides(city);
-  const transport = getTransport(city);
-  const activities = getActivities(city);
+  const stays = dataService.getHomestaysByCity(city);
+  const guides = dataService.getGuidesByCity(city);
+  const transport = dataService.getTransportByCity(city);
+  const activities = dataService.getActivitiesByCity(city);
 
-  const systemPrompt = `You are TripWay's AI travel planner. You are in REPLANNING mode because the current itinerary is over budget by $${state.overBudgetBy.toFixed(2)}.
+  const systemPrompt = `You are TripWay's AI travel planner. You are in REPLANNING mode because the current itinerary is over budget by ₹${state.overBudgetBy.toFixed(2)}.
 Your goal is to replan Day ${day} in ${city} to reduce costs.
 
-Current Plan for Day ${day} (Total Cost: $${currentDayPlan.cost}):
-- Stay: ${currentDayPlan.stay?.name} ($${currentDayPlan.stay?.costPerNight})
-- Guide: ${currentDayPlan.guide?.name || "None"} ($${currentDayPlan.guide?.costPerDay || 0})
-- Transport: ${currentDayPlan.transport?.name} ($${currentDayPlan.transport?.costPerDay})
-- Activities: ${JSON.stringify(currentDayPlan.activities.map((a) => `${a.name} ($${a.cost})`))}
+Current Plan for Day ${day} (Total Cost: ₹${currentDayPlan.cost}):
+- Stay: ${currentDayPlan.stay?.name} (₹${currentDayPlan.stay?.pricePerNight})
+- Guide: ${currentDayPlan.guide?.name || "None"} (₹${currentDayPlan.guide?.pricePerDay || 0})
+- Transport: ${currentDayPlan.transport?.name} (₹${currentDayPlan.transport?.pricePerDay})
+- Activities: ${JSON.stringify(currentDayPlan.activities.map((a) => `${a.name} (₹${a.price})`))}
 
 Replacement Guidelines:
 1. Select a cheaper stay or transport option, or remove/swap activities, or remove the guide entirely.
-2. CRITICAL local-first constraint: You must prefer verified local options (type: 'local') over chain options (type: 'chain'). Do NOT swap a local option for a more expensive chain option just to fit budget.
-3. The new plan MUST cost significantly less than the current plan (aiming to reduce cost by at least $${state.overBudgetBy.toFixed(2)}).
-4. CRITICAL BUDGET CONSTRAINT: The new plan for this day must fit within the reduced budget limits. If needed to meet the reduction target of $${state.overBudgetBy.toFixed(2)}, set guideId to null, choose the cheapest stay, cheapest transport, and/or choose fewer or no activities.
+2. CRITICAL local-first constraint: You must prefer verified local options (isLocal: true) over chain options (isLocal: false). Do NOT swap a local option for a more expensive chain option just to fit budget.
+3. The new plan MUST cost significantly less than the current plan (aiming to reduce cost by at least ₹${state.overBudgetBy.toFixed(2)}).
+4. CRITICAL BUDGET CONSTRAINT: The new plan for this day must fit within the reduced budget limits. If needed to meet the reduction target of ₹${state.overBudgetBy.toFixed(2)}, set guideId to null, choose the cheapest stay, cheapest transport, and/or choose fewer or no activities.
 
 Available stays:
 ${JSON.stringify(stays, null, 2)}
@@ -392,11 +387,11 @@ You must return a valid JSON object matching the following structure:
       }
     }
 
-    // Compute costs
-    const stayCost = selectedStay.costPerNight;
-    const guideCost = selectedGuide ? selectedGuide.costPerDay : 0;
-    const transCost = selectedTransport.costPerDay;
-    const actCost = selectedActivities.reduce((sum, a) => sum + a.cost, 0);
+    // Compute costs from production dataset field names
+    const stayCost = selectedStay.pricePerNight;
+    const guideCost = selectedGuide ? selectedGuide.pricePerDay : 0;
+    const transCost = selectedTransport.pricePerDay;
+    const actCost = selectedActivities.reduce((sum, a) => sum + a.price, 0);
     const totalDayCost = stayCost + guideCost + transCost + actCost;
 
     const dayPlan: DayPlan = {
@@ -426,7 +421,7 @@ You must return a valid JSON object matching the following structure:
         {
           step: "replan_day",
           day,
-          message: `Day ${day} replanned. New Cost: $${totalDayCost} (Old Cost was $${currentDayPlan.cost}). Details: Stay: ${selectedStay.name}, Transport: ${selectedTransport.name}, Guide: ${selectedGuide ? selectedGuide.name : "None"}, Activities Count: ${selectedActivities.length}`,
+          message: `Day ${day} replanned. New Cost: ₹${totalDayCost} (Old Cost was ₹${currentDayPlan.cost}). Details: Stay: ${selectedStay.name}, Transport: ${selectedTransport.name}, Guide: ${selectedGuide ? selectedGuide.name : "None"}, Activities Count: ${selectedActivities.length}`,
           timestamp: Date.now(),
         },
       ],
@@ -478,20 +473,20 @@ export async function generateItineraryNode(state: TravelState): Promise<Partial
 
   for (const d of state.days) {
     if (d.stay) {
-      if (d.stay.type === "local") localSpend += d.stay.costPerNight;
-      else chainSpend += d.stay.costPerNight;
+      if (d.stay.isLocal) localSpend += d.stay.pricePerNight;
+      else chainSpend += d.stay.pricePerNight;
     }
     if (d.guide) {
-      if (d.guide.type === "local") localSpend += d.guide.costPerDay;
-      else chainSpend += d.guide.costPerDay;
+      if (d.guide.isLocal) localSpend += d.guide.pricePerDay;
+      else chainSpend += d.guide.pricePerDay;
     }
     if (d.transport) {
-      if (d.transport.type === "local") localSpend += d.transport.costPerDay;
-      else chainSpend += d.transport.costPerDay;
+      if (d.transport.isLocal) localSpend += d.transport.pricePerDay;
+      else chainSpend += d.transport.pricePerDay;
     }
     for (const act of d.activities) {
-      if (act.type === "local") localSpend += act.cost;
-      else chainSpend += act.cost;
+      if (act.isLocal) localSpend += act.price;
+      else chainSpend += act.price;
     }
   }
 
@@ -507,8 +502,8 @@ export async function generateItineraryNode(state: TravelState): Promise<Partial
         step: "final",
         day: null,
         message: isFailure
-          ? `Itinerary planning failed: Unable to fit within the budget of $${state.totalBudget.toFixed(2)}. Best attempt cost: $${totalSpent.toFixed(2)}.`
-          : `Itinerary generated successfully! Total Cost: $${totalSpent.toFixed(2)}. Local spend contribution: $${localSpend.toFixed(2)} (${localPercentage.toFixed(1)}%). Chain/aggregator spend: $${chainSpend.toFixed(2)} (${(100 - localPercentage).toFixed(1)}%).`,
+          ? `Itinerary planning failed: Unable to fit within the budget of ₹${state.totalBudget.toFixed(2)}. Best attempt cost: ₹${totalSpent.toFixed(2)}.`
+          : `Itinerary generated successfully! Total Cost: ₹${totalSpent.toFixed(2)}. Local spend contribution: ₹${localSpend.toFixed(2)} (${localPercentage.toFixed(1)}%). Chain/aggregator spend: ₹${chainSpend.toFixed(2)} (${(100 - localPercentage).toFixed(1)}%).`,
         timestamp: Date.now(),
       },
     ],

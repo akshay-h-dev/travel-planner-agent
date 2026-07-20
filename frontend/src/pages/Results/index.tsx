@@ -9,7 +9,7 @@ import { Modal } from "../../components/common/Modal";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 
 export const Results: React.FC = () => {
-  const { currentItinerary, saveTrip, replanBudget, showToast } = useTrip();
+  const { currentItinerary, saveTrip, replanBudget, confirmAllBookings, showToast } = useTrip();
 
   const [isReplanModalOpen, setIsReplanModalOpen] = useState(false);
   const [newBudget, setNewBudget] = useState(0);
@@ -153,6 +153,57 @@ export const Results: React.FC = () => {
 
           </div>
 
+          {/* Transit Card (if applicable) */}
+          {currentItinerary.startPlace && (
+            <div className="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 bg-white dark:bg-dark-card/90">
+              <h3 className="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-400">
+                Long-Distance Transit
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Outbound</div>
+                    <div className="text-xs font-semibold text-slate-800 dark:text-white mt-0.5">
+                      {currentItinerary.startPlace} → {currentItinerary.city}
+                    </div>
+                    <div className="text-[10px] text-slate-500 mt-1 capitalize">{currentItinerary.transitTypes?.join(", ")}</div>
+                  </div>
+                  <div className="text-right">
+                    {currentItinerary.bookingStatus?.["transit-outbound"] === "confirmed" ? (
+                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                        CONFIRMED
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                        PENDING
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                  <div>
+                    <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Inbound</div>
+                    <div className="text-xs font-semibold text-slate-800 dark:text-white mt-0.5">
+                      {currentItinerary.city} → {currentItinerary.startPlace}
+                    </div>
+                    <div className="text-[10px] text-slate-500 mt-1 capitalize">{currentItinerary.transitTypes?.join(", ")}</div>
+                  </div>
+                  <div className="text-right">
+                    {currentItinerary.bookingStatus?.["transit-inbound"] === "confirmed" ? (
+                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                        CONFIRMED
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                        PENDING
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Quick PDF / share buttons */}
           <div className="flex gap-2">
             <button
@@ -182,6 +233,23 @@ export const Results: React.FC = () => {
           <BudgetSummary itinerary={currentItinerary} />
           
           <CostBreakdown itinerary={currentItinerary} />
+
+          {/* Booking Dashboard */}
+          <div className="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 bg-white dark:bg-dark-card/90">
+            <h3 className="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-400">
+              Booking Status
+            </h3>
+            <p className="text-xs text-slate-500 font-medium">
+              Review and confirm all your pending bookings in one click.
+            </p>
+            <button
+              onClick={confirmAllBookings}
+              className="w-full btn-primary py-3 text-sm font-semibold rounded-xl flex items-center justify-center gap-1.5 shadow-md transition-transform hover:scale-[1.02] active:scale-95"
+            >
+              <Sparkles className="h-4 w-4" />
+              Confirm All Bookings
+            </button>
+          </div>
 
         </div>
 

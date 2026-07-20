@@ -30,6 +30,16 @@ export const PlanRequestSchema = z.object({
     .array(z.string().trim().min(1))
     .min(1, "At least one preference is required")
     .max(10, "Maximum 10 preferences allowed"),
+  travelers: z
+    .number()
+    .int("Travelers must be a whole number")
+    .min(1, "Minimum 1 traveler required")
+    .max(20, "Maximum 20 travelers allowed"),
+  travelStyle: z
+    .string()
+    .min(1, "Travel style is required")
+    .max(50, "Travel style must not exceed 50 characters")
+    .trim(),
 });
 
 export type PlanRequest = z.infer<typeof PlanRequestSchema>;

@@ -84,6 +84,10 @@ export interface Itinerary {
   preferences: string[];
   travelers: number;
   travelStyle: string;
+  startPlace?: string;
+  startDate?: string;
+  transitTypes?: string[];
+  bookingStatus?: Record<string, "pending" | "confirmed">;
 }
 
 export interface AgentState {
