@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, ShieldCheck, Compass, Check } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
@@ -30,6 +30,62 @@ export const Planner: React.FC = () => {
   const [keepUnderBudget, setKeepUnderBudget] = useState(true);
   const [ecoFriendly, setEcoFriendly] = useState(true);
   const [minimizeTime, setMinimizeTime] = useState(false);
+
+  // Persist form to localStorage so inputs are not reset on navigation/refresh
+  const STORAGE_KEY = "tripway:planner:form";
+
+  // On mount restore
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setCityId(parsed.cityId || "");
+        setBudget(parsed.budget ?? "");
+        setDays(parsed.days ?? "");
+        setTravelers(parsed.travelers ?? "");
+        setTravelStyle(parsed.travelStyle || "");
+        setStartPlace(parsed.startPlace || "");
+        setStartDate(parsed.startDate || "");
+        setTransitTypes(parsed.transitTypes || []);
+        setSelectedInterests(parsed.selectedInterests || []);
+        setSelectedStays(parsed.selectedStays || []);
+        setSelectedTransports(parsed.selectedTransports || []);
+        setPrioritizeLocal(parsed.prioritizeLocal ?? true);
+        setKeepUnderBudget(parsed.keepUnderBudget ?? true);
+        setEcoFriendly(parsed.ecoFriendly ?? true);
+        setMinimizeTime(parsed.minimizeTime ?? false);
+      }
+    } catch (e) {
+      // ignore parse errors
+    }
+  }, []);
+
+  // Save on changes
+  useEffect(() => {
+    const toSave = {
+      cityId,
+      budget,
+      days,
+      travelers,
+      travelStyle,
+      startPlace,
+      startDate,
+      transitTypes,
+      selectedInterests,
+      selectedStays,
+      selectedTransports,
+      prioritizeLocal,
+      keepUnderBudget,
+      ecoFriendly,
+      minimizeTime,
+    };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (e) {
+      // ignore quota errors
+    }
+  }, [cityId, budget, days, travelers, travelStyle, startPlace, startDate, transitTypes, selectedInterests, selectedStays, selectedTransports, prioritizeLocal, keepUnderBudget, ecoFriendly, minimizeTime]);
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
