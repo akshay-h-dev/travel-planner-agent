@@ -1,35 +1,50 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CalendarRange, Coins, Users, CloudRain, Save, Download, Share2, AlertOctagon, Compass, Sparkles, MapPin, RefreshCw } from "lucide-react";
+import {
+  CalendarRange,
+  Coins,
+  Users,
+  Save,
+  Download,
+  Share2,
+  RefreshCw,
+  Sparkles,
+} from "lucide-react";
+
 import { useTrip } from "../../context/TripContext";
 import { Timeline } from "../../components/timeline/Timeline";
 import { BudgetSummary } from "../../components/budget/BudgetSummary";
-import { CostBreakdown } from "../../components/budget/CostBreakdown";
 import { Modal } from "../../components/common/Modal";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 
 export const Results: React.FC = () => {
-  const { currentItinerary, saveTrip, replanBudget, confirmAllBookings, showToast } = useTrip();
+  const {
+    currentItinerary,
+    saveTrip,
+    replanBudget,
+    confirmAllBookings,
+    showToast,
+  } = useTrip();
 
   const [isReplanModalOpen, setIsReplanModalOpen] = useState(false);
   const [newBudget, setNewBudget] = useState(0);
 
   if (!currentItinerary) {
     return (
-      <div className="flex-1 max-w-4xl mx-auto px-4 py-16 text-center space-y-6">
-        <div className="relative mx-auto w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center border text-slate-400">
-          <Compass className="h-8 w-8 text-slate-405 animate-pulse" />
-        </div>
-        <div className="space-y-1">
-          <h2 className="font-heading font-extrabold text-xl text-slate-800 dark:text-white">
-            No Active Itinerary Set
-          </h2>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
-            Please run the AI Trip Planner wizard to compile a new local budget-optimised travel schedule.
-          </p>
-        </div>
-        <Link to="/planner" className="btn-primary inline-flex py-2 px-5 text-xs font-semibold rounded-xl">
-          Launch Planner Wizard
+      <div className="flex-1 max-w-4xl mx-auto py-20 text-center">
+        <h2 className="text-2xl font-bold mb-3">
+          No Active Itinerary
+        </h2>
+
+        <p className="text-slate-500 mb-6">
+          Start by creating a new trip plan.
+        </p>
+
+        <Link
+          to="/planner"
+          className="btn-primary px-6 py-3 rounded-xl"
+        >
+          Launch Planner
         </Link>
       </div>
     );
@@ -42,255 +57,403 @@ export const Results: React.FC = () => {
 
   const handleReplanSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (newBudget <= 2000) {
-      showToast("Budget must be at least ₹2,000 to construct travel variables.", "error");
+
+    if (newBudget < 2000) {
+      showToast(
+        "Budget must be at least ₹2,000.",
+        "error"
+      );
       return;
     }
+
     replanBudget(newBudget);
     setIsReplanModalOpen(false);
   };
 
   const handleDownloadPDF = () => {
-    showToast("Successfully generated trip PDF! Download started.", "success");
+    showToast(
+      "Trip PDF generated successfully.",
+      "success"
+    );
   };
 
   const handleShareTrip = () => {
     navigator.clipboard.writeText(window.location.href);
-    showToast("Shareable link copied to clipboard!", "success");
+
+    showToast(
+      "Share link copied.",
+      "success"
+    );
   };
 
   return (
-    <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-6">
-      
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-8">
+
+      {/* Header */}
+
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+
         <div>
-          <Breadcrumb items={[{ name: "Planner", path: "/planner" }, { name: "Active Itinerary" }]} />
-          <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-800 dark:text-white flex items-center gap-2 pt-1">
+          <Breadcrumb
+            items={[
+              { name: "Planner", path: "/planner" },
+              { name: "Results" },
+            ]}
+          />
+
+          <h1 className="text-3xl font-bold mt-2">
             Trip to {currentItinerary.city}
           </h1>
+
+          <p className="text-slate-500 mt-1">
+            {currentItinerary.totalDays} Days •{" "}
+            {currentItinerary.travelers} Traveler
+            {currentItinerary.travelers > 1 ? "s" : ""}
+          </p>
         </div>
 
-        <div className="flex gap-2 w-full sm:w-auto">
+        <div className="flex flex-wrap gap-3">
+
           <button
             onClick={handleOpenReplan}
-            className="btn-secondary py-2 px-4 rounded-xl text-xs font-bold flex-1 sm:flex-initial flex items-center justify-center gap-1.5 shadow-sm"
+            className="btn-secondary px-5 py-2 rounded-xl flex items-center gap-2"
           >
-            <RefreshCw className="h-4 w-4 animate-spin-slow" /> AI Dynamic Replan
+            <RefreshCw className="w-4 h-4" />
+            Replan
           </button>
-          
+
           <button
             onClick={() => saveTrip(currentItinerary)}
-            className="btn-primary py-2 px-4 rounded-xl text-xs font-bold flex-1 sm:flex-initial flex items-center justify-center gap-1.5 shadow-sm"
+            className="btn-primary px-5 py-2 rounded-xl flex items-center gap-2"
           >
-            <Save className="h-4 w-4" /> Save Itinerary
+            <Save className="w-4 h-4" />
+            Save
           </button>
+
+          <button
+            onClick={handleDownloadPDF}
+            className="btn-outline px-5 py-2 rounded-xl flex items-center gap-2"
+          >
+            <Download className="w-4 h-4" />
+            PDF
+          </button>
+
+          <button
+            onClick={handleShareTrip}
+            className="btn-outline px-5 py-2 rounded-xl flex items-center gap-2"
+          >
+            <Share2 className="w-4 h-4" />
+            Share
+          </button>
+
         </div>
       </div>
 
-      {/* Main Grid: Three Column Matrix Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* COLUMN 1: Left Summary Info (col-span-3) */}
-        <div className="lg:col-span-3 space-y-6 lg:sticky lg:top-20">
-          
-          <div className="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-5 bg-white dark:bg-dark-card/90">
-            <h3 className="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-400">
-              Trip Overview
-            </h3>
+      {/* Quick Summary */}
 
-            {/* Quick KPIs stats */}
-            <div className="space-y-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <div className="flex items-center gap-2">
-                <CalendarRange className="h-4.5 w-4.5 text-primary" />
-                <span>{currentItinerary.totalDays} Days Itinerary</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4.5 w-4.5 text-secondary" />
-                <span>{currentItinerary.travelers} Traveler{currentItinerary.travelers > 1 ? "s" : ""}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Coins className="h-4.5 w-4.5 text-accent" />
-                <span>Style: {currentItinerary.travelStyle}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CloudRain className="h-4.5 w-4.5 text-blue-400" />
-                <span>Weather: 24°C / Light Rain</span>
-              </div>
-            </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-            {/* Simulated Map Preview static image */}
-            <div className="space-y-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                Itinerary route map
+        <div className="glass-card rounded-2xl p-5">
+          <CalendarRange className="text-primary mb-3" />
+          <p className="text-sm text-slate-500">
+            Duration
+          </p>
+          <h3 className="text-xl font-bold">
+            {currentItinerary.totalDays} Days
+          </h3>
+        </div>
+
+        <div className="glass-card rounded-2xl p-5">
+          <Users className="text-primary mb-3" />
+          <p className="text-sm text-slate-500">
+            Travelers
+          </p>
+          <h3 className="text-xl font-bold">
+            {currentItinerary.travelers}
+          </h3>
+        </div>
+
+        <div className="glass-card rounded-2xl p-5">
+          <Coins className="text-primary mb-3" />
+          <p className="text-sm text-slate-500">
+            Budget
+          </p>
+          <h3 className="text-xl font-bold">
+            ₹{currentItinerary.budget.toLocaleString()}
+          </h3>
+        </div>
+
+        <div className="glass-card rounded-2xl p-5">
+          <Sparkles className="text-primary mb-3" />
+          <p className="text-sm text-slate-500">
+            Travel Style
+          </p>
+          <h3 className="text-xl font-bold capitalize">
+            {currentItinerary.travelStyle}
+          </h3>
+        </div>
+
+      </div>
+
+      {/* Main Content */}
+
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* =========================
+      LEFT (2/3 Width)
+      Timeline
+  ========================== */}
+
+        <div className="lg:col-span-2 space-y-6">
+
+          <div className="glass-card rounded-3xl p-6">
+
+            <div className="flex items-center justify-between mb-6">
+
+              <div>
+                <h2 className="text-xl font-bold">
+                  Daily Itinerary
+                </h2>
+
+                <p className="text-sm text-slate-500 mt-1">
+                  Follow your complete travel schedule day by day.
+                </p>
+              </div>
+
+              <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                {currentItinerary.totalDays} Days
               </span>
-              <div className="h-32 rounded-2xl overflow-hidden border border-slate-105 bg-slate-150 relative">
-                <img
-                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=350&q=80"
-                  alt="Scenic Route Map"
-                  className="w-full h-full object-cover opacity-80"
-                />
-                <div className="absolute inset-0 bg-slate-900/10 flex items-center justify-center p-2">
-                  <div className="bg-white/90 dark:bg-dark-card/90 px-3 py-1.5 rounded-lg border border-slate-100/50 shadow flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5 text-danger fill-danger/10" />
-                    <span className="text-[9px] font-bold text-slate-800 dark:text-white uppercase tracking-wider">Map routing Active</span>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
-            {/* Emergency Contacts Widget */}
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1 text-danger">
-                <AlertOctagon className="h-3.5 w-3.5" /> Emergency Contacts
-              </span>
-              <div className="text-[10px] text-slate-500 font-medium leading-normal space-y-1">
-                <p>Regional Tourism Desk: <b>1800-425-4747</b></p>
-                <p>Local Police Helpline: <b>112</b></p>
-                <p>TripWay Host Concierge: <b>+91 91191 10001</b></p>
-              </div>
-            </div>
+            <Timeline
+              days={currentItinerary.days}
+              travelers={currentItinerary.travelers}
+            />
 
-          </div>
-
-          {/* Transit Card (if applicable) */}
-          {currentItinerary.startPlace && (
-            <div className="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 bg-white dark:bg-dark-card/90">
-              <h3 className="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-400">
-                Long-Distance Transit
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Outbound</div>
-                    <div className="text-xs font-semibold text-slate-800 dark:text-white mt-0.5">
-                      {currentItinerary.startPlace} → {currentItinerary.city}
-                    </div>
-                    <div className="text-[10px] text-slate-500 mt-1 capitalize">{currentItinerary.transitTypes?.join(", ")}</div>
-                  </div>
-                  <div className="text-right">
-                    {currentItinerary.bookingStatus?.["transit-outbound"] === "confirmed" ? (
-                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
-                        CONFIRMED
-                      </span>
-                    ) : (
-                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
-                        PENDING
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-900/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                  <div>
-                    <div className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Inbound</div>
-                    <div className="text-xs font-semibold text-slate-800 dark:text-white mt-0.5">
-                      {currentItinerary.city} → {currentItinerary.startPlace}
-                    </div>
-                    <div className="text-[10px] text-slate-500 mt-1 capitalize">{currentItinerary.transitTypes?.join(", ")}</div>
-                  </div>
-                  <div className="text-right">
-                    {currentItinerary.bookingStatus?.["transit-inbound"] === "confirmed" ? (
-                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
-                        CONFIRMED
-                      </span>
-                    ) : (
-                      <span className="px-2 py-1 rounded-lg text-[9px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
-                        PENDING
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Quick PDF / share buttons */}
-          <div className="flex gap-2">
-            <button
-              onClick={handleDownloadPDF}
-              className="btn-outline flex-1 dark:text-white dark:border-slate-800 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1"
-            >
-              <Download className="h-4 w-4" /> Download PDF
-            </button>
-            <button
-              onClick={handleShareTrip}
-              className="btn-outline flex-1 dark:text-white dark:border-slate-800 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1"
-            >
-              <Share2 className="h-4 w-4" /> Share link
-            </button>
           </div>
 
         </div>
 
-        {/* COLUMN 2: Day Schedule timeline (col-span-5) */}
-        <div className="lg:col-span-5 space-y-6">
-          <Timeline days={currentItinerary.days} travelers={currentItinerary.travelers} />
-        </div>
+        {/* =========================
+      RIGHT SIDEBAR
+  ========================== */}
 
-        {/* COLUMN 3: Right Budget Summary, Cost Breakdown panel (col-span-4) */}
-        <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-20">
-          
-          <BudgetSummary itinerary={currentItinerary} />
-          
-          <CostBreakdown itinerary={currentItinerary} />
+        <div className="space-y-6">
 
-          {/* Booking Dashboard */}
-          <div className="glass-card rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 bg-white dark:bg-dark-card/90">
-            <h3 className="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-400">
-              Booking Status
-            </h3>
-            <p className="text-xs text-slate-500 font-medium">
-              Review and confirm all your pending bookings in one click.
-            </p>
+          {/* Budget Summary */}
+
+          <div className="glass-card rounded-3xl p-6">
+
+            <h2 className="text-xl font-bold mb-5">
+              Budget Overview
+            </h2>
+
+            <BudgetSummary itinerary={currentItinerary} />
+
+          </div>
+
+          {/* =========================
+        Booking Status
+    ========================== */}
+
+          <div className="glass-card rounded-3xl p-6">
+
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-xl font-bold">
+                Booking Status
+              </h2>
+
+              <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+                Live
+              </span>
+            </div>
+
+            <div className="space-y-4">
+
+              {/* Hotel */}
+
+              <div className="flex items-center justify-between border rounded-xl px-4 py-3">
+
+                <div>
+                  <p className="font-medium">
+                    Hotel
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Accommodation booking
+                  </p>
+                </div>
+
+                {currentItinerary.bookingStatus?.hotel === "confirmed" ? (
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
+                    Confirmed
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">
+                    Pending
+                  </span>
+                )}
+
+              </div>
+
+              {/* Transport */}
+
+              <div className="flex items-center justify-between border rounded-xl px-4 py-3">
+
+                <div>
+                  <p className="font-medium">
+                    Transport
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    Travel tickets
+                  </p>
+                </div>
+
+                {currentItinerary.bookingStatus?.["transit-outbound"] === "confirmed" &&
+                  currentItinerary.bookingStatus?.["transit-inbound"] === "confirmed" ? (
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
+                    Confirmed
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">
+                    Pending
+                  </span>
+                )}
+
+              </div>
+
+            </div>
+
             <button
               onClick={confirmAllBookings}
-              className="w-full btn-primary py-3 text-sm font-semibold rounded-xl flex items-center justify-center gap-1.5 shadow-md transition-transform hover:scale-[1.02] active:scale-95"
+              className="w-full mt-6 btn-primary py-3 rounded-xl flex items-center justify-center gap-2"
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="w-4 h-4" />
               Confirm All Bookings
             </button>
+
           </div>
 
         </div>
 
       </div>
+      {/* =========================
+    AI Replan Modal
+========================== */}
 
-      {/* AI DYNAMIC REPLANNING MODAL */}
       <Modal
         isOpen={isReplanModalOpen}
         onClose={() => setIsReplanModalOpen(false)}
-        title="AI Dynamic Budget Replanning"
+        title="Replan Budget"
       >
-        <form onSubmit={handleReplanSubmit} className="space-y-4">
-          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-            Enter a new target budget cap. The TripWay AI engine will scan stays, remove surcharge guides and switch transport modes automatically to balance costs.
-          </p>
+        <form
+          onSubmit={handleReplanSubmit}
+          className="space-y-6"
+        >
 
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
-              New Itinerary Budget Cap (₹)
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-3 text-slate-400 text-sm font-bold">₹</span>
-              <input
-                type="number"
-                value={newBudget}
-                onChange={(e) => setNewBudget(Number(e.target.value))}
-                className="input-premium pl-8 py-3"
-                required
-              />
-            </div>
+          <div>
+            <h3 className="text-lg font-semibold">
+              Adjust Your Budget
+            </h3>
+
+            <p className="text-sm text-slate-500 mt-1">
+              Enter a new budget and we'll regenerate the itinerary
+              while keeping your trip balanced.
+            </p>
           </div>
 
-          <button
-            type="submit"
-            className="w-full btn-secondary py-3 text-sm font-semibold rounded-2xl flex items-center justify-center gap-1 shadow-sm"
-          >
-            <Sparkles className="h-4 w-4 text-white animate-pulse" /> Re-Optimize Itinerary
-          </button>
-        </form>
-      </Modal>
+          {/* Budget Input */}
 
+          <div>
+
+            <label className="block text-sm font-medium mb-2">
+              New Budget (₹)
+            </label>
+
+            <div className="relative">
+
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-semibold">
+                ₹
+              </span>
+
+              <input
+                type="number"
+                min={2000}
+                value={newBudget}
+                onChange={(e) =>
+                  setNewBudget(Number(e.target.value))
+                }
+                className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-8 pr-4 outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Enter budget"
+                required
+              />
+
+            </div>
+
+            <p className="text-xs text-slate-500 mt-2">
+              Minimum budget: ₹2,000
+            </p>
+
+          </div>
+
+          {/* Budget Preview */}
+
+          <div className="rounded-xl bg-slate-50 dark:bg-slate-900 p-4 space-y-2">
+
+            <div className="flex justify-between">
+
+              <span className="text-slate-500">
+                Current Budget
+              </span>
+
+              <span className="font-semibold">
+                ₹{currentItinerary.budget.toLocaleString()}
+              </span>
+
+            </div>
+
+            <div className="flex justify-between">
+
+              <span className="text-slate-500">
+                New Budget
+              </span>
+
+              <span className="font-bold text-primary">
+                ₹{newBudget.toLocaleString()}
+              </span>
+
+            </div>
+
+          </div>
+
+          {/* Action Buttons */}
+
+          <div className="flex gap-3">
+
+            <button
+              type="button"
+              onClick={() => setIsReplanModalOpen(false)}
+              className="flex-1 border border-slate-300 rounded-xl py-3 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="flex-1 btn-primary rounded-xl py-3 flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              Generate Plan
+            </button>
+
+          </div>
+
+        </form>
+
+      </Modal>
     </div>
   );
 };
+
+export default Results;

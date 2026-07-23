@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Planner", path: "/planner" },
-    { name: "Local Hub", path: "/vendors" },
+    {},
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" }
   ];
@@ -46,11 +46,10 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  isActive(link.path)
+                className={`text-sm font-medium transition-colors duration-200 ${isActive(link.path)
                     ? "text-primary dark:text-secondary font-semibold"
                     : "text-slate-600 dark:text-slate-350 hover:text-primary dark:hover:text-white"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -153,11 +152,10 @@ export const Navbar: React.FC = () => {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-xl text-base font-medium ${
-                  isActive(link.path)
+                className={`block px-3 py-2 rounded-xl text-base font-medium ${isActive(link.path)
                     ? "bg-slate-100 dark:bg-slate-800 text-primary dark:text-secondary font-bold"
                     : "text-slate-650 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-dark dark:hover:text-white"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>

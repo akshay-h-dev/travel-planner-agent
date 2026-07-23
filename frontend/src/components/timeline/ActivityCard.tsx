@@ -1,10 +1,11 @@
 import React from "react";
 import { Star, Clock, Award, ArrowLeftRight } from "lucide-react";
 import type { Activity } from "../../types";
+import { formatCurrency } from "../../utils/format";
 
 interface ActivityCardProps {
   activity: Activity;
-  onSwap: () => void;
+  onSwap?: () => void;
   travelers: number;
   bookingStatus?: "pending" | "confirmed";
   onConfirm?: () => void;
@@ -60,8 +61,8 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, onSwap, tr
           {/* Pricing indicator */}
           <div className="text-right">
             <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
-              ₹{activity.price * travelers}
-            </span>
+                {formatCurrency(activity.price * travelers)}
+              </span>
             <span className="text-[9px] text-slate-400 block">for {travelers} travelers</span>
           </div>
         </div>
@@ -81,13 +82,15 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, onSwap, tr
             Book
           </button>
         )}
-        <button
-          onClick={onSwap}
-          className="p-1.5 rounded-lg bg-white dark:bg-dark-card border border-slate-205 dark:border-slate-800 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-100 dark:hover:bg-slate-800 text-primary"
-          title="Swap Activity"
-        >
-          <ArrowLeftRight className="h-3.5 w-3.5" />
-        </button>
+        {onSwap && (
+          <button
+            onClick={onSwap}
+            className="p-1.5 rounded-lg bg-white dark:bg-dark-card border border-slate-205 dark:border-slate-800 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-100 dark:hover:bg-slate-800 text-primary"
+            title="Swap Activity"
+          >
+            <ArrowLeftRight className="h-3.5 w-3.5" />
+          </button>
+        )}
       </div>
 
     </div>

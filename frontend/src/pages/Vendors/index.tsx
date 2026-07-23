@@ -49,14 +49,14 @@ export const Vendors: React.FC = () => {
 
   const filtered = unifiedVendors.filter(v => {
     const matchesCat = filterCategory === "All" || v.category === filterCategory;
-    const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          v.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCat && matchesSearch;
   });
 
   return (
     <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-6">
-      
+
       {/* Head section */}
       <div className="space-y-2">
         <Breadcrumb items={[{ name: "Local operator directory" }]} />
@@ -71,18 +71,17 @@ export const Vendors: React.FC = () => {
 
       {/* Filter and search bar */}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white dark:bg-dark-card border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
-        
+
         {/* Category filters */}
         <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilterCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors ${
-                filterCategory === cat
-                  ? "bg-secondary/15 border-secondary text-secondary"
-                  : "border-slate-205 dark:border-slate-800 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800"
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors ${filterCategory === cat
+                ? "bg-secondary/15 border-secondary text-secondary"
+                : "border-slate-205 dark:border-slate-800 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
             >
               {cat}
             </button>
