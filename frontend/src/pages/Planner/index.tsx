@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sparkles, ShieldCheck, Compass, Check } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
-import { MOCK_CITIES } from "../../services/mockData";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 
 export const Planner: React.FC = () => {
@@ -16,11 +15,11 @@ export const Planner: React.FC = () => {
   const [days, setDays] = useState<number | "">("");
   const [travelers, setTravelers] = useState<number | "">("");
   const [travelStyle, setTravelStyle] = useState("");
-  
+
   const [startPlace, setStartPlace] = useState("");
   const [startDate, setStartDate] = useState("");
   const [transitTypes, setTransitTypes] = useState<string[]>([]);
-  
+
   // Array structures
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [selectedStays, setSelectedStays] = useState<string[]>([]);
@@ -31,6 +30,62 @@ export const Planner: React.FC = () => {
   const [keepUnderBudget, setKeepUnderBudget] = useState(true);
   const [ecoFriendly, setEcoFriendly] = useState(true);
   const [minimizeTime, setMinimizeTime] = useState(false);
+
+  // Persist form to localStorage so inputs are not reset on navigation/refresh
+  const STORAGE_KEY = "tripway:planner:form";
+
+  // On mount restore
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setCityId(parsed.cityId || "");
+        setBudget(parsed.budget ?? "");
+        setDays(parsed.days ?? "");
+        setTravelers(parsed.travelers ?? "");
+        setTravelStyle(parsed.travelStyle || "");
+        setStartPlace(parsed.startPlace || "");
+        setStartDate(parsed.startDate || "");
+        setTransitTypes(parsed.transitTypes || []);
+        setSelectedInterests(parsed.selectedInterests || []);
+        setSelectedStays(parsed.selectedStays || []);
+        setSelectedTransports(parsed.selectedTransports || []);
+        setPrioritizeLocal(parsed.prioritizeLocal ?? true);
+        setKeepUnderBudget(parsed.keepUnderBudget ?? true);
+        setEcoFriendly(parsed.ecoFriendly ?? true);
+        setMinimizeTime(parsed.minimizeTime ?? false);
+      }
+    } catch (e) {
+      // ignore parse errors
+    }
+  }, []);
+
+  // Save on changes
+  useEffect(() => {
+    const toSave = {
+      cityId,
+      budget,
+      days,
+      travelers,
+      travelStyle,
+      startPlace,
+      startDate,
+      transitTypes,
+      selectedInterests,
+      selectedStays,
+      selectedTransports,
+      prioritizeLocal,
+      keepUnderBudget,
+      ecoFriendly,
+      minimizeTime,
+    };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    } catch (e) {
+      // ignore quota errors
+    }
+  }, [cityId, budget, days, travelers, travelStyle, startPlace, startDate, transitTypes, selectedInterests, selectedStays, selectedTransports, prioritizeLocal, keepUnderBudget, ecoFriendly, minimizeTime]);
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -90,7 +145,7 @@ export const Planner: React.FC = () => {
   const stylesList = ["Budget", "Luxury", "Adventure", "Backpacking", "Family", "Solo"];
   const interestsList = ["Food", "Nature", "Adventure", "History", "Shopping", "Nightlife"];
   const accommodateList = ["Hotel", "Hostel", "Homestay", "Resort", "Camping"];
-  
+
   const transportTypes = [
     { label: "Public Bus", val: "bus" },
     { label: "Local Auto / Rickshaw", val: "auto-rickshaw" },
@@ -117,10 +172,10 @@ export const Planner: React.FC = () => {
 
         {/* Form Container */}
         <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800/80 shadow-premium space-y-6 bg-white dark:bg-dark-card/90">
-          
+
           {/* Section 1: Basic Parameters */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-            
+
             {/* Start Location Selection */}
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350">
@@ -236,11 +291,10 @@ export const Planner: React.FC = () => {
                       key={tr.val}
                       type="button"
                       onClick={() => toggleTransitType(tr.val)}
-                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${
-                        selected
+                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${selected
                           ? "border-blue-500 bg-blue-500/10 text-blue-600 dark:text-blue-400"
                           : "border-slate-205 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                      }`}
+                        }`}
                     >
                       {selected && <Check className="w-3.5 h-3.5" />}
                       {tr.label}
@@ -261,11 +315,10 @@ export const Planner: React.FC = () => {
                     key={style}
                     type="button"
                     onClick={() => setTravelStyle(style)}
-                    className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 ${
-                      travelStyle === style
+                    className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 ${travelStyle === style
                         ? "border-primary bg-primary/10 text-primary dark:border-secondary dark:bg-secondary/10 dark:text-secondary"
                         : "border-slate-200 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                    }`}
+                      }`}
                   >
                     {style}
                   </button>
@@ -286,11 +339,10 @@ export const Planner: React.FC = () => {
                       key={interest}
                       type="button"
                       onClick={() => toggleInterest(interest)}
-                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${
-                        selected
+                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${selected
                           ? "border-secondary bg-secondary/10 text-secondary"
                           : "border-slate-205 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                      }`}
+                        }`}
                     >
                       {selected && <Check className="w-3.5 h-3.5" />}
                       {interest}
@@ -313,11 +365,10 @@ export const Planner: React.FC = () => {
                       key={ch}
                       type="button"
                       onClick={() => toggleStay(ch)}
-                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${
-                        selected
+                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${selected
                           ? "border-teal-500 bg-teal-500/10 text-[#0F766E]"
                           : "border-slate-205 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                      }`}
+                        }`}
                     >
                       {selected && <Check className="w-3.5 h-3.5" />}
                       {ch}
@@ -340,11 +391,10 @@ export const Planner: React.FC = () => {
                       key={tr.val}
                       type="button"
                       onClick={() => toggleTransport(tr.val)}
-                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${
-                        selected
+                      className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-all duration-200 flex items-center gap-1.5 ${selected
                           ? "border-accent bg-accent/10 text-accent-dark"
                           : "border-slate-205 dark:border-slate-800 text-slate-650 hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                      }`}
+                        }`}
                     >
                       {selected && <Check className="w-3.5 h-3.5" />}
                       {tr.label}
@@ -361,9 +411,9 @@ export const Planner: React.FC = () => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-350">
               TripWay Local Verification Options
             </h4>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              
+
               {/* Local prioritizing */}
               <div className="p-4 border border-slate-150 dark:border-slate-800 rounded-2xl flex items-start gap-3 bg-slate-50/50 dark:bg-slate-900/35 hover:border-teal-500/30 transition-all">
                 <input
