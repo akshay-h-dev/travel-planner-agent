@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Sparkles, ShieldCheck, Compass, Check } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
 import { MOCK_CITIES } from "../../services/mockData";
@@ -8,9 +8,10 @@ import { Breadcrumb } from "../../components/common/Breadcrumb";
 export const Planner: React.FC = () => {
   const { planTrip, showToast } = useTrip();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Form State variables
-  const [cityId, setCityId] = useState("");
+  const [cityId, setCityId] = useState(location.state?.cityId || "");
   const [budget, setBudget] = useState<number | "">("");
   const [days, setDays] = useState<number | "">("");
   const [travelers, setTravelers] = useState<number | "">("");
@@ -79,7 +80,7 @@ export const Planner: React.FC = () => {
       prioritizeLocal,
       keepUnderBudget,
       ecoFriendly
-    }, startPlace, startDate, transitTypes);
+    }, startPlace, startDate, transitTypes, selectedTransports, selectedStays);
 
     if (success) {
       navigate("/results");

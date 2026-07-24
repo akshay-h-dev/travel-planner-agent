@@ -219,7 +219,7 @@ export const Landing: React.FC = () => {
             <div
               key={c.id}
               onClick={() => {
-                setDestination(c.id);
+                navigate("/planner", { state: { cityId: c.name } });
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
               className="glass-card hover:bg-slate-50/20 border border-slate-205 dark:border-slate-800 rounded-3xl overflow-hidden group cursor-pointer transition-all duration-350 shadow-premium"

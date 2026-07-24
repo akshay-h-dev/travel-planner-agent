@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import type { Itinerary, Activity, Homestay, Guide } from "../types";
 import { MOCK_HOMESTAYS } from "../services/mockData";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+/** Backend base URL — empty in dev uses Vite proxy (/api → localhost:5000). */
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 interface UserProfile {
   name: string;
@@ -41,7 +42,9 @@ interface TripContextType {
     options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean },
     startPlace: string,
     startDate: string,
-    transitTypes: string[]
+    transitTypes: string[],
+    localTransitTypes?: string[],
+    accommodationTypes?: string[]
   ) => Promise<boolean>;
   saveTrip: (itinerary: Itinerary) => void;
   deleteTrip: (id: string) => void;
@@ -108,10 +111,12 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     travelers: number,
     travelStyle: string,
     interests: string[],
-    _options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean },
+    options: { prioritizeLocal: boolean; keepUnderBudget: boolean; ecoFriendly: boolean },
     startPlace: string,
     startDate: string,
-    transitTypes: string[]
+    transitTypes: string[],
+    localTransitTypes: string[] = [],
+    accommodationTypes: string[] = []
   ) => {
     setIsGenerating(true);
     setGenerationStep(0);
@@ -152,6 +157,9 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
           startPlace,
           startDate,
           transitTypes,
+          localTransitTypes,
+          accommodationTypes,
+          options,
         }),
       });
 
@@ -170,9 +178,10 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const fetchedItinerary = result.data;
       fetchedItinerary.bookingStatus = {};
-      fetchedItinerary.startPlace = startPlace;
-      fetchedItinerary.startDate = startDate;
-      fetchedItinerary.transitTypes = transitTypes;
+      // Backend already echoes user inputs; keep as fallback
+      fetchedItinerary.startPlace = fetchedItinerary.startPlace ?? startPlace;
+      fetchedItinerary.startDate = fetchedItinerary.startDate ?? startDate;
+      fetchedItinerary.transitTypes = fetchedItinerary.transitTypes ?? transitTypes;
 
       setCurrentItinerary(fetchedItinerary);
       showToast("Itinerary generated successfully by TripWay AI!", "success");
@@ -356,10 +365,15 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
           preferences: currentItinerary.preferences,
           travelers: currentItinerary.travelers,
           travelStyle: currentItinerary.travelStyle,
-          startPlace: currentItinerary.startPlace,
-          startDate: currentItinerary.startDate,
-          transitTypes: currentItinerary.transitTypes,
-        })
+          startPlace: currentItinerary.startPlace ?? "",
+          startDate: currentItinerary.startDate ?? "",
+          transitTypes: currentItinerary.transitTypes ?? [],
+          options: {
+            prioritizeLocal: true,
+            keepUnderBudget: true,
+            ecoFriendly: false,
+          },
+        }),
       });
       const result = await response.json();
       if (result.success) {
