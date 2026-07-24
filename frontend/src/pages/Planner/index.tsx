@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sparkles, ShieldCheck, Compass, Check } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
-import { MOCK_CITIES } from "../../services/mockData";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 
 export const Planner: React.FC = () => {
