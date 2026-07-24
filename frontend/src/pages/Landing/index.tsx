@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Calendar, Users, Compass, ChevronRight, CheckCircle, Award, ArrowUpRight } from "lucide-react";
-import { useTrip } from "../../context/TripContext";
+import { Sparkles, ChevronRight, CheckCircle, Award, ArrowUpRight } from "lucide-react";
 import { MOCK_CITIES, MOCK_ACTIVITIES } from "../../services/mockData";
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
-  const { planTrip } = useTrip();
 
   const partners = ["IIT Delhi", "BITS Pilani", "Delhi University", "VIT University", "Manipal Academy"];
 

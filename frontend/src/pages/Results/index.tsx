@@ -284,7 +284,9 @@ export const Results: React.FC = () => {
                   </p>
                 </div>
 
-                {currentItinerary.bookingStatus?.hotel === "confirmed" ? (
+                {currentItinerary.days.length > 0 &&
+                  currentItinerary.days[0].stay &&
+                  currentItinerary.bookingStatus?.[currentItinerary.days[0].stay.id] === "confirmed" ? (
                   <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
                     Confirmed
                   </span>

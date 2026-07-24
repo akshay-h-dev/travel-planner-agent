@@ -150,7 +150,10 @@ async function buildFlightContext(
     };
   }
 
-  const cheapest = flights.find((f) => f.isCheapest) ?? flights[0];
+  const cheapest = flights.find((f) => f.isCheapest) ?? flights[0] ?? null;
+  if (!cheapest) {
+    return { text: "", flight: null, flightCost: 0 };
+  }
   const flightCost = cheapest.totalPrice;
 
   let text = `\nAvailable flights (${state.startPlace} → ${state.city}) on ${state.startDate}:\n`;
@@ -629,7 +632,7 @@ export async function validateItineraryNode(
 
   const autoFixableIssues = results
     .flatMap((r) => r.issues)
-    .filter((i) => !i.passed && i.autoFixable);
+    .filter((i) => i.autoFixable);
 
   const failedNames = results
     .filter((r) => !r.passed)
@@ -843,7 +846,7 @@ function validateAvailability(state: TravelState): ValidationResult {
   if (
     state.transitTypes?.includes("flight") &&
     state.days.length > 0 &&
-    !state.days[0].flight
+    !state.days[0]!.flight
   ) {
     issues.push({
       day: 1,
@@ -886,9 +889,9 @@ function validateExperienceQuality(state: TravelState): ValidationResult {
 
   // Repetitive activities — same category appearing on 3+ consecutive days
   for (let i = 2; i < state.days.length; i++) {
-    const d0 = state.days[i - 2];
-    const d1 = state.days[i - 1];
-    const d2 = state.days[i];
+    const d0 = state.days[i - 2]!;
+    const d1 = state.days[i - 1]!;
+    const d2 = state.days[i]!;
 
     const cats0 = d0.activities.map((a) => a.category);
     const cats1 = d1.activities.map((a) => a.category);

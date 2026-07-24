@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { Itinerary, Activity, Homestay, Guide } from "../types";
-import { MOCK_HOMESTAYS } from "../services/mockData";
 
 /** Backend base URL — empty in dev uses Vite proxy (/api → localhost:5000). */
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
@@ -51,7 +50,7 @@ interface TripContextType {
   replaceActivity: (dayNumber: number, activityIdToReplace: string, newActivity: Activity) => void;
   replaceStay: (dayNumber: number, newStay: Homestay) => void;
   replaceGuide: (dayNumber: number, newGuide: Guide | null) => void;
-  replanBudget: (targetBudget: number) => void;
+  replanBudget: (targetBudget: number) => Promise<void>;
   confirmBooking: (itemId: string) => void;
   confirmAllBookings: () => void;
   setCurrentItinerary: (itinerary: Itinerary | null) => void;
@@ -70,14 +69,7 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [generationLogs, setGenerationLogs] = useState<string[]>([]);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
-  const [user, setUser] = useState<UserProfile | null>({
-    name: "Akshay H",
-    email: "akshay@tripway.io",
-    phone: "+91 98765 43210",
-    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
-    travelStyle: "Adventure",
-    preferences: ["Nature", "Adventure", "History"]
-  });
+  const [user, setUser] = useState<UserProfile | null>(null);
 
   // Apply dark mode class
   useEffect(() => {

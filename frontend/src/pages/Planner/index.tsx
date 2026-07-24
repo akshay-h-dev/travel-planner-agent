@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sparkles, ShieldCheck, Compass, Check } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
@@ -198,12 +198,26 @@ export const Planner: React.FC = () => {
               </label>
               <input
                 type="text"
+                list="supported-cities"
                 value={cityId}
                 onChange={(e) => setCityId(e.target.value)}
-                placeholder="e.g. Goa, Paris, Tokyo..."
+                placeholder="e.g. Goa, Manali, Wayanad..."
                 className="input-premium py-3"
                 required
               />
+              <datalist id="supported-cities">
+                <option value="Goa" />
+                <option value="Wayanad" />
+                <option value="Manali" />
+                <option value="Munnar" />
+                <option value="Coorg" />
+                <option value="Hampi" />
+                <option value="Rishikesh" />
+                <option value="Darjeeling" />
+              </datalist>
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 pt-0.5">
+                Supported: Goa · Wayanad · Manali · Munnar · Coorg · Hampi · Rishikesh · Darjeeling
+              </p>
             </div>
 
             {/* Budget Limit */}

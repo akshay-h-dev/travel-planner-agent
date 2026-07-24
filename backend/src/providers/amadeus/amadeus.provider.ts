@@ -104,7 +104,7 @@ export class AmadeusProvider {
   constructor(
     private readonly apiKey: string,
     private readonly apiSecret: string,
-    private readonly baseUrl: string = "https://test.api.amadeus.com",
+    baseUrl: string = "https://test.api.amadeus.com",
   ) {
     if (!apiKey || !apiSecret) {
       throw new Error("AmadeusProvider: apiKey and apiSecret are required");

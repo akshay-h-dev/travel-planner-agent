@@ -188,9 +188,10 @@ assert(flight.totalPrice === 4500, "totalPrice parsed correctly");
 assert(flight.pricePerPerson === 4500, "pricePerPerson = totalPrice / 1 adult");
 assert(flight.isCheapest === true, "isCheapest flag set");
 assert(flight.outboundSegments.length === 1, "outbound segment extracted");
-assert(flight.outboundSegments[0].airlineName === "IndiGo", "carrier code 6E → IndiGo");
-assert(flight.outboundSegments[0].flightNumber === "6E-421", "flight number formatted");
-assert(flight.outboundSegments[0].departureAirport === "BLR", "departure IATA extracted");
+const seg0 = flight.outboundSegments[0]!;
+assert(seg0.airlineName === "IndiGo", "carrier code 6E → IndiGo");
+assert(seg0.flightNumber === "6E-421", "flight number formatted");
+assert(seg0.departureAirport === "BLR", "departure IATA extracted");
 assert(flight.totalOutboundDuration === "PT1H10M", "outbound duration preserved");
 
 const multiOffer = {
@@ -201,8 +202,9 @@ const multiOffer = {
 };
 const flights = normalizeAmadeusResponse(multiOffer as any, 1);
 assert(flights.length === 2, "both offers normalized");
-assert(flights[0].isCheapest === true, "cheapest offer is first after sort");
-assert(flights[0].totalPrice === 4500, "sorted by price ascending");
+const firstFlight = flights[0]!;
+assert(firstFlight.isCheapest === true, "cheapest offer is first after sort");
+assert(firstFlight.totalPrice === 4500, "sorted by price ascending");
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TEST 4 — TravelDataProvider facade (no API keys needed)
@@ -265,7 +267,7 @@ if (!otmKey || otmKey.includes("your_")) {
     assert(Array.isArray(activities), "getActivities returns an array");
     assert(activities.length > 0, `returned ${activities.length} activities (> 0)`);
 
-    const first = activities[0];
+    const first = activities[0]!;
     assert(typeof first.id === "string" && first.id.startsWith("otm_"), "id starts with 'otm_'");
     assert(typeof first.name === "string" && first.name.length > 0, "name is a non-empty string");
     assert(first.source === "opentripmap", "source is 'opentripmap'");
@@ -313,13 +315,13 @@ if (!amKey || amKey.includes("your_") || !amSecret || amSecret.includes("your_")
       console.log("  ℹ  No flights returned — sandbox may have no data for this route/date.");
     } else {
       assert(flights.length > 0, `returned ${flights.length} flight offers`);
-      const first = flights[0];
+      const first = flights[0]!;
       assert(first.isCheapest === true, "first offer is cheapest");
       assert(first.source === "amadeus", "source is 'amadeus'");
       assert(first.outboundSegments.length > 0, "at least one outbound segment");
 
       console.log(`\n  ℹ  Cheapest flight: ₹${first.totalPrice} (${first.currency})`);
-      const seg = first.outboundSegments[0];
+      const seg = first.outboundSegments[0]!;
       console.log(`       ${seg.departureAirport} → ${seg.arrivalAirport} on ${seg.airlineName}`);
       console.log(`       Departs: ${seg.departureTime} | Duration: ${first.totalOutboundDuration}`);
     }

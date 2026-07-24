@@ -42,11 +42,6 @@ interface GeonameResponse {
   status?: string;
 }
 
-interface RadiusResponse {
-  features: Array<{
-    properties: OTMListFeature;
-  }>;
-}
 
 // ─── Category keyword → OTM "kinds" mapping ──────────────────────────────────
 
@@ -137,7 +132,6 @@ export class OpenTripMapProvider {
       );
 
       // Merge: detailed entries first, then shallow entries for the remainder
-      const detailedXids = new Set(detailResults.map((a) => a.id.replace("otm_", "")));
       const shallowRemainder = listFeatures
         .slice(detailLimit)
         .map((f) => normalizeOTMListFeature(f, city));

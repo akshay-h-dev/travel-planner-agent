@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Compass, Moon, Sun, Menu, X, User, LogOut, Briefcase } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
@@ -7,8 +7,22 @@ export const Navbar: React.FC = () => {
   const { user, logout, theme, toggleTheme } = useTrip();
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Close dropdown when clicking anywhere outside it
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showDropdown]);
 
   const handleLogout = () => {
     logout();
@@ -20,12 +34,11 @@ export const Navbar: React.FC = () => {
     return location.pathname === path;
   };
 
-  const navLinks = [
+  const navLinks: { name: string; path: string }[] = [
     { name: "Home", path: "/" },
     { name: "Planner", path: "/planner" },
-    {},
     { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" }
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -68,7 +81,7 @@ export const Navbar: React.FC = () => {
             </button>
 
             {user ? (
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-2 focus:outline-none"
