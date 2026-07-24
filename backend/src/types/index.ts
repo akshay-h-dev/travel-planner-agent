@@ -10,7 +10,17 @@ import { z } from "zod";
 
 // ─── Request Validation ─────────────────────────────────────
 
-/** Schema for the POST /api/plan request body. */
+/** User planning toggles from the frontend wizard. */
+export const PlanOptionsSchema = z.object({
+  prioritizeLocal: z.boolean().default(true),
+  keepUnderBudget: z.boolean().default(true),
+  ecoFriendly: z.boolean().default(false),
+});
+
+/** Accommodation types preferred by the user (e.g. "Homestay", "Hotel"). */
+export const AccommodationPrefsSchema = z.array(z.string().trim()).max(10).default([]);
+
+/** Schema for POST /api/plan — every trip parameter comes from the frontend. */
 export const PlanRequestSchema = z.object({
   budget: z
     .number()
@@ -40,6 +50,23 @@ export const PlanRequestSchema = z.object({
     .min(1, "Travel style is required")
     .max(50, "Travel style must not exceed 50 characters")
     .trim(),
+  startPlace: z
+    .string()
+    .min(2, "Departure city is required")
+    .max(100)
+    .trim(),
+  startDate: z.string().min(1, "Start date is required").max(30).trim(),
+  /** Long-distance transit modes selected by the user (flight, train, intercity bus). */
+  transitTypes: z.array(z.string().trim().min(1)).max(10).default([]),
+  /** Local transport preferences (auto-rickshaw, cab, bike-rental, etc.). */
+  localTransitTypes: z.array(z.string().trim().min(1)).max(10).default([]),
+  /** Accommodation type preferences (Homestay, Hotel, Hostel, etc.). */
+  accommodationTypes: AccommodationPrefsSchema,
+  options: PlanOptionsSchema.default({
+    prioritizeLocal: true,
+    keepUnderBudget: true,
+    ecoFriendly: false,
+  }),
 });
 
 export type PlanRequest = z.infer<typeof PlanRequestSchema>;

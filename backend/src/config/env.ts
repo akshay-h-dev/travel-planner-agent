@@ -28,14 +28,31 @@ const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
 
-  OPENAI_API_KEY: z
-    .string()
-    .optional(),
+  // ── LLM ──────────────────────────────────────────────────
+  OPENAI_API_KEY: z.string().optional(),
 
   GROQ_API_KEY: z
     .string()
     .min(1, "GROQ_API_KEY is required"),
 
+  // ── Travel Data Provider APIs ────────────────────────────
+  /** OpenTripMap — tourist attractions.  Free tier: 5 000 req/day.
+   *  https://opentripmap.io/product */
+  OPENTRIPMAP_API_KEY: z.string().optional(),
+
+  /** Amadeus for Developers — flights.  Free tier: 2 000 calls/month.
+   *  https://developers.amadeus.com */
+  AMADEUS_API_KEY: z.string().optional(),
+  AMADEUS_API_SECRET: z.string().optional(),
+
+  /** Amadeus API base URL — use test URL for sandbox, prod for live.
+   *  Default: test (sandbox) environment. */
+  AMADEUS_BASE_URL: z
+    .string()
+    .url()
+    .default("https://test.api.amadeus.com"),
+
+  // ── Security ─────────────────────────────────────────────
   ALLOWED_ORIGINS: z
     .string()
     .default("http://localhost:5173,http://localhost:3000")

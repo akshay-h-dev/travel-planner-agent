@@ -63,6 +63,65 @@ export interface Guide {
   bio: string;
 }
 
+export interface TimeSlot {
+  time: string;       // "09:00"
+  activityId: string;
+  duration: string;   // "2 hours"
+  note?: string;
+}
+
+export interface FlightSegment {
+  flightNumber: string;
+  airlineName: string;
+  departureAirport: string;
+  arrivalAirport: string;
+  departureTime: string;
+  arrivalTime: string;
+}
+
+export interface Flight {
+  id: string;
+  origin: string;
+  destination: string;
+  departureDate: string;
+  totalPrice: number;
+  pricePerPerson: number;
+  currency: string;
+  outboundSegments: FlightSegment[];
+  totalOutboundDuration: string;
+  isCheapest: boolean;
+}
+
+export interface ValidationIssue {
+  day: number | null;
+  code: string;
+  message: string;
+  severity: "error" | "warning";
+  autoFixable: boolean;
+  fixHint?: string;
+}
+
+export interface ValidationResult {
+  validator: string;
+  passed: boolean;
+  issues: ValidationIssue[];
+}
+
+export interface AgentDecision {
+  timestamp: number;
+  day: number | null;
+  action: string;
+  reasoning: string;
+  costDelta: number;
+}
+
+export interface ProgressLog {
+  step: string;
+  day: number | null;
+  message: string;
+  timestamp: number;
+}
+
 export interface DayPlan {
   day: number;
   stay: Homestay | null;
@@ -70,6 +129,16 @@ export interface DayPlan {
   transport: Transport | null;
   guide: Guide | null;
   dailyCost: number;
+  /** True when this day was autonomously re-planned due to budget overflow. */
+  replanned?: boolean;
+  /** LLM note explaining selections or changes made. */
+  note?: string;
+  /** Time-slotted schedule for the day. */
+  schedule?: TimeSlot[];
+  /** Flight details if user selected flight transit (Day 1 only). */
+  flight?: Flight | null;
+  /** Flight cost already included in dailyCost (Day 1 only). */
+  flightCost?: number;
 }
 
 export interface Itinerary {
@@ -88,6 +157,13 @@ export interface Itinerary {
   startDate?: string;
   transitTypes?: string[];
   bookingStatus?: Record<string, "pending" | "confirmed">;
+  // Agent output fields
+  threadId?: string;
+  status?: string;
+  needsUserInput?: boolean;
+  validationResults?: ValidationResult[];
+  agentDecisions?: AgentDecision[];
+  progressLog?: ProgressLog[];
 }
 
 export interface AgentState {
