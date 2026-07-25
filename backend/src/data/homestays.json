@@ -1,39 +1,2561 @@
 [
-  { "id": "hs_coorg_01", "name": "Misty Valley Homestay", "city": "Coorg", "pricePerNight": 1200, "rating": 4.5, "description": "A cozy homestay nestled in a coffee plantation with stunning valley views.", "amenities": ["WiFi", "Breakfast", "Parking", "Garden"], "isLocal": true, "category": "budget" },
-  { "id": "hs_coorg_02", "name": "Coorg Coffee Trail Stay", "city": "Coorg", "pricePerNight": 1800, "rating": 4.7, "description": "Family-run homestay offering authentic Coorgi cuisine and plantation tours.", "amenities": ["WiFi", "Meals", "Parking", "Plantation Tour"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_coorg_03", "name": "Green Hills Resort", "city": "Coorg", "pricePerNight": 3500, "rating": 4.3, "description": "A commercial resort with swimming pool and spa facilities.", "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Room Service"], "isLocal": false, "category": "premium" },
-  { "id": "hs_coorg_04", "name": "Kodagu Heritage Home", "city": "Coorg", "pricePerNight": 2200, "rating": 4.8, "description": "Traditional Kodava-style heritage home with organic farm-to-table meals.", "amenities": ["WiFi", "Organic Meals", "Parking", "Cultural Activities"], "isLocal": true, "category": "mid-range" },
-
-  { "id": "hs_wayanad_01", "name": "Wayanad Tree House", "city": "Wayanad", "pricePerNight": 1500, "rating": 4.6, "description": "Unique tree house accommodation in the heart of a spice plantation.", "amenities": ["Breakfast", "Nature Walk", "Parking"], "isLocal": true, "category": "budget" },
-  { "id": "hs_wayanad_02", "name": "Pepper Trail Cottage", "city": "Wayanad", "pricePerNight": 2000, "rating": 4.4, "description": "Rustic cottage surrounded by pepper and cardamom plantations.", "amenities": ["WiFi", "Meals", "Plantation Tour", "Bonfire"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_wayanad_03", "name": "Wayanad Grand Hotel", "city": "Wayanad", "pricePerNight": 4000, "rating": 4.2, "description": "Large commercial hotel with conference facilities and multi-cuisine restaurant.", "amenities": ["WiFi", "Pool", "Gym", "Restaurant", "Bar"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_munnar_01", "name": "Tea Valley View", "city": "Munnar", "pricePerNight": 1000, "rating": 4.3, "description": "Budget-friendly homestay with panoramic views of tea plantations.", "amenities": ["WiFi", "Breakfast", "Parking"], "isLocal": true, "category": "budget" },
-  { "id": "hs_munnar_02", "name": "Munnar Hilltop Retreat", "city": "Munnar", "pricePerNight": 2500, "rating": 4.6, "description": "Charming hilltop retreat run by a local family with home-cooked Kerala meals.", "amenities": ["WiFi", "Meals", "Garden", "Campfire"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_munnar_03", "name": "Sterling Munnar", "city": "Munnar", "pricePerNight": 5000, "rating": 4.1, "description": "Chain resort with modern amenities and organised sightseeing packages.", "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Activities"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_ooty_01", "name": "Nilgiri Nest", "city": "Ooty", "pricePerNight": 900, "rating": 4.2, "description": "Simple and affordable homestay near the botanical gardens.", "amenities": ["WiFi", "Breakfast", "Parking"], "isLocal": true, "category": "budget" },
-  { "id": "hs_ooty_02", "name": "Rose Garden Cottage", "city": "Ooty", "pricePerNight": 2000, "rating": 4.5, "description": "A cottage surrounded by rose gardens with a local host family.", "amenities": ["WiFi", "Meals", "Garden", "Parking"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_ooty_03", "name": "Ooty Grand Palace", "city": "Ooty", "pricePerNight": 4500, "rating": 4.0, "description": "Upscale hotel with heritage architecture and fine dining.", "amenities": ["WiFi", "Restaurant", "Bar", "Room Service", "Laundry"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_goa_01", "name": "Beach Shack Stay", "city": "Goa", "pricePerNight": 800, "rating": 4.1, "description": "Budget beach hut steps away from the sand, run by a local Goan family.", "amenities": ["Fan", "Beach Access", "Breakfast"], "isLocal": true, "category": "budget" },
-  { "id": "hs_goa_02", "name": "Susegad Heritage Home", "city": "Goa", "pricePerNight": 2200, "rating": 4.7, "description": "Restored Portuguese-era house with courtyard and authentic Goan cooking.", "amenities": ["WiFi", "Meals", "Courtyard", "Cultural Tours"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_goa_03", "name": "Taj Holiday Village", "city": "Goa", "pricePerNight": 8000, "rating": 4.5, "description": "Luxury resort with private beach, pool villas, and world-class dining.", "amenities": ["WiFi", "Pool", "Spa", "Private Beach", "Fine Dining"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_jaipur_01", "name": "Pink City Haveli", "city": "Jaipur", "pricePerNight": 1100, "rating": 4.4, "description": "A traditional haveli stay in the old city with rooftop views of Hawa Mahal.", "amenities": ["WiFi", "Breakfast", "Rooftop"], "isLocal": true, "category": "budget" },
-  { "id": "hs_jaipur_02", "name": "Royal Heritage Inn", "city": "Jaipur", "pricePerNight": 2800, "rating": 4.6, "description": "Boutique heritage property with Rajasthani décor and cultural evenings.", "amenities": ["WiFi", "Meals", "Cultural Program", "Parking"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_jaipur_03", "name": "ITC Rajputana", "city": "Jaipur", "pricePerNight": 7000, "rating": 4.4, "description": "Five-star hotel with Mughal-inspired architecture and luxury amenities.", "amenities": ["WiFi", "Pool", "Spa", "Fine Dining", "Concierge"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_udaipur_01", "name": "Lakeside Guesthouse", "city": "Udaipur", "pricePerNight": 1000, "rating": 4.3, "description": "Budget guesthouse with views of Lake Pichola, run by a local couple.", "amenities": ["WiFi", "Breakfast", "Lake View"], "isLocal": true, "category": "budget" },
-  { "id": "hs_udaipur_02", "name": "Mewar Haveli", "city": "Udaipur", "pricePerNight": 2500, "rating": 4.7, "description": "Heritage haveli with rooftop restaurant and boat ride arrangements.", "amenities": ["WiFi", "Meals", "Rooftop", "Boat Rides"], "isLocal": true, "category": "mid-range" },
-
-  { "id": "hs_manali_01", "name": "Mountain View Cottage", "city": "Manali", "pricePerNight": 1200, "rating": 4.4, "description": "Wooden cottage with mountain views and a warm bukhari in winter.", "amenities": ["WiFi", "Breakfast", "Heater", "Parking"], "isLocal": true, "category": "budget" },
-  { "id": "hs_manali_02", "name": "Apple Orchard Homestay", "city": "Manali", "pricePerNight": 2000, "rating": 4.6, "description": "Homestay set in an apple orchard with home-cooked Himachali meals.", "amenities": ["WiFi", "Meals", "Garden", "Bonfire"], "isLocal": true, "category": "mid-range" },
-  { "id": "hs_manali_03", "name": "Span Resort & Spa", "city": "Manali", "pricePerNight": 6000, "rating": 4.3, "description": "Luxury riverside resort with spa, heated pool, and adventure sports desk.", "amenities": ["WiFi", "Pool", "Spa", "Restaurant", "Adventure Desk"], "isLocal": false, "category": "premium" },
-
-  { "id": "hs_rishikesh_01", "name": "Ganga View Ashram Stay", "city": "Rishikesh", "pricePerNight": 700, "rating": 4.2, "description": "Simple ashram-style accommodation with yoga sessions and river views.", "amenities": ["Yoga", "Vegetarian Meals", "Meditation"], "isLocal": true, "category": "budget" },
-  { "id": "hs_rishikesh_02", "name": "Riverside Camp", "city": "Rishikesh", "pricePerNight": 1800, "rating": 4.5, "description": "Beach camping on the banks of the Ganges with adventure activities.", "amenities": ["Meals", "Rafting", "Bonfire", "Beach Volleyball"], "isLocal": true, "category": "mid-range" },
-
-  { "id": "hs_pondi_01", "name": "French Quarter Studio", "city": "Pondicherry", "pricePerNight": 1300, "rating": 4.5, "description": "Charming studio apartment in the French Quarter with cycle rental.", "amenities": ["WiFi", "Cycle Rental", "Kitchen"], "isLocal": true, "category": "budget" },
-  { "id": "hs_pondi_02", "name": "Villa Shanti", "city": "Pondicherry", "pricePerNight": 3000, "rating": 4.7, "description": "Boutique heritage villa with courtyard dining and curated local experiences.", "amenities": ["WiFi", "Restaurant", "Courtyard", "Local Tours"], "isLocal": true, "category": "mid-range" }
+  {
+    "id": "hs_coorg_01",
+    "name": "Misty Valley Homestay",
+    "city": "Coorg",
+    "pricePerNight": 1200,
+    "rating": 4.5,
+    "description": "A cozy homestay nestled in a coffee plantation with stunning valley views.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Parking",
+      "Garden"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_coorg_02",
+    "name": "Coorg Coffee Trail Stay",
+    "city": "Coorg",
+    "pricePerNight": 1800,
+    "rating": 4.7,
+    "description": "Family-run homestay offering authentic Coorgi cuisine and plantation tours.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Parking",
+      "Plantation Tour"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_coorg_03",
+    "name": "Green Hills Resort",
+    "city": "Coorg",
+    "pricePerNight": 3500,
+    "rating": 4.3,
+    "description": "A commercial resort with swimming pool and spa facilities.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Spa",
+      "Restaurant",
+      "Room Service"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_coorg_04",
+    "name": "Kodagu Heritage Home",
+    "city": "Coorg",
+    "pricePerNight": 2200,
+    "rating": 4.8,
+    "description": "Traditional Kodava-style heritage home with organic farm-to-table meals.",
+    "amenities": [
+      "WiFi",
+      "Organic Meals",
+      "Parking",
+      "Cultural Activities"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_wayanad_01",
+    "name": "Wayanad Tree House",
+    "city": "Wayanad",
+    "pricePerNight": 1500,
+    "rating": 4.6,
+    "description": "Unique tree house accommodation in the heart of a spice plantation.",
+    "amenities": [
+      "Breakfast",
+      "Nature Walk",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_wayanad_02",
+    "name": "Pepper Trail Cottage",
+    "city": "Wayanad",
+    "pricePerNight": 2000,
+    "rating": 4.4,
+    "description": "Rustic cottage surrounded by pepper and cardamom plantations.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Plantation Tour",
+      "Bonfire"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_wayanad_03",
+    "name": "Wayanad Grand Hotel",
+    "city": "Wayanad",
+    "pricePerNight": 4000,
+    "rating": 4.2,
+    "description": "Large commercial hotel with conference facilities and multi-cuisine restaurant.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Gym",
+      "Restaurant",
+      "Bar"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_munnar_01",
+    "name": "Tea Valley View",
+    "city": "Munnar",
+    "pricePerNight": 1000,
+    "rating": 4.3,
+    "description": "Budget-friendly homestay with panoramic views of tea plantations.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_munnar_02",
+    "name": "Munnar Hilltop Retreat",
+    "city": "Munnar",
+    "pricePerNight": 2500,
+    "rating": 4.6,
+    "description": "Charming hilltop retreat run by a local family with home-cooked Kerala meals.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Garden",
+      "Campfire"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_munnar_03",
+    "name": "Sterling Munnar",
+    "city": "Munnar",
+    "pricePerNight": 5000,
+    "rating": 4.1,
+    "description": "Chain resort with modern amenities and organised sightseeing packages.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Spa",
+      "Restaurant",
+      "Activities"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_ooty_01",
+    "name": "Nilgiri Nest",
+    "city": "Ooty",
+    "pricePerNight": 900,
+    "rating": 4.2,
+    "description": "Simple and affordable homestay near the botanical gardens.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_ooty_02",
+    "name": "Rose Garden Cottage",
+    "city": "Ooty",
+    "pricePerNight": 2000,
+    "rating": 4.5,
+    "description": "A cottage surrounded by rose gardens with a local host family.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Garden",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_ooty_03",
+    "name": "Ooty Grand Palace",
+    "city": "Ooty",
+    "pricePerNight": 4500,
+    "rating": 4,
+    "description": "Upscale hotel with heritage architecture and fine dining.",
+    "amenities": [
+      "WiFi",
+      "Restaurant",
+      "Bar",
+      "Room Service",
+      "Laundry"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_goa_01",
+    "name": "Beach Shack Stay",
+    "city": "Goa",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Budget beach hut steps away from the sand, run by a local Goan family.",
+    "amenities": [
+      "Fan",
+      "Beach Access",
+      "Breakfast"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_goa_02",
+    "name": "Susegad Heritage Home",
+    "city": "Goa",
+    "pricePerNight": 2200,
+    "rating": 4.7,
+    "description": "Restored Portuguese-era house with courtyard and authentic Goan cooking.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Courtyard",
+      "Cultural Tours"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_goa_03",
+    "name": "Taj Holiday Village",
+    "city": "Goa",
+    "pricePerNight": 8000,
+    "rating": 4.5,
+    "description": "Luxury resort with private beach, pool villas, and world-class dining.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Spa",
+      "Private Beach",
+      "Fine Dining"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_jaipur_01",
+    "name": "Pink City Haveli",
+    "city": "Jaipur",
+    "pricePerNight": 1100,
+    "rating": 4.4,
+    "description": "A traditional haveli stay in the old city with rooftop views of Hawa Mahal.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Rooftop"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_jaipur_02",
+    "name": "Royal Heritage Inn",
+    "city": "Jaipur",
+    "pricePerNight": 2800,
+    "rating": 4.6,
+    "description": "Boutique heritage property with Rajasthani décor and cultural evenings.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Cultural Program",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_jaipur_03",
+    "name": "ITC Rajputana",
+    "city": "Jaipur",
+    "pricePerNight": 7000,
+    "rating": 4.4,
+    "description": "Five-star hotel with Mughal-inspired architecture and luxury amenities.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Spa",
+      "Fine Dining",
+      "Concierge"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_udaipur_01",
+    "name": "Lakeside Guesthouse",
+    "city": "Udaipur",
+    "pricePerNight": 1000,
+    "rating": 4.3,
+    "description": "Budget guesthouse with views of Lake Pichola, run by a local couple.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Lake View"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_udaipur_02",
+    "name": "Mewar Haveli",
+    "city": "Udaipur",
+    "pricePerNight": 2500,
+    "rating": 4.7,
+    "description": "Heritage haveli with rooftop restaurant and boat ride arrangements.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Rooftop",
+      "Boat Rides"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_manali_01",
+    "name": "Mountain View Cottage",
+    "city": "Manali",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "Wooden cottage with mountain views and a warm bukhari in winter.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "Heater",
+      "Parking"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_manali_02",
+    "name": "Apple Orchard Homestay",
+    "city": "Manali",
+    "pricePerNight": 2000,
+    "rating": 4.6,
+    "description": "Homestay set in an apple orchard with home-cooked Himachali meals.",
+    "amenities": [
+      "WiFi",
+      "Meals",
+      "Garden",
+      "Bonfire"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_manali_03",
+    "name": "Span Resort & Spa",
+    "city": "Manali",
+    "pricePerNight": 6000,
+    "rating": 4.3,
+    "description": "Luxury riverside resort with spa, heated pool, and adventure sports desk.",
+    "amenities": [
+      "WiFi",
+      "Pool",
+      "Spa",
+      "Restaurant",
+      "Adventure Desk"
+    ],
+    "isLocal": false,
+    "category": "premium"
+  },
+  {
+    "id": "hs_rishikesh_01",
+    "name": "Ganga View Ashram Stay",
+    "city": "Rishikesh",
+    "pricePerNight": 700,
+    "rating": 4.2,
+    "description": "Simple ashram-style accommodation with yoga sessions and river views.",
+    "amenities": [
+      "Yoga",
+      "Vegetarian Meals",
+      "Meditation"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_rishikesh_02",
+    "name": "Riverside Camp",
+    "city": "Rishikesh",
+    "pricePerNight": 1800,
+    "rating": 4.5,
+    "description": "Beach camping on the banks of the Ganges with adventure activities.",
+    "amenities": [
+      "Meals",
+      "Rafting",
+      "Bonfire",
+      "Beach Volleyball"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_pondi_01",
+    "name": "French Quarter Studio",
+    "city": "Pondicherry",
+    "pricePerNight": 1300,
+    "rating": 4.5,
+    "description": "Charming studio apartment in the French Quarter with cycle rental.",
+    "amenities": [
+      "WiFi",
+      "Cycle Rental",
+      "Kitchen"
+    ],
+    "isLocal": true,
+    "category": "budget"
+  },
+  {
+    "id": "hs_pondi_02",
+    "name": "Villa Shanti",
+    "city": "Pondicherry",
+    "pricePerNight": 3000,
+    "rating": 4.7,
+    "description": "Boutique heritage villa with courtyard dining and curated local experiences.",
+    "amenities": [
+      "WiFi",
+      "Restaurant",
+      "Courtyard",
+      "Local Tours"
+    ],
+    "isLocal": true,
+    "category": "mid-range"
+  },
+  {
+    "id": "hs_amaravati_01",
+    "name": "Amaravati Heritage Stay",
+    "city": "Amaravati",
+    "pricePerNight": 2500,
+    "rating": 4.5,
+    "description": "Experience traditional Andhra Pradesh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_amaravati_02",
+    "name": "Budget Backpacker Hostel Amaravati",
+    "city": "Amaravati",
+    "pricePerNight": 800,
+    "rating": 4.2,
+    "description": "Clean, affordable, and social accommodation in the heart of Amaravati.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_amaravati_03",
+    "name": "Luxury Villa Amaravati",
+    "city": "Amaravati",
+    "pricePerNight": 6500,
+    "rating": 4.8,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Amaravati getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_amaravati_04",
+    "name": "Cozy Amaravati Homestay",
+    "city": "Amaravati",
+    "pricePerNight": 1200,
+    "rating": 4.9,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_itanagar_01",
+    "name": "Itanagar Heritage Stay",
+    "city": "Itanagar",
+    "pricePerNight": 2500,
+    "rating": 4.1,
+    "description": "Experience traditional Arunachal Pradesh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_itanagar_02",
+    "name": "Budget Backpacker Hostel Itanagar",
+    "city": "Itanagar",
+    "pricePerNight": 800,
+    "rating": 4.4,
+    "description": "Clean, affordable, and social accommodation in the heart of Itanagar.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_itanagar_03",
+    "name": "Luxury Villa Itanagar",
+    "city": "Itanagar",
+    "pricePerNight": 6500,
+    "rating": 4.9,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Itanagar getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_itanagar_04",
+    "name": "Cozy Itanagar Homestay",
+    "city": "Itanagar",
+    "pricePerNight": 1200,
+    "rating": 4.5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dispur_01",
+    "name": "Dispur Heritage Stay",
+    "city": "Dispur",
+    "pricePerNight": 2500,
+    "rating": 4.2,
+    "description": "Experience traditional Assam hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dispur_02",
+    "name": "Budget Backpacker Hostel Dispur",
+    "city": "Dispur",
+    "pricePerNight": 800,
+    "rating": 4.5,
+    "description": "Clean, affordable, and social accommodation in the heart of Dispur.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dispur_03",
+    "name": "Luxury Villa Dispur",
+    "city": "Dispur",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Dispur getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dispur_04",
+    "name": "Cozy Dispur Homestay",
+    "city": "Dispur",
+    "pricePerNight": 1200,
+    "rating": 4.9,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_patna_01",
+    "name": "Patna Heritage Stay",
+    "city": "Patna",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Bihar hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_patna_02",
+    "name": "Budget Backpacker Hostel Patna",
+    "city": "Patna",
+    "pricePerNight": 800,
+    "rating": 4.3,
+    "description": "Clean, affordable, and social accommodation in the heart of Patna.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_patna_03",
+    "name": "Luxury Villa Patna",
+    "city": "Patna",
+    "pricePerNight": 6500,
+    "rating": 4.9,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Patna getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_patna_04",
+    "name": "Cozy Patna Homestay",
+    "city": "Patna",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_raipur_01",
+    "name": "Raipur Heritage Stay",
+    "city": "Raipur",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Chhattisgarh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_raipur_02",
+    "name": "Budget Backpacker Hostel Raipur",
+    "city": "Raipur",
+    "pricePerNight": 800,
+    "rating": 4.8,
+    "description": "Clean, affordable, and social accommodation in the heart of Raipur.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_raipur_03",
+    "name": "Luxury Villa Raipur",
+    "city": "Raipur",
+    "pricePerNight": 6500,
+    "rating": 4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Raipur getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_raipur_04",
+    "name": "Cozy Raipur Homestay",
+    "city": "Raipur",
+    "pricePerNight": 1200,
+    "rating": 4.3,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_panaji_01",
+    "name": "Panaji Heritage Stay",
+    "city": "Panaji",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Goa hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_panaji_02",
+    "name": "Budget Backpacker Hostel Panaji",
+    "city": "Panaji",
+    "pricePerNight": 800,
+    "rating": 4.5,
+    "description": "Clean, affordable, and social accommodation in the heart of Panaji.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_panaji_03",
+    "name": "Luxury Villa Panaji",
+    "city": "Panaji",
+    "pricePerNight": 6500,
+    "rating": 4.6,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Panaji getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_panaji_04",
+    "name": "Cozy Panaji Homestay",
+    "city": "Panaji",
+    "pricePerNight": 1200,
+    "rating": 4.8,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gandhinagar_01",
+    "name": "Gandhinagar Heritage Stay",
+    "city": "Gandhinagar",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Gujarat hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gandhinagar_02",
+    "name": "Budget Backpacker Hostel Gandhinagar",
+    "city": "Gandhinagar",
+    "pricePerNight": 800,
+    "rating": 4.3,
+    "description": "Clean, affordable, and social accommodation in the heart of Gandhinagar.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gandhinagar_03",
+    "name": "Luxury Villa Gandhinagar",
+    "city": "Gandhinagar",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Gandhinagar getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gandhinagar_04",
+    "name": "Cozy Gandhinagar Homestay",
+    "city": "Gandhinagar",
+    "pricePerNight": 1200,
+    "rating": 4.7,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chandigarh_01",
+    "name": "Chandigarh Heritage Stay",
+    "city": "Chandigarh",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Haryana hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chandigarh_02",
+    "name": "Budget Backpacker Hostel Chandigarh",
+    "city": "Chandigarh",
+    "pricePerNight": 800,
+    "rating": 4.7,
+    "description": "Clean, affordable, and social accommodation in the heart of Chandigarh.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chandigarh_03",
+    "name": "Luxury Villa Chandigarh",
+    "city": "Chandigarh",
+    "pricePerNight": 6500,
+    "rating": 4.6,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Chandigarh getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chandigarh_04",
+    "name": "Cozy Chandigarh Homestay",
+    "city": "Chandigarh",
+    "pricePerNight": 1200,
+    "rating": 4.2,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shimla_01",
+    "name": "Shimla Heritage Stay",
+    "city": "Shimla",
+    "pricePerNight": 2500,
+    "rating": 4.9,
+    "description": "Experience traditional Himachal Pradesh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shimla_02",
+    "name": "Budget Backpacker Hostel Shimla",
+    "city": "Shimla",
+    "pricePerNight": 800,
+    "rating": 4,
+    "description": "Clean, affordable, and social accommodation in the heart of Shimla.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shimla_03",
+    "name": "Luxury Villa Shimla",
+    "city": "Shimla",
+    "pricePerNight": 6500,
+    "rating": 4.1,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Shimla getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shimla_04",
+    "name": "Cozy Shimla Homestay",
+    "city": "Shimla",
+    "pricePerNight": 1200,
+    "rating": 4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_ranchi_01",
+    "name": "Ranchi Heritage Stay",
+    "city": "Ranchi",
+    "pricePerNight": 2500,
+    "rating": 4.1,
+    "description": "Experience traditional Jharkhand hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_ranchi_02",
+    "name": "Budget Backpacker Hostel Ranchi",
+    "city": "Ranchi",
+    "pricePerNight": 800,
+    "rating": 4.7,
+    "description": "Clean, affordable, and social accommodation in the heart of Ranchi.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_ranchi_03",
+    "name": "Luxury Villa Ranchi",
+    "city": "Ranchi",
+    "pricePerNight": 6500,
+    "rating": 4.4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Ranchi getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_ranchi_04",
+    "name": "Cozy Ranchi Homestay",
+    "city": "Ranchi",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bengaluru_01",
+    "name": "Bengaluru Heritage Stay",
+    "city": "Bengaluru",
+    "pricePerNight": 2500,
+    "rating": 4.7,
+    "description": "Experience traditional Karnataka hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bengaluru_02",
+    "name": "Budget Backpacker Hostel Bengaluru",
+    "city": "Bengaluru",
+    "pricePerNight": 800,
+    "rating": 4.3,
+    "description": "Clean, affordable, and social accommodation in the heart of Bengaluru.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bengaluru_03",
+    "name": "Luxury Villa Bengaluru",
+    "city": "Bengaluru",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Bengaluru getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bengaluru_04",
+    "name": "Cozy Bengaluru Homestay",
+    "city": "Bengaluru",
+    "pricePerNight": 1200,
+    "rating": 4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_thiruvananthapuram_01",
+    "name": "Thiruvananthapuram Heritage Stay",
+    "city": "Thiruvananthapuram",
+    "pricePerNight": 2500,
+    "rating": 4.5,
+    "description": "Experience traditional Kerala hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_thiruvananthapuram_02",
+    "name": "Budget Backpacker Hostel Thiruvananthapuram",
+    "city": "Thiruvananthapuram",
+    "pricePerNight": 800,
+    "rating": 4.5,
+    "description": "Clean, affordable, and social accommodation in the heart of Thiruvananthapuram.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_thiruvananthapuram_03",
+    "name": "Luxury Villa Thiruvananthapuram",
+    "city": "Thiruvananthapuram",
+    "pricePerNight": 6500,
+    "rating": 5,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Thiruvananthapuram getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_thiruvananthapuram_04",
+    "name": "Cozy Thiruvananthapuram Homestay",
+    "city": "Thiruvananthapuram",
+    "pricePerNight": 1200,
+    "rating": 4.7,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhopal_01",
+    "name": "Bhopal Heritage Stay",
+    "city": "Bhopal",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Madhya Pradesh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhopal_02",
+    "name": "Budget Backpacker Hostel Bhopal",
+    "city": "Bhopal",
+    "pricePerNight": 800,
+    "rating": 4.2,
+    "description": "Clean, affordable, and social accommodation in the heart of Bhopal.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhopal_03",
+    "name": "Luxury Villa Bhopal",
+    "city": "Bhopal",
+    "pricePerNight": 6500,
+    "rating": 5,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Bhopal getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhopal_04",
+    "name": "Cozy Bhopal Homestay",
+    "city": "Bhopal",
+    "pricePerNight": 1200,
+    "rating": 4.9,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_mumbai_01",
+    "name": "Mumbai Heritage Stay",
+    "city": "Mumbai",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Maharashtra hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_mumbai_02",
+    "name": "Budget Backpacker Hostel Mumbai",
+    "city": "Mumbai",
+    "pricePerNight": 800,
+    "rating": 5,
+    "description": "Clean, affordable, and social accommodation in the heart of Mumbai.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_mumbai_03",
+    "name": "Luxury Villa Mumbai",
+    "city": "Mumbai",
+    "pricePerNight": 6500,
+    "rating": 4.8,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Mumbai getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_mumbai_04",
+    "name": "Cozy Mumbai Homestay",
+    "city": "Mumbai",
+    "pricePerNight": 1200,
+    "rating": 4.1,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_imphal_01",
+    "name": "Imphal Heritage Stay",
+    "city": "Imphal",
+    "pricePerNight": 2500,
+    "rating": 4.6,
+    "description": "Experience traditional Manipur hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_imphal_02",
+    "name": "Budget Backpacker Hostel Imphal",
+    "city": "Imphal",
+    "pricePerNight": 800,
+    "rating": 4.8,
+    "description": "Clean, affordable, and social accommodation in the heart of Imphal.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_imphal_03",
+    "name": "Luxury Villa Imphal",
+    "city": "Imphal",
+    "pricePerNight": 6500,
+    "rating": 4.8,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Imphal getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_imphal_04",
+    "name": "Cozy Imphal Homestay",
+    "city": "Imphal",
+    "pricePerNight": 1200,
+    "rating": 5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shillong_01",
+    "name": "Shillong Heritage Stay",
+    "city": "Shillong",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Meghalaya hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shillong_02",
+    "name": "Budget Backpacker Hostel Shillong",
+    "city": "Shillong",
+    "pricePerNight": 800,
+    "rating": 4.3,
+    "description": "Clean, affordable, and social accommodation in the heart of Shillong.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shillong_03",
+    "name": "Luxury Villa Shillong",
+    "city": "Shillong",
+    "pricePerNight": 6500,
+    "rating": 4.1,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Shillong getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_shillong_04",
+    "name": "Cozy Shillong Homestay",
+    "city": "Shillong",
+    "pricePerNight": 1200,
+    "rating": 5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_aizawl_01",
+    "name": "Aizawl Heritage Stay",
+    "city": "Aizawl",
+    "pricePerNight": 2500,
+    "rating": 4.4,
+    "description": "Experience traditional Mizoram hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_aizawl_02",
+    "name": "Budget Backpacker Hostel Aizawl",
+    "city": "Aizawl",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Aizawl.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_aizawl_03",
+    "name": "Luxury Villa Aizawl",
+    "city": "Aizawl",
+    "pricePerNight": 6500,
+    "rating": 4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Aizawl getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_aizawl_04",
+    "name": "Cozy Aizawl Homestay",
+    "city": "Aizawl",
+    "pricePerNight": 1200,
+    "rating": 4.5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kohima_01",
+    "name": "Kohima Heritage Stay",
+    "city": "Kohima",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Nagaland hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kohima_02",
+    "name": "Budget Backpacker Hostel Kohima",
+    "city": "Kohima",
+    "pricePerNight": 800,
+    "rating": 4.9,
+    "description": "Clean, affordable, and social accommodation in the heart of Kohima.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kohima_03",
+    "name": "Luxury Villa Kohima",
+    "city": "Kohima",
+    "pricePerNight": 6500,
+    "rating": 4.2,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Kohima getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kohima_04",
+    "name": "Cozy Kohima Homestay",
+    "city": "Kohima",
+    "pricePerNight": 1200,
+    "rating": 4.1,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhubaneswar_01",
+    "name": "Bhubaneswar Heritage Stay",
+    "city": "Bhubaneswar",
+    "pricePerNight": 2500,
+    "rating": 4.5,
+    "description": "Experience traditional Odisha hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhubaneswar_02",
+    "name": "Budget Backpacker Hostel Bhubaneswar",
+    "city": "Bhubaneswar",
+    "pricePerNight": 800,
+    "rating": 4,
+    "description": "Clean, affordable, and social accommodation in the heart of Bhubaneswar.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhubaneswar_03",
+    "name": "Luxury Villa Bhubaneswar",
+    "city": "Bhubaneswar",
+    "pricePerNight": 6500,
+    "rating": 4.8,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Bhubaneswar getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_bhubaneswar_04",
+    "name": "Cozy Bhubaneswar Homestay",
+    "city": "Bhubaneswar",
+    "pricePerNight": 1200,
+    "rating": 4.2,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gangtok_01",
+    "name": "Gangtok Heritage Stay",
+    "city": "Gangtok",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Sikkim hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gangtok_02",
+    "name": "Budget Backpacker Hostel Gangtok",
+    "city": "Gangtok",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Gangtok.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gangtok_03",
+    "name": "Luxury Villa Gangtok",
+    "city": "Gangtok",
+    "pricePerNight": 6500,
+    "rating": 5,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Gangtok getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_gangtok_04",
+    "name": "Cozy Gangtok Homestay",
+    "city": "Gangtok",
+    "pricePerNight": 1200,
+    "rating": 4.6,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chennai_01",
+    "name": "Chennai Heritage Stay",
+    "city": "Chennai",
+    "pricePerNight": 2500,
+    "rating": 4.7,
+    "description": "Experience traditional Tamil Nadu hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chennai_02",
+    "name": "Budget Backpacker Hostel Chennai",
+    "city": "Chennai",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Chennai.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chennai_03",
+    "name": "Luxury Villa Chennai",
+    "city": "Chennai",
+    "pricePerNight": 6500,
+    "rating": 4.2,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Chennai getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_chennai_04",
+    "name": "Cozy Chennai Homestay",
+    "city": "Chennai",
+    "pricePerNight": 1200,
+    "rating": 4.5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_hyderabad_01",
+    "name": "Hyderabad Heritage Stay",
+    "city": "Hyderabad",
+    "pricePerNight": 2500,
+    "rating": 4.9,
+    "description": "Experience traditional Telangana hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_hyderabad_02",
+    "name": "Budget Backpacker Hostel Hyderabad",
+    "city": "Hyderabad",
+    "pricePerNight": 800,
+    "rating": 4.9,
+    "description": "Clean, affordable, and social accommodation in the heart of Hyderabad.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_hyderabad_03",
+    "name": "Luxury Villa Hyderabad",
+    "city": "Hyderabad",
+    "pricePerNight": 6500,
+    "rating": 4.1,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Hyderabad getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_hyderabad_04",
+    "name": "Cozy Hyderabad Homestay",
+    "city": "Hyderabad",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_agartala_01",
+    "name": "Agartala Heritage Stay",
+    "city": "Agartala",
+    "pricePerNight": 2500,
+    "rating": 4.6,
+    "description": "Experience traditional Tripura hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_agartala_02",
+    "name": "Budget Backpacker Hostel Agartala",
+    "city": "Agartala",
+    "pricePerNight": 800,
+    "rating": 4.5,
+    "description": "Clean, affordable, and social accommodation in the heart of Agartala.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_agartala_03",
+    "name": "Luxury Villa Agartala",
+    "city": "Agartala",
+    "pricePerNight": 6500,
+    "rating": 4.4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Agartala getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_agartala_04",
+    "name": "Cozy Agartala Homestay",
+    "city": "Agartala",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_lucknow_01",
+    "name": "Lucknow Heritage Stay",
+    "city": "Lucknow",
+    "pricePerNight": 2500,
+    "rating": 4.5,
+    "description": "Experience traditional Uttar Pradesh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_lucknow_02",
+    "name": "Budget Backpacker Hostel Lucknow",
+    "city": "Lucknow",
+    "pricePerNight": 800,
+    "rating": 4.4,
+    "description": "Clean, affordable, and social accommodation in the heart of Lucknow.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_lucknow_03",
+    "name": "Luxury Villa Lucknow",
+    "city": "Lucknow",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Lucknow getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_lucknow_04",
+    "name": "Cozy Lucknow Homestay",
+    "city": "Lucknow",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dehradun_01",
+    "name": "Dehradun Heritage Stay",
+    "city": "Dehradun",
+    "pricePerNight": 2500,
+    "rating": 4.2,
+    "description": "Experience traditional Uttarakhand hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dehradun_02",
+    "name": "Budget Backpacker Hostel Dehradun",
+    "city": "Dehradun",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Dehradun.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dehradun_03",
+    "name": "Luxury Villa Dehradun",
+    "city": "Dehradun",
+    "pricePerNight": 6500,
+    "rating": 4.4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Dehradun getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_dehradun_04",
+    "name": "Cozy Dehradun Homestay",
+    "city": "Dehradun",
+    "pricePerNight": 1200,
+    "rating": 4.9,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kolkata_01",
+    "name": "Kolkata Heritage Stay",
+    "city": "Kolkata",
+    "pricePerNight": 2500,
+    "rating": 4.6,
+    "description": "Experience traditional West Bengal hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kolkata_02",
+    "name": "Budget Backpacker Hostel Kolkata",
+    "city": "Kolkata",
+    "pricePerNight": 800,
+    "rating": 4.7,
+    "description": "Clean, affordable, and social accommodation in the heart of Kolkata.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kolkata_03",
+    "name": "Luxury Villa Kolkata",
+    "city": "Kolkata",
+    "pricePerNight": 6500,
+    "rating": 4.2,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Kolkata getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kolkata_04",
+    "name": "Cozy Kolkata Homestay",
+    "city": "Kolkata",
+    "pricePerNight": 1200,
+    "rating": 4.3,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_port_blair_01",
+    "name": "Port Blair Heritage Stay",
+    "city": "Port Blair",
+    "pricePerNight": 2500,
+    "rating": 4.1,
+    "description": "Experience traditional Andaman and Nicobar Islands hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_port_blair_02",
+    "name": "Budget Backpacker Hostel Port Blair",
+    "city": "Port Blair",
+    "pricePerNight": 800,
+    "rating": 4.2,
+    "description": "Clean, affordable, and social accommodation in the heart of Port Blair.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_port_blair_03",
+    "name": "Luxury Villa Port Blair",
+    "city": "Port Blair",
+    "pricePerNight": 6500,
+    "rating": 4.2,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Port Blair getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_port_blair_04",
+    "name": "Cozy Port Blair Homestay",
+    "city": "Port Blair",
+    "pricePerNight": 1200,
+    "rating": 4.3,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_daman_01",
+    "name": "Daman Heritage Stay",
+    "city": "Daman",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Dadra and Nagar Haveli and Daman and Diu hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_daman_02",
+    "name": "Budget Backpacker Hostel Daman",
+    "city": "Daman",
+    "pricePerNight": 800,
+    "rating": 4.4,
+    "description": "Clean, affordable, and social accommodation in the heart of Daman.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_daman_03",
+    "name": "Luxury Villa Daman",
+    "city": "Daman",
+    "pricePerNight": 6500,
+    "rating": 4.9,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Daman getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_daman_04",
+    "name": "Cozy Daman Homestay",
+    "city": "Daman",
+    "pricePerNight": 1200,
+    "rating": 4.1,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_new_delhi_01",
+    "name": "New Delhi Heritage Stay",
+    "city": "New Delhi",
+    "pricePerNight": 2500,
+    "rating": 4.8,
+    "description": "Experience traditional Delhi hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_new_delhi_02",
+    "name": "Budget Backpacker Hostel New Delhi",
+    "city": "New Delhi",
+    "pricePerNight": 800,
+    "rating": 4.8,
+    "description": "Clean, affordable, and social accommodation in the heart of New Delhi.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_new_delhi_03",
+    "name": "Luxury Villa New Delhi",
+    "city": "New Delhi",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing New Delhi getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_new_delhi_04",
+    "name": "Cozy New Delhi Homestay",
+    "city": "New Delhi",
+    "pricePerNight": 1200,
+    "rating": 4.3,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_srinagar_01",
+    "name": "Srinagar Heritage Stay",
+    "city": "Srinagar",
+    "pricePerNight": 2500,
+    "rating": 4.3,
+    "description": "Experience traditional Jammu and Kashmir hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_srinagar_02",
+    "name": "Budget Backpacker Hostel Srinagar",
+    "city": "Srinagar",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Srinagar.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_srinagar_03",
+    "name": "Luxury Villa Srinagar",
+    "city": "Srinagar",
+    "pricePerNight": 6500,
+    "rating": 4.7,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Srinagar getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_srinagar_04",
+    "name": "Cozy Srinagar Homestay",
+    "city": "Srinagar",
+    "pricePerNight": 1200,
+    "rating": 4.4,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_leh_01",
+    "name": "Leh Heritage Stay",
+    "city": "Leh",
+    "pricePerNight": 2500,
+    "rating": 5,
+    "description": "Experience traditional Ladakh hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_leh_02",
+    "name": "Budget Backpacker Hostel Leh",
+    "city": "Leh",
+    "pricePerNight": 800,
+    "rating": 4.4,
+    "description": "Clean, affordable, and social accommodation in the heart of Leh.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_leh_03",
+    "name": "Luxury Villa Leh",
+    "city": "Leh",
+    "pricePerNight": 6500,
+    "rating": 4.6,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Leh getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_leh_04",
+    "name": "Cozy Leh Homestay",
+    "city": "Leh",
+    "pricePerNight": 1200,
+    "rating": 4.3,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kavaratti_01",
+    "name": "Kavaratti Heritage Stay",
+    "city": "Kavaratti",
+    "pricePerNight": 2500,
+    "rating": 4.9,
+    "description": "Experience traditional Lakshadweep hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kavaratti_02",
+    "name": "Budget Backpacker Hostel Kavaratti",
+    "city": "Kavaratti",
+    "pricePerNight": 800,
+    "rating": 4.1,
+    "description": "Clean, affordable, and social accommodation in the heart of Kavaratti.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kavaratti_03",
+    "name": "Luxury Villa Kavaratti",
+    "city": "Kavaratti",
+    "pricePerNight": 6500,
+    "rating": 4,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Kavaratti getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_kavaratti_04",
+    "name": "Cozy Kavaratti Homestay",
+    "city": "Kavaratti",
+    "pricePerNight": 1200,
+    "rating": 5,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_pondicherry_01",
+    "name": "Pondicherry Heritage Stay",
+    "city": "Pondicherry",
+    "pricePerNight": 2500,
+    "rating": 4.1,
+    "description": "Experience traditional Puducherry hospitality in this beautifully restored heritage home.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "mid-range",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_pondicherry_02",
+    "name": "Budget Backpacker Hostel Pondicherry",
+    "city": "Pondicherry",
+    "pricePerNight": 800,
+    "rating": 4.3,
+    "description": "Clean, affordable, and social accommodation in the heart of Pondicherry.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_pondicherry_03",
+    "name": "Luxury Villa Pondicherry",
+    "city": "Pondicherry",
+    "pricePerNight": 6500,
+    "rating": 4.9,
+    "description": "Premium villa with private pool and chef, perfect for a relaxing Pondicherry getaway.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": false,
+    "category": "premium",
+    "imageUrl": ""
+  },
+  {
+    "id": "hs_pondicherry_04",
+    "name": "Cozy Pondicherry Homestay",
+    "city": "Pondicherry",
+    "pricePerNight": 1200,
+    "rating": 4.6,
+    "description": "A quiet family-run homestay offering authentic local meals.",
+    "amenities": [
+      "WiFi",
+      "Breakfast",
+      "AC"
+    ],
+    "isLocal": true,
+    "category": "budget",
+    "imageUrl": ""
+  }
 ]

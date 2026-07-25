@@ -152,6 +152,16 @@ export const TravelStateAnnotation = Annotation.Root({
     default: () => [],
   }),
 
+  // ── Budget approval (HITL) ──────────────────────────────────────────────
+  /**
+   * The minimum budget the agent needs to complete the trip.
+   * Set when status becomes "needs_budget_approval".
+   */
+  requiredBudget: Annotation<number>({
+    reducer: (_x, y) => y,
+    default: () => 0,
+  }),
+
   // ── Workflow status ─────────────────────────────────────────────────────
   status: Annotation<
     | "planning"
@@ -164,6 +174,8 @@ export const TravelStateAnnotation = Annotation.Root({
     | "success"
     | "budget_exceeded_failure"
     | "needs_user_input"
+    | "needs_budget_approval"
+    | "strict_budget_replan"
   >({
     reducer: (_x, y) => y,
     default: () => "planning",

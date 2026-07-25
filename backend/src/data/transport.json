@@ -1,36 +1,1217 @@
 [
-  { "id": "tr_coorg_01", "name": "Local Auto-Rickshaw", "city": "Coorg", "pricePerDay": 500, "type": "auto-rickshaw", "description": "Auto-rickshaw with a local driver for short-distance sightseeing.", "isLocal": true },
-  { "id": "tr_coorg_02", "name": "Jeep Rental", "city": "Coorg", "pricePerDay": 1500, "type": "cab", "description": "4x4 jeep with driver for off-road and hill terrain.", "isLocal": true },
-  { "id": "tr_coorg_03", "name": "OLA/Uber Cab", "city": "Coorg", "pricePerDay": 2000, "type": "cab", "description": "App-based cab service for comfortable point-to-point travel.", "isLocal": false },
-
-  { "id": "tr_wayanad_01", "name": "Local Jeep Service", "city": "Wayanad", "pricePerDay": 1200, "type": "cab", "description": "Local jeep driver familiar with plantation routes and viewpoints.", "isLocal": true },
-  { "id": "tr_wayanad_02", "name": "KSRTC Bus Pass", "city": "Wayanad", "pricePerDay": 200, "type": "bus", "description": "Kerala state bus day pass for budget travel between towns.", "isLocal": true },
-  { "id": "tr_wayanad_03", "name": "Shared Shuttle", "city": "Wayanad", "pricePerDay": 400, "type": "shared-shuttle", "description": "Shared tourist shuttle connecting major attractions.", "isLocal": true },
-
-  { "id": "tr_munnar_01", "name": "Local Auto-Rickshaw", "city": "Munnar", "pricePerDay": 600, "type": "auto-rickshaw", "description": "Auto-rickshaw for getting around Munnar town and nearby spots.", "isLocal": true },
-  { "id": "tr_munnar_02", "name": "Tourist Cab", "city": "Munnar", "pricePerDay": 1800, "type": "cab", "description": "Sedan cab with experienced local driver for full-day sightseeing.", "isLocal": true },
-
-  { "id": "tr_ooty_01", "name": "Ooty Bus Service", "city": "Ooty", "pricePerDay": 150, "type": "bus", "description": "Tamil Nadu state bus for budget travel around Ooty and Coonoor.", "isLocal": true },
-  { "id": "tr_ooty_02", "name": "Bike Rental", "city": "Ooty", "pricePerDay": 500, "type": "bike-rental", "description": "Royal Enfield or scooter rental from a local shop.", "isLocal": true },
-  { "id": "tr_ooty_03", "name": "Private Cab", "city": "Ooty", "pricePerDay": 2200, "type": "cab", "description": "Air-conditioned cab with driver for comfortable touring.", "isLocal": false },
-
-  { "id": "tr_goa_01", "name": "Scooter Rental", "city": "Goa", "pricePerDay": 350, "type": "bike-rental", "description": "Activa/scooter rental — the most popular way to explore Goa.", "isLocal": true },
-  { "id": "tr_goa_02", "name": "Local Pilot (Motorcycle Taxi)", "city": "Goa", "pricePerDay": 400, "type": "auto-rickshaw", "description": "Goa's iconic motorcycle taxi service for quick rides.", "isLocal": true },
-  { "id": "tr_goa_03", "name": "Self-Drive Car", "city": "Goa", "pricePerDay": 1500, "type": "cab", "description": "Self-drive car rental from a local agency.", "isLocal": true },
-
-  { "id": "tr_jaipur_01", "name": "Auto-Rickshaw", "city": "Jaipur", "pricePerDay": 600, "type": "auto-rickshaw", "description": "Jaipur's classic auto-rickshaw for bazaar hopping.", "isLocal": true },
-  { "id": "tr_jaipur_02", "name": "AC Cab Full Day", "city": "Jaipur", "pricePerDay": 1800, "type": "cab", "description": "AC sedan with driver covering all major fort circuits.", "isLocal": true },
-
-  { "id": "tr_udaipur_01", "name": "E-Rickshaw", "city": "Udaipur", "pricePerDay": 400, "type": "auto-rickshaw", "description": "Electric rickshaw for eco-friendly lakeside touring.", "isLocal": true },
-  { "id": "tr_udaipur_02", "name": "Local Cab", "city": "Udaipur", "pricePerDay": 1400, "type": "cab", "description": "Local cab service with a knowledgeable driver-guide.", "isLocal": true },
-
-  { "id": "tr_manali_01", "name": "Local Bus", "city": "Manali", "pricePerDay": 200, "type": "bus", "description": "HRTC local bus for travel between Manali, Solang, and Old Manali.", "isLocal": true },
-  { "id": "tr_manali_02", "name": "Bike Rental", "city": "Manali", "pricePerDay": 800, "type": "bike-rental", "description": "Royal Enfield rental for mountain road exploration.", "isLocal": true },
-  { "id": "tr_manali_03", "name": "Innova Cab", "city": "Manali", "pricePerDay": 2500, "type": "cab", "description": "Toyota Innova with driver for Rohtang and valley excursions.", "isLocal": false },
-
-  { "id": "tr_rishikesh_01", "name": "Shared Jeep", "city": "Rishikesh", "pricePerDay": 300, "type": "shared-shuttle", "description": "Shared jeep service between Rishikesh, Laxman Jhula, and camps.", "isLocal": true },
-  { "id": "tr_rishikesh_02", "name": "Auto-Rickshaw", "city": "Rishikesh", "pricePerDay": 500, "type": "auto-rickshaw", "description": "Auto-rickshaw for town travel and ghat visits.", "isLocal": true },
-
-  { "id": "tr_pondi_01", "name": "Cycle Rental", "city": "Pondicherry", "pricePerDay": 100, "type": "bike-rental", "description": "Bicycle rental — the best way to explore the French Quarter.", "isLocal": true },
-  { "id": "tr_pondi_02", "name": "Scooter Rental", "city": "Pondicherry", "pricePerDay": 300, "type": "bike-rental", "description": "Scooter rental for reaching Auroville and nearby beaches.", "isLocal": true }
+  {
+    "id": "tr_coorg_01",
+    "name": "Local Auto-Rickshaw",
+    "city": "Coorg",
+    "pricePerDay": 500,
+    "type": "auto-rickshaw",
+    "description": "Auto-rickshaw with a local driver for short-distance sightseeing.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_coorg_02",
+    "name": "Jeep Rental",
+    "city": "Coorg",
+    "pricePerDay": 1500,
+    "type": "cab",
+    "description": "4x4 jeep with driver for off-road and hill terrain.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_coorg_03",
+    "name": "OLA/Uber Cab",
+    "city": "Coorg",
+    "pricePerDay": 2000,
+    "type": "cab",
+    "description": "App-based cab service for comfortable point-to-point travel.",
+    "isLocal": false
+  },
+  {
+    "id": "tr_wayanad_01",
+    "name": "Local Jeep Service",
+    "city": "Wayanad",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Local jeep driver familiar with plantation routes and viewpoints.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_wayanad_02",
+    "name": "KSRTC Bus Pass",
+    "city": "Wayanad",
+    "pricePerDay": 200,
+    "type": "bus",
+    "description": "Kerala state bus day pass for budget travel between towns.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_wayanad_03",
+    "name": "Shared Shuttle",
+    "city": "Wayanad",
+    "pricePerDay": 400,
+    "type": "shared-shuttle",
+    "description": "Shared tourist shuttle connecting major attractions.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_munnar_01",
+    "name": "Local Auto-Rickshaw",
+    "city": "Munnar",
+    "pricePerDay": 600,
+    "type": "auto-rickshaw",
+    "description": "Auto-rickshaw for getting around Munnar town and nearby spots.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_munnar_02",
+    "name": "Tourist Cab",
+    "city": "Munnar",
+    "pricePerDay": 1800,
+    "type": "cab",
+    "description": "Sedan cab with experienced local driver for full-day sightseeing.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_ooty_01",
+    "name": "Ooty Bus Service",
+    "city": "Ooty",
+    "pricePerDay": 150,
+    "type": "bus",
+    "description": "Tamil Nadu state bus for budget travel around Ooty and Coonoor.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_ooty_02",
+    "name": "Bike Rental",
+    "city": "Ooty",
+    "pricePerDay": 500,
+    "type": "bike-rental",
+    "description": "Royal Enfield or scooter rental from a local shop.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_ooty_03",
+    "name": "Private Cab",
+    "city": "Ooty",
+    "pricePerDay": 2200,
+    "type": "cab",
+    "description": "Air-conditioned cab with driver for comfortable touring.",
+    "isLocal": false
+  },
+  {
+    "id": "tr_goa_01",
+    "name": "Scooter Rental",
+    "city": "Goa",
+    "pricePerDay": 350,
+    "type": "bike-rental",
+    "description": "Activa/scooter rental — the most popular way to explore Goa.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_goa_02",
+    "name": "Local Pilot (Motorcycle Taxi)",
+    "city": "Goa",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Goa's iconic motorcycle taxi service for quick rides.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_goa_03",
+    "name": "Self-Drive Car",
+    "city": "Goa",
+    "pricePerDay": 1500,
+    "type": "cab",
+    "description": "Self-drive car rental from a local agency.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_jaipur_01",
+    "name": "Auto-Rickshaw",
+    "city": "Jaipur",
+    "pricePerDay": 600,
+    "type": "auto-rickshaw",
+    "description": "Jaipur's classic auto-rickshaw for bazaar hopping.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_jaipur_02",
+    "name": "AC Cab Full Day",
+    "city": "Jaipur",
+    "pricePerDay": 1800,
+    "type": "cab",
+    "description": "AC sedan with driver covering all major fort circuits.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_udaipur_01",
+    "name": "E-Rickshaw",
+    "city": "Udaipur",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Electric rickshaw for eco-friendly lakeside touring.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_udaipur_02",
+    "name": "Local Cab",
+    "city": "Udaipur",
+    "pricePerDay": 1400,
+    "type": "cab",
+    "description": "Local cab service with a knowledgeable driver-guide.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_manali_01",
+    "name": "Local Bus",
+    "city": "Manali",
+    "pricePerDay": 200,
+    "type": "bus",
+    "description": "HRTC local bus for travel between Manali, Solang, and Old Manali.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_manali_02",
+    "name": "Bike Rental",
+    "city": "Manali",
+    "pricePerDay": 800,
+    "type": "bike-rental",
+    "description": "Royal Enfield rental for mountain road exploration.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_manali_03",
+    "name": "Innova Cab",
+    "city": "Manali",
+    "pricePerDay": 2500,
+    "type": "cab",
+    "description": "Toyota Innova with driver for Rohtang and valley excursions.",
+    "isLocal": false
+  },
+  {
+    "id": "tr_rishikesh_01",
+    "name": "Shared Jeep",
+    "city": "Rishikesh",
+    "pricePerDay": 300,
+    "type": "shared-shuttle",
+    "description": "Shared jeep service between Rishikesh, Laxman Jhula, and camps.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_rishikesh_02",
+    "name": "Auto-Rickshaw",
+    "city": "Rishikesh",
+    "pricePerDay": 500,
+    "type": "auto-rickshaw",
+    "description": "Auto-rickshaw for town travel and ghat visits.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_pondi_01",
+    "name": "Cycle Rental",
+    "city": "Pondicherry",
+    "pricePerDay": 100,
+    "type": "bike-rental",
+    "description": "Bicycle rental — the best way to explore the French Quarter.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_pondi_02",
+    "name": "Scooter Rental",
+    "city": "Pondicherry",
+    "pricePerDay": 300,
+    "type": "bike-rental",
+    "description": "Scooter rental for reaching Auroville and nearby beaches.",
+    "isLocal": true
+  },
+  {
+    "id": "tr_amaravati_01",
+    "name": "Amaravati Auto-rickshaw",
+    "city": "Amaravati",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Amaravati.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_amaravati_02",
+    "name": "Amaravati Local Cab",
+    "city": "Amaravati",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Amaravati.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_amaravati_03",
+    "name": "Amaravati Scooter Rental",
+    "city": "Amaravati",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Amaravati.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_itanagar_01",
+    "name": "Itanagar Auto-rickshaw",
+    "city": "Itanagar",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Itanagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_itanagar_02",
+    "name": "Itanagar Local Cab",
+    "city": "Itanagar",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Itanagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_itanagar_03",
+    "name": "Itanagar Scooter Rental",
+    "city": "Itanagar",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Itanagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dispur_01",
+    "name": "Dispur Auto-rickshaw",
+    "city": "Dispur",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Dispur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dispur_02",
+    "name": "Dispur Local Cab",
+    "city": "Dispur",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Dispur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dispur_03",
+    "name": "Dispur Scooter Rental",
+    "city": "Dispur",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Dispur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_patna_01",
+    "name": "Patna Auto-rickshaw",
+    "city": "Patna",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Patna.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_patna_02",
+    "name": "Patna Local Cab",
+    "city": "Patna",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Patna.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_patna_03",
+    "name": "Patna Scooter Rental",
+    "city": "Patna",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Patna.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_raipur_01",
+    "name": "Raipur Auto-rickshaw",
+    "city": "Raipur",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Raipur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_raipur_02",
+    "name": "Raipur Local Cab",
+    "city": "Raipur",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Raipur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_raipur_03",
+    "name": "Raipur Scooter Rental",
+    "city": "Raipur",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Raipur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_panaji_01",
+    "name": "Panaji Auto-rickshaw",
+    "city": "Panaji",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Panaji.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_panaji_02",
+    "name": "Panaji Local Cab",
+    "city": "Panaji",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Panaji.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_panaji_03",
+    "name": "Panaji Scooter Rental",
+    "city": "Panaji",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Panaji.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gandhinagar_01",
+    "name": "Gandhinagar Auto-rickshaw",
+    "city": "Gandhinagar",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Gandhinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gandhinagar_02",
+    "name": "Gandhinagar Local Cab",
+    "city": "Gandhinagar",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Gandhinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gandhinagar_03",
+    "name": "Gandhinagar Scooter Rental",
+    "city": "Gandhinagar",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Gandhinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chandigarh_01",
+    "name": "Chandigarh Auto-rickshaw",
+    "city": "Chandigarh",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Chandigarh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chandigarh_02",
+    "name": "Chandigarh Local Cab",
+    "city": "Chandigarh",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Chandigarh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chandigarh_03",
+    "name": "Chandigarh Scooter Rental",
+    "city": "Chandigarh",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Chandigarh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shimla_01",
+    "name": "Shimla Auto-rickshaw",
+    "city": "Shimla",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Shimla.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shimla_02",
+    "name": "Shimla Local Cab",
+    "city": "Shimla",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Shimla.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shimla_03",
+    "name": "Shimla Scooter Rental",
+    "city": "Shimla",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Shimla.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_ranchi_01",
+    "name": "Ranchi Auto-rickshaw",
+    "city": "Ranchi",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Ranchi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_ranchi_02",
+    "name": "Ranchi Local Cab",
+    "city": "Ranchi",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Ranchi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_ranchi_03",
+    "name": "Ranchi Scooter Rental",
+    "city": "Ranchi",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Ranchi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bengaluru_01",
+    "name": "Bengaluru Auto-rickshaw",
+    "city": "Bengaluru",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Bengaluru.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bengaluru_02",
+    "name": "Bengaluru Local Cab",
+    "city": "Bengaluru",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Bengaluru.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bengaluru_03",
+    "name": "Bengaluru Scooter Rental",
+    "city": "Bengaluru",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Bengaluru.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_thiruvananthapuram_01",
+    "name": "Thiruvananthapuram Auto-rickshaw",
+    "city": "Thiruvananthapuram",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Thiruvananthapuram.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_thiruvananthapuram_02",
+    "name": "Thiruvananthapuram Local Cab",
+    "city": "Thiruvananthapuram",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Thiruvananthapuram.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_thiruvananthapuram_03",
+    "name": "Thiruvananthapuram Scooter Rental",
+    "city": "Thiruvananthapuram",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Thiruvananthapuram.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhopal_01",
+    "name": "Bhopal Auto-rickshaw",
+    "city": "Bhopal",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Bhopal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhopal_02",
+    "name": "Bhopal Local Cab",
+    "city": "Bhopal",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Bhopal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhopal_03",
+    "name": "Bhopal Scooter Rental",
+    "city": "Bhopal",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Bhopal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_mumbai_01",
+    "name": "Mumbai Auto-rickshaw",
+    "city": "Mumbai",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Mumbai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_mumbai_02",
+    "name": "Mumbai Local Cab",
+    "city": "Mumbai",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Mumbai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_mumbai_03",
+    "name": "Mumbai Scooter Rental",
+    "city": "Mumbai",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Mumbai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_imphal_01",
+    "name": "Imphal Auto-rickshaw",
+    "city": "Imphal",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Imphal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_imphal_02",
+    "name": "Imphal Local Cab",
+    "city": "Imphal",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Imphal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_imphal_03",
+    "name": "Imphal Scooter Rental",
+    "city": "Imphal",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Imphal.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shillong_01",
+    "name": "Shillong Auto-rickshaw",
+    "city": "Shillong",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Shillong.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shillong_02",
+    "name": "Shillong Local Cab",
+    "city": "Shillong",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Shillong.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_shillong_03",
+    "name": "Shillong Scooter Rental",
+    "city": "Shillong",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Shillong.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_aizawl_01",
+    "name": "Aizawl Auto-rickshaw",
+    "city": "Aizawl",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Aizawl.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_aizawl_02",
+    "name": "Aizawl Local Cab",
+    "city": "Aizawl",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Aizawl.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_aizawl_03",
+    "name": "Aizawl Scooter Rental",
+    "city": "Aizawl",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Aizawl.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kohima_01",
+    "name": "Kohima Auto-rickshaw",
+    "city": "Kohima",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Kohima.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kohima_02",
+    "name": "Kohima Local Cab",
+    "city": "Kohima",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Kohima.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kohima_03",
+    "name": "Kohima Scooter Rental",
+    "city": "Kohima",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Kohima.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhubaneswar_01",
+    "name": "Bhubaneswar Auto-rickshaw",
+    "city": "Bhubaneswar",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Bhubaneswar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhubaneswar_02",
+    "name": "Bhubaneswar Local Cab",
+    "city": "Bhubaneswar",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Bhubaneswar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_bhubaneswar_03",
+    "name": "Bhubaneswar Scooter Rental",
+    "city": "Bhubaneswar",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Bhubaneswar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_jaipur_03",
+    "name": "Jaipur Scooter Rental",
+    "city": "Jaipur",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Jaipur.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gangtok_01",
+    "name": "Gangtok Auto-rickshaw",
+    "city": "Gangtok",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Gangtok.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gangtok_02",
+    "name": "Gangtok Local Cab",
+    "city": "Gangtok",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Gangtok.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_gangtok_03",
+    "name": "Gangtok Scooter Rental",
+    "city": "Gangtok",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Gangtok.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chennai_01",
+    "name": "Chennai Auto-rickshaw",
+    "city": "Chennai",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Chennai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chennai_02",
+    "name": "Chennai Local Cab",
+    "city": "Chennai",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Chennai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_chennai_03",
+    "name": "Chennai Scooter Rental",
+    "city": "Chennai",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Chennai.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_hyderabad_01",
+    "name": "Hyderabad Auto-rickshaw",
+    "city": "Hyderabad",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Hyderabad.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_hyderabad_02",
+    "name": "Hyderabad Local Cab",
+    "city": "Hyderabad",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Hyderabad.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_hyderabad_03",
+    "name": "Hyderabad Scooter Rental",
+    "city": "Hyderabad",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Hyderabad.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_agartala_01",
+    "name": "Agartala Auto-rickshaw",
+    "city": "Agartala",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Agartala.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_agartala_02",
+    "name": "Agartala Local Cab",
+    "city": "Agartala",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Agartala.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_agartala_03",
+    "name": "Agartala Scooter Rental",
+    "city": "Agartala",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Agartala.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_lucknow_01",
+    "name": "Lucknow Auto-rickshaw",
+    "city": "Lucknow",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Lucknow.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_lucknow_02",
+    "name": "Lucknow Local Cab",
+    "city": "Lucknow",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Lucknow.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_lucknow_03",
+    "name": "Lucknow Scooter Rental",
+    "city": "Lucknow",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Lucknow.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dehradun_01",
+    "name": "Dehradun Auto-rickshaw",
+    "city": "Dehradun",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Dehradun.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dehradun_02",
+    "name": "Dehradun Local Cab",
+    "city": "Dehradun",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Dehradun.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_dehradun_03",
+    "name": "Dehradun Scooter Rental",
+    "city": "Dehradun",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Dehradun.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kolkata_01",
+    "name": "Kolkata Auto-rickshaw",
+    "city": "Kolkata",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Kolkata.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kolkata_02",
+    "name": "Kolkata Local Cab",
+    "city": "Kolkata",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Kolkata.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kolkata_03",
+    "name": "Kolkata Scooter Rental",
+    "city": "Kolkata",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Kolkata.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_port_blair_01",
+    "name": "Port Blair Auto-rickshaw",
+    "city": "Port Blair",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Port Blair.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_port_blair_02",
+    "name": "Port Blair Local Cab",
+    "city": "Port Blair",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Port Blair.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_port_blair_03",
+    "name": "Port Blair Scooter Rental",
+    "city": "Port Blair",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Port Blair.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_daman_01",
+    "name": "Daman Auto-rickshaw",
+    "city": "Daman",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Daman.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_daman_02",
+    "name": "Daman Local Cab",
+    "city": "Daman",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Daman.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_daman_03",
+    "name": "Daman Scooter Rental",
+    "city": "Daman",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Daman.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_new_delhi_01",
+    "name": "New Delhi Auto-rickshaw",
+    "city": "New Delhi",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in New Delhi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_new_delhi_02",
+    "name": "New Delhi Local Cab",
+    "city": "New Delhi",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in New Delhi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_new_delhi_03",
+    "name": "New Delhi Scooter Rental",
+    "city": "New Delhi",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in New Delhi.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_srinagar_01",
+    "name": "Srinagar Auto-rickshaw",
+    "city": "Srinagar",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Srinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_srinagar_02",
+    "name": "Srinagar Local Cab",
+    "city": "Srinagar",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Srinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_srinagar_03",
+    "name": "Srinagar Scooter Rental",
+    "city": "Srinagar",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Srinagar.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_leh_01",
+    "name": "Leh Auto-rickshaw",
+    "city": "Leh",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Leh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_leh_02",
+    "name": "Leh Local Cab",
+    "city": "Leh",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Leh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_leh_03",
+    "name": "Leh Scooter Rental",
+    "city": "Leh",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Leh.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kavaratti_01",
+    "name": "Kavaratti Auto-rickshaw",
+    "city": "Kavaratti",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Kavaratti.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kavaratti_02",
+    "name": "Kavaratti Local Cab",
+    "city": "Kavaratti",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Kavaratti.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_kavaratti_03",
+    "name": "Kavaratti Scooter Rental",
+    "city": "Kavaratti",
+    "pricePerDay": 600,
+    "type": "bike-rental",
+    "description": "Reliable scooter rental for daily travel in Kavaratti.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_pondicherry_01",
+    "name": "Pondicherry Auto-rickshaw",
+    "city": "Pondicherry",
+    "pricePerDay": 400,
+    "type": "auto-rickshaw",
+    "description": "Reliable auto-rickshaw for daily travel in Pondicherry.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  },
+  {
+    "id": "tr_pondicherry_02",
+    "name": "Pondicherry Local Cab",
+    "city": "Pondicherry",
+    "pricePerDay": 1200,
+    "type": "cab",
+    "description": "Reliable local cab for daily travel in Pondicherry.",
+    "isLocal": true,
+    "provider": "Local Transit Hub"
+  }
 ]

@@ -212,6 +212,8 @@ function mapToFrontendItinerary(
     // Planning meta
     status: finalState.status,
     needsUserInput: finalState.status === "needs_user_input",
+    // HITL — budget approval
+    requiredBudget: (finalState as any).requiredBudget ?? 0,
   };
 }
 
@@ -266,6 +268,23 @@ router.post("/plan", validateBody(PlanRequestSchema), async (req, res, next) => 
             `Unable to fit a ${body.days}-day trip to ${cityName} within ₹${body.budget}.`,
           statusCode: 422,
         },
+      });
+      return;
+    }
+
+    // HITL: Agent hit budget limit — pause and ask user for approval
+    if (finalState.status === "needs_budget_approval") {
+      const requiredBudget = (finalState as any).requiredBudget ?? 0;
+      const lastLog = finalState.progressLog[finalState.progressLog.length - 1];
+      res.status(202).json({
+        success: false,
+        needsBudgetApproval: true,
+        threadId,
+        requiredBudget,
+        originalBudget: body.budget,
+        message:
+          lastLog?.message ||
+          `Your ideal trip requires ₹${requiredBudget}. Your current budget is ₹${body.budget}. Would you like to increase it?`,
       });
       return;
     }
@@ -450,6 +469,148 @@ router.post(
         success: true,
         data: updatedItinerary,
       });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ROUTE 4 — POST /api/plan/resume-budget  (HITL budget approval response)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const ResumeBudgetSchema = z.object({
+  threadId: z.string().min(1, "threadId is required"),
+  approved: z.boolean(),
+  // Only meaningful when approved === true; ignored when false
+  newBudget: z.number().positive().optional(),
+});
+
+router.post(
+  "/plan/resume-budget",
+  validateBody(ResumeBudgetSchema),
+  async (req, res, next) => {
+    try {
+      const { threadId, approved, newBudget } = req.body as z.infer<typeof ResumeBudgetSchema>;
+      const config = { configurable: { thread_id: threadId } };
+
+      // Verify the session exists and is paused at the budget checkpoint
+      const snapshot = await compiledGraph.getState(config);
+      if (!snapshot.values || !(snapshot.values as any).city) {
+        throw new AppError("Planning session not found. Please start a new trip.", 404);
+      }
+
+      const currentState = snapshot.values as any;
+      logger.info("Resuming trip after budget decision", {
+        threadId,
+        approved,
+        originalBudget: currentState.totalBudget,
+        newBudget: approved ? newBudget : currentState.totalBudget,
+      });
+
+      // Mutate the LangGraph state before resuming:
+      // - Approved: increase totalBudget and reset replanAttempts so the agent tries freely again
+      // - Rejected: keep original budget and set status to strict_budget_replan
+      if (approved && newBudget) {
+        await compiledGraph.updateState(config, {
+          totalBudget: newBudget,
+          replanAttempts: {}, // reset so agent gets fresh attempts at the new budget
+          status: "replanning" as const,
+          progressLog: [
+            {
+              level: "info" as const,
+              step: "budget_approval",
+              day: null,
+              message: `User approved budget increase to ₹${newBudget}. Resuming planning with new budget.`,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+          agentDecisions: [
+            {
+              type: "budget_approval",
+              day: null,
+              description: `User approved budget increase from ₹${currentState.totalBudget} to ₹${newBudget}.`,
+              impact: newBudget - currentState.totalBudget,
+            },
+          ],
+        });
+      } else {
+        await compiledGraph.updateState(config, {
+          status: "strict_budget_replan" as const,
+          replanAttempts: {}, // reset for another round of strict replanning
+          progressLog: [
+            {
+              level: "info" as const,
+              step: "budget_approval",
+              day: null,
+              message: `User declined budget increase. Replanning strictly within ₹${currentState.totalBudget}.`,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+          agentDecisions: [
+            {
+              type: "budget_approval",
+              day: null,
+              description: `User declined increase. Agent will replan all days within ₹${currentState.totalBudget} using strict budget mode.`,
+              impact: 0,
+            },
+          ],
+        });
+      }
+
+      // Resume the graph — it will continue from humanBudgetApproval → replanDay → checkBudget → …
+      const invokePromise = compiledGraph.invoke(null, config);
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(
+          () => reject(new AppError("Trip replanning timed out. Please try again.", 504)),
+          PLAN_TIMEOUT_MS,
+        );
+      });
+
+      const finalState = await Promise.race([invokePromise, timeoutPromise]);
+
+      if (!finalState) {
+        throw new AppError("Replanning failed to produce a result.", 500);
+      }
+
+      // If still needs approval after strict replan, surface an error
+      if (
+        finalState.status === "budget_exceeded_failure" ||
+        finalState.status === "needs_budget_approval"
+      ) {
+        res.status(422).json({
+          success: false,
+          error: {
+            message: `Unable to complete the trip within the budget even in strict mode. Please try a longer budget or fewer days.`,
+            statusCode: 422,
+          },
+        });
+        return;
+      }
+
+      const agentDays = finalState.days as AgentDayPlan[];
+      const totalCost = agentDays.reduce((s: number, d: AgentDayPlan) => s + d.cost, 0);
+      const effectiveBudget = approved && newBudget ? newBudget : currentState.totalBudget;
+
+      const itinerary = {
+        id: uuidv4(),
+        city: finalState.city,
+        totalDays: finalState.totalDays,
+        days: agentDays.map(mapAgentDayToFrontend),
+        totalCost,
+        budget: effectiveBudget,
+        remainingBudget: Math.max(0, effectiveBudget - totalCost),
+        localOperatorPercentage: computeLocalOperatorPercentage(agentDays),
+        validationResults: finalState.validationResults ?? [],
+        agentDecisions: finalState.agentDecisions ?? [],
+        progressLog: finalState.progressLog ?? [],
+        status: finalState.status,
+        budgetWasIncreased: approved,
+        threadId,
+      };
+
+      res.status(200).json({ success: true, data: itinerary });
     } catch (err) {
       next(err);
     }

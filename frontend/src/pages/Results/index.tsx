@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   CalendarRange,
-  Coins,
   Users,
   Save,
   Download,
   Share2,
   RefreshCw,
+  Coins,
   Sparkles,
 } from "lucide-react";
 
@@ -15,13 +15,13 @@ import { useTrip } from "../../context/TripContext";
 import { Timeline } from "../../components/timeline/Timeline";
 import { Modal } from "../../components/common/Modal";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
+import { AvailableFlights } from "../../components/flights/AvailableFlights";
 
 export const Results: React.FC = () => {
   const {
     currentItinerary,
     saveTrip,
     replanBudget,
-    confirmAllBookings,
     showToast,
   } = useTrip();
 
@@ -194,134 +194,42 @@ export const Results: React.FC = () => {
 
       </div>
 
-      {/* Main Content */}
+      {/* AvailableFlights — shown only if user selected flight transit */}
+      {currentItinerary.days[0]?.flight != null && (
+        <AvailableFlights
+          day1={currentItinerary.days[0]}
+          origin={currentItinerary.startPlace}
+          destination={currentItinerary.city}
+        />
+      )}
 
-      <div className="grid lg:grid-cols-3 gap-8">
-        {/* =========================
-      LEFT (2/3 Width)
-      Timeline
-  ========================== */}
+      {/* Main Content — full width itinerary */}
+      <div className="space-y-6">
 
-        <div className="lg:col-span-2 space-y-6">
+        <div className="glass-card rounded-3xl p-6">
 
-          <div className="glass-card rounded-3xl p-6">
+          <div className="flex items-center justify-between mb-6">
 
-            <div className="flex items-center justify-between mb-6">
-
-              <div>
-                <h2 className="text-xl font-bold">
-                  Daily Itinerary
-                </h2>
-
-                <p className="text-sm text-slate-500 mt-1">
-                  Follow your complete travel schedule day by day.
-                </p>
-              </div>
-
-              <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-                {currentItinerary.totalDays} Days
-              </span>
-
-            </div>
-
-            <Timeline
-              days={currentItinerary.days}
-              travelers={currentItinerary.travelers}
-            />
-
-          </div>
-
-        </div>
-
-        {/* =========================
-      RIGHT SIDEBAR
-  ========================== */}
-
-        <div className="space-y-6">
-          {/* =========================
-        Booking Status
-    ========================== */}
-
-          <div className="glass-card rounded-3xl p-6">
-
-            <div className="flex items-center justify-between mb-5">
+            <div>
               <h2 className="text-xl font-bold">
-                Booking Status
+                Daily Itinerary
               </h2>
 
-              <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-                Live
-              </span>
+              <p className="text-sm text-slate-500 mt-1">
+                Your complete AI-planned schedule, day by day.
+              </p>
             </div>
 
-            <div className="space-y-4">
-
-              {/* Hotel */}
-
-              <div className="flex items-center justify-between border rounded-xl px-4 py-3">
-
-                <div>
-                  <p className="font-medium">
-                    Hotel
-                  </p>
-
-                  <p className="text-sm text-slate-500">
-                    Accommodation booking
-                  </p>
-                </div>
-
-                {currentItinerary.days.length > 0 &&
-                  currentItinerary.days[0].stay &&
-                  currentItinerary.bookingStatus?.[currentItinerary.days[0].stay.id] === "confirmed" ? (
-                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
-                    Confirmed
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">
-                    Pending
-                  </span>
-                )}
-
-              </div>
-
-              {/* Transport */}
-
-              <div className="flex items-center justify-between border rounded-xl px-4 py-3">
-
-                <div>
-                  <p className="font-medium">
-                    Transport
-                  </p>
-
-                  <p className="text-sm text-slate-500">
-                    Travel tickets
-                  </p>
-                </div>
-
-                {currentItinerary.bookingStatus?.["transit-outbound"] === "confirmed" &&
-                  currentItinerary.bookingStatus?.["transit-inbound"] === "confirmed" ? (
-                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
-                    Confirmed
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">
-                    Pending
-                  </span>
-                )}
-
-              </div>
-
-            </div>
-
-            <button
-              onClick={confirmAllBookings}
-              className="w-full mt-6 btn-primary py-3 rounded-xl flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-4 h-4" />
-              Confirm All Bookings
-            </button>
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+              {currentItinerary.totalDays} Days
+            </span>
 
           </div>
+
+          <Timeline
+            days={currentItinerary.days}
+            travelers={currentItinerary.travelers}
+          />
 
         </div>
 

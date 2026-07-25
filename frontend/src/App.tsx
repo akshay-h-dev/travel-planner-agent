@@ -5,11 +5,10 @@ import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { ToastContainer } from "./components/common/Toast";
 import { AILoading } from "./components/planner/AILoading";
+import BudgetApprovalModal from "./components/BudgetApprovalModal";
 
 // Page Views
 import { Landing } from "./pages/Landing";
-import { Login } from "./pages/Login";
-import { Signup } from "./pages/Signup";
 import { Dashboard } from "./pages/Dashboard";
 import { Planner } from "./pages/Planner";
 import { Results } from "./pages/Results";
@@ -28,6 +27,9 @@ const AppContent: React.FC = () => {
       {/* Dynamic AI Loading cover screen */}
       {isGenerating && <AILoading />}
 
+      {/* HITL: Budget Approval modal — fires when agent detects budget overshoot */}
+      <BudgetApprovalModal />
+
       {/* Global Toast Alert toaster */}
       <ToastContainer />
 
@@ -38,8 +40,6 @@ const AppContent: React.FC = () => {
       <main className="flex-1 flex flex-col min-h-[75vh]">
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/planner" element={<Planner />} />
           <Route path="/results" element={<Results />} />

@@ -4,69 +4,545 @@
     "name": "Coorg",
     "state": "Karnataka",
     "description": "Known as the Scotland of India, Coorg is a misty hill station famous for coffee plantations, lush greenery, and waterfalls.",
-    "highlights": ["Coffee Plantations", "Abbey Falls", "Raja's Seat", "Dubare Elephant Camp", "Talacauvery"]
+    "highlights": [
+      "Coffee Plantations",
+      "Abbey Falls",
+      "Raja's Seat",
+      "Dubare Elephant Camp",
+      "Talacauvery"
+    ]
   },
   {
     "id": "city_wayanad",
     "name": "Wayanad",
     "state": "Kerala",
     "description": "A lush green hill district in Kerala known for its wildlife sanctuaries, ancient caves, and spice plantations.",
-    "highlights": ["Edakkal Caves", "Banasura Sagar Dam", "Chembra Peak", "Soochipara Falls", "Kuruva Island"]
+    "highlights": [
+      "Edakkal Caves",
+      "Banasura Sagar Dam",
+      "Chembra Peak",
+      "Soochipara Falls",
+      "Kuruva Island"
+    ]
   },
   {
     "id": "city_munnar",
     "name": "Munnar",
     "state": "Kerala",
     "description": "A stunning hill station surrounded by rolling tea plantations and misty mountains in the Western Ghats.",
-    "highlights": ["Tea Gardens", "Eravikulam National Park", "Mattupetty Dam", "Top Station", "Attukal Waterfalls"]
+    "highlights": [
+      "Tea Gardens",
+      "Eravikulam National Park",
+      "Mattupetty Dam",
+      "Top Station",
+      "Attukal Waterfalls"
+    ]
   },
   {
     "id": "city_ooty",
     "name": "Ooty",
     "state": "Tamil Nadu",
     "description": "The Queen of Hill Stations, Ooty offers scenic beauty with its botanical gardens, lakes, and the famous Nilgiri Mountain Railway.",
-    "highlights": ["Botanical Gardens", "Ooty Lake", "Nilgiri Mountain Railway", "Doddabetta Peak", "Rose Garden"]
+    "highlights": [
+      "Botanical Gardens",
+      "Ooty Lake",
+      "Nilgiri Mountain Railway",
+      "Doddabetta Peak",
+      "Rose Garden"
+    ]
   },
   {
     "id": "city_goa",
     "name": "Goa",
     "state": "Goa",
     "description": "India's premier beach destination known for its vibrant nightlife, Portuguese heritage architecture, and coastal cuisine.",
-    "highlights": ["Baga Beach", "Old Goa Churches", "Dudhsagar Falls", "Fort Aguada", "Spice Plantations"]
+    "highlights": [
+      "Baga Beach",
+      "Old Goa Churches",
+      "Dudhsagar Falls",
+      "Fort Aguada",
+      "Spice Plantations"
+    ]
   },
   {
     "id": "city_jaipur",
     "name": "Jaipur",
     "state": "Rajasthan",
     "description": "The Pink City, known for its grand forts, palaces, vibrant bazaars, and rich Rajasthani culture.",
-    "highlights": ["Amber Fort", "Hawa Mahal", "City Palace", "Jantar Mantar", "Nahargarh Fort"]
+    "highlights": [
+      "Amber Fort",
+      "Hawa Mahal",
+      "City Palace",
+      "Jantar Mantar",
+      "Nahargarh Fort"
+    ]
   },
   {
     "id": "city_udaipur",
     "name": "Udaipur",
     "state": "Rajasthan",
     "description": "The City of Lakes, known for its romantic setting, magnificent palaces, and lakeside hotels.",
-    "highlights": ["Lake Pichola", "City Palace", "Jag Mandir", "Saheliyon Ki Bari", "Fateh Sagar Lake"]
+    "highlights": [
+      "Lake Pichola",
+      "City Palace",
+      "Jag Mandir",
+      "Saheliyon Ki Bari",
+      "Fateh Sagar Lake"
+    ]
   },
   {
     "id": "city_manali",
     "name": "Manali",
     "state": "Himachal Pradesh",
     "description": "A popular hill station in the mountains of Himachal Pradesh, known for adventure sports, hot springs, and snow-capped peaks.",
-    "highlights": ["Rohtang Pass", "Solang Valley", "Hadimba Temple", "Old Manali", "Jogini Waterfall"]
+    "highlights": [
+      "Rohtang Pass",
+      "Solang Valley",
+      "Hadimba Temple",
+      "Old Manali",
+      "Jogini Waterfall"
+    ]
   },
   {
     "id": "city_rishikesh",
     "name": "Rishikesh",
     "state": "Uttarakhand",
     "description": "The Yoga Capital of the World, situated on the banks of the Ganges, known for adventure activities and spiritual retreats.",
-    "highlights": ["Laxman Jhula", "Ram Jhula", "River Rafting", "Triveni Ghat", "Beatles Ashram"]
+    "highlights": [
+      "Laxman Jhula",
+      "Ram Jhula",
+      "River Rafting",
+      "Triveni Ghat",
+      "Beatles Ashram"
+    ]
   },
   {
     "id": "city_pondicherry",
     "name": "Pondicherry",
     "state": "Puducherry",
     "description": "A charming coastal city with French colonial architecture, serene beaches, and spiritual centres.",
-    "highlights": ["Promenade Beach", "Auroville", "French Quarter", "Paradise Beach", "Sri Aurobindo Ashram"]
+    "highlights": [
+      "Promenade Beach",
+      "Auroville",
+      "French Quarter",
+      "Paradise Beach",
+      "Sri Aurobindo Ashram"
+    ]
+  },
+  {
+    "id": "city_amaravati",
+    "name": "Amaravati",
+    "state": "Andhra Pradesh",
+    "description": "Capital city of Andhra Pradesh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Amaravati City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_itanagar",
+    "name": "Itanagar",
+    "state": "Arunachal Pradesh",
+    "description": "Capital city of Arunachal Pradesh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Itanagar City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_dispur",
+    "name": "Dispur",
+    "state": "Assam",
+    "description": "Capital city of Assam, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Dispur City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_patna",
+    "name": "Patna",
+    "state": "Bihar",
+    "description": "Capital city of Bihar, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Patna City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_raipur",
+    "name": "Raipur",
+    "state": "Chhattisgarh",
+    "description": "Capital city of Chhattisgarh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Raipur City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_panaji",
+    "name": "Panaji",
+    "state": "Goa",
+    "description": "Capital city of Goa, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Panaji City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_gandhinagar",
+    "name": "Gandhinagar",
+    "state": "Gujarat",
+    "description": "Capital city of Gujarat, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Gandhinagar City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_chandigarh",
+    "name": "Chandigarh",
+    "state": "Haryana",
+    "description": "Capital city of Haryana, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Chandigarh City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_shimla",
+    "name": "Shimla",
+    "state": "Himachal Pradesh",
+    "description": "Capital city of Himachal Pradesh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Shimla City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_ranchi",
+    "name": "Ranchi",
+    "state": "Jharkhand",
+    "description": "Capital city of Jharkhand, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Ranchi City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_bengaluru",
+    "name": "Bengaluru",
+    "state": "Karnataka",
+    "description": "Capital city of Karnataka, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Bengaluru City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_thiruvananthapuram",
+    "name": "Thiruvananthapuram",
+    "state": "Kerala",
+    "description": "Capital city of Kerala, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Thiruvananthapuram City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_bhopal",
+    "name": "Bhopal",
+    "state": "Madhya Pradesh",
+    "description": "Capital city of Madhya Pradesh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Bhopal City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_mumbai",
+    "name": "Mumbai",
+    "state": "Maharashtra",
+    "description": "Capital city of Maharashtra, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Mumbai City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_imphal",
+    "name": "Imphal",
+    "state": "Manipur",
+    "description": "Capital city of Manipur, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Imphal City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_shillong",
+    "name": "Shillong",
+    "state": "Meghalaya",
+    "description": "Capital city of Meghalaya, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Shillong City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_aizawl",
+    "name": "Aizawl",
+    "state": "Mizoram",
+    "description": "Capital city of Mizoram, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Aizawl City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_kohima",
+    "name": "Kohima",
+    "state": "Nagaland",
+    "description": "Capital city of Nagaland, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Kohima City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_bhubaneswar",
+    "name": "Bhubaneswar",
+    "state": "Odisha",
+    "description": "Capital city of Odisha, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Bhubaneswar City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_gangtok",
+    "name": "Gangtok",
+    "state": "Sikkim",
+    "description": "Capital city of Sikkim, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Gangtok City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_chennai",
+    "name": "Chennai",
+    "state": "Tamil Nadu",
+    "description": "Capital city of Tamil Nadu, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Chennai City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_hyderabad",
+    "name": "Hyderabad",
+    "state": "Telangana",
+    "description": "Capital city of Telangana, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Hyderabad City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_agartala",
+    "name": "Agartala",
+    "state": "Tripura",
+    "description": "Capital city of Tripura, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Agartala City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_lucknow",
+    "name": "Lucknow",
+    "state": "Uttar Pradesh",
+    "description": "Capital city of Uttar Pradesh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Lucknow City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_dehradun",
+    "name": "Dehradun",
+    "state": "Uttarakhand",
+    "description": "Capital city of Uttarakhand, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Dehradun City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_kolkata",
+    "name": "Kolkata",
+    "state": "West Bengal",
+    "description": "Capital city of West Bengal, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Kolkata City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_port_blair",
+    "name": "Port Blair",
+    "state": "Andaman and Nicobar Islands",
+    "description": "Capital city of Andaman and Nicobar Islands, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Port Blair City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_daman",
+    "name": "Daman",
+    "state": "Dadra and Nagar Haveli and Daman and Diu",
+    "description": "Capital city of Dadra and Nagar Haveli and Daman and Diu, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Daman City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_new_delhi",
+    "name": "New Delhi",
+    "state": "Delhi",
+    "description": "Capital city of Delhi, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "New Delhi City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_srinagar",
+    "name": "Srinagar",
+    "state": "Jammu and Kashmir",
+    "description": "Capital city of Jammu and Kashmir, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Srinagar City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_leh",
+    "name": "Leh",
+    "state": "Ladakh",
+    "description": "Capital city of Ladakh, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Leh City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
+  },
+  {
+    "id": "city_kavaratti",
+    "name": "Kavaratti",
+    "state": "Lakshadweep",
+    "description": "Capital city of Lakshadweep, known for its rich culture, history, and vibrant local life.",
+    "highlights": [
+      "Kavaratti City Center",
+      "Local Markets",
+      "Historical Monuments",
+      "Regional Cuisine"
+    ],
+    "imageUrl": ""
   }
 ]

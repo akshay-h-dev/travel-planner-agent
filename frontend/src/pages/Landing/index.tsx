@@ -46,12 +46,6 @@ export const Landing: React.FC = () => {
               >
                 Start AI Planning <ChevronRight className="h-4 w-4" />
               </button>
-              <a
-                href="#how-it-works"
-                className="btn-outline border-white/20 text-white hover:bg-white/10 py-3 px-6 text-sm font-semibold rounded-xl flex items-center justify-center gap-1"
-              >
-                Watch Video Demo
-              </a>
             </div>
           </div>
 

@@ -19,6 +19,13 @@ interface ToastMessage {
   type: "success" | "info" | "error";
 }
 
+interface BudgetApprovalRequest {
+  threadId: string;
+  requiredBudget: number;
+  originalBudget: number;
+  message: string;
+}
+
 interface TripContextType {
   currentItinerary: Itinerary | null;
   savedItineraries: Itinerary[];
@@ -57,6 +64,9 @@ interface TripContextType {
   login: (email: string, name?: string) => void;
   signup: (userData: Partial<UserProfile>) => void;
   logout: () => void;
+  // HITL budget approval
+  budgetApprovalRequest: BudgetApprovalRequest | null;
+  resumeTrip: (approved: boolean) => Promise<void>;
 }
 
 const TripContext = createContext<TripContextType | undefined>(undefined);
@@ -70,6 +80,8 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [user, setUser] = useState<UserProfile | null>(null);
+  // HITL: stores budget approval pending state
+  const [budgetApprovalRequest, setBudgetApprovalRequest] = useState<BudgetApprovalRequest | null>(null);
 
   // Apply dark mode class
   useEffect(() => {
@@ -160,6 +172,18 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Wait for progress animation to finish so UX feels complete
       await progressPromise;
 
+      // HITL: Backend is pausing and asking user to approve a budget increase
+      if (response.status === 202 && result.needsBudgetApproval) {
+        setBudgetApprovalRequest({
+          threadId: result.threadId,
+          requiredBudget: result.requiredBudget,
+          originalBudget: result.originalBudget,
+          message: result.message,
+        });
+        // Don't navigate yet — the modal will handle the next step
+        return false;
+      }
+
       if (!response.ok || result.success === false) {
         const message =
           result.error?.message ||
@@ -196,6 +220,48 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setSavedItineraries(prev => [itinerary, ...prev]);
     showToast("Trip saved to your dashboard!", "success");
+  };
+
+  /** Called by BudgetApprovalModal when the user clicks Yes or No. */
+  const resumeTrip = async (approved: boolean) => {
+    if (!budgetApprovalRequest) return;
+    const { threadId, requiredBudget, originalBudget } = budgetApprovalRequest;
+    setIsGenerating(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/plan/resume-budget`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          threadId,
+          approved,
+          newBudget: approved ? requiredBudget : originalBudget,
+        }),
+      });
+      const result = await response.json();
+      setBudgetApprovalRequest(null);
+
+      if (!response.ok || result.success === false) {
+        const msg = result.error?.message || "Replanning failed. Please try again.";
+        showToast(msg, "error");
+        return;
+      }
+
+      const itinerary = result.data;
+      itinerary.bookingStatus = {};
+      setCurrentItinerary(itinerary);
+
+      if (approved) {
+        showToast(`Budget increased to ₹${requiredBudget.toLocaleString("en-IN")}. Itinerary replanned!`, "success");
+      } else {
+        showToast("Itinerary tightened to fit your original budget!", "success");
+      }
+    } catch (e) {
+      setBudgetApprovalRequest(null);
+      const msg = e instanceof Error ? e.message : "Replanning failed. Please try again.";
+      showToast(msg, "error");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const deleteTrip = (id: string) => {
@@ -472,7 +538,10 @@ export const TripProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCurrentItinerary,
         login,
         signup,
-        logout
+        logout,
+        // HITL budget approval
+        budgetApprovalRequest,
+        resumeTrip,
       }}
     >
       {children}

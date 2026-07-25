@@ -163,7 +163,7 @@ export function normalizeAviationStackResponse(
   const sorted = [...flights].sort((a, b) => a.totalPrice - b.totalPrice);
 
   if (sorted.length > 0) {
-    sorted[0].isCheapest = true;
+    sorted[0]!.isCheapest = true;
   }
 
   return sorted;

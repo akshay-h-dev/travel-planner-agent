@@ -213,29 +213,36 @@ Plan Day ${day} in ${city}. Target budget for today (excluding flight): ₹${tar
 ${buildUserContextBlock(state)}
 ${flightText}
 
-SELECTION RULES:
-1. Select exactly one stay (prefer local, isLocal: true). If user specified accommodation preferences, match the category when possible.
-2. Optionally select one guide (null if budget is tight).
-3. Select exactly one local transport option that matches user's local transport preferences.
-4. Select 1–3 activities that match the user's interests: ${state.preferences.join(", ")}.
-5. NEVER exceed the target budget of ₹${targetBudget.toFixed(0)}.
-6. If budget < ₹3000: omit guide. If < ₹2000: ≤1 cheap activity. If < ₹1600: no activities.
-7. Assign each activity a time slot (morning/afternoon/evening) to produce a daily schedule.
-8. Prefer activities with isLocal: true.
+⚠ CRITICAL RULE — ACTIVITIES: You MUST select EXACTLY 3 to 4 activities per day. Never fewer than 3. Never more than 4. This is non-negotiable.
 
-Available stays:
+DATA SOURCES (important):
+- Stays, Guides, Transport: from local verified dataset (use IDs exactly as listed).
+- Activities: dynamically sourced from Geoapify Places API (use IDs exactly as listed).
+
+SELECTION RULES:
+1. Select exactly one stay (prefer local, isLocal: true). Match accommodation preferences when possible.
+2. Optionally select one guide (null if budget is tight, i.e., < ₹3000).
+3. Select exactly one local transport option matching user's local transport preferences.
+4. *** MANDATORY: Select EXACTLY 3 to 4 activities (no more, no less) that match user interests: ${state.preferences.join(", ")}. Spread across morning, afternoon, evening time slots. ***
+5. NEVER exceed target budget of ₹${targetBudget.toFixed(0)}.
+6. Calculate activitiesCost as the SUM of the price field for ALL selected activities.
+7. Calculate totalComputedCost = stayCost + guideCost + transportCost + activitiesCost.
+8. Prefer activities with isLocal: true.
+9. Assign each activity a distinct time slot: first activity at 09:00, second at 12:00, third at 15:00, fourth at 18:00.
+
+Available stays (STATIC — from verified local dataset):
 ${JSON.stringify(stays, null, 2)}
 
-Available guides:
+Available guides (STATIC — from verified local dataset):
 ${JSON.stringify(guides, null, 2)}
 
-Available transport:
+Available transport (STATIC — from verified local dataset):
 ${JSON.stringify(transport, null, 2)}
 
-Available activities (API-sourced first — preferred):
+Available activities (DYNAMIC — from Geoapify Places API, select 3–4 of these):
 ${JSON.stringify(activities, null, 2)}
 
-Return ONLY valid JSON:
+Return ONLY valid JSON (no extra text, no markdown):
 {
   "stayId": "string",
   "stayCost": number,
@@ -243,9 +250,14 @@ Return ONLY valid JSON:
   "guideCost": number,
   "transportId": "string",
   "transportCost": number,
-  "activityIds": ["string", ...],
+  "activityIds": ["id1", "id2", "id3", "id4"],
   "activitiesCost": number,
-  "schedule": [{"time":"09:00","activityId":"string","duration":"2 hours","note":"optional"}],
+  "schedule": [
+    {"time":"09:00","activityId":"id1","duration":"2 hours","note":"optional description"},
+    {"time":"12:00","activityId":"id2","duration":"2 hours","note":"optional"},
+    {"time":"15:00","activityId":"id3","duration":"2 hours","note":"optional"},
+    {"time":"18:00","activityId":"id4","duration":"1.5 hours","note":"optional"}
+  ],
   "totalComputedCost": number,
   "note": "Brief reason for selections, mentioning local preferences and budget fit."
 }`;
@@ -358,14 +370,22 @@ Return ONLY valid JSON:
 export async function checkBudgetNode(
   state: TravelState,
 ): Promise<Partial<TravelState>> {
-  if (state.status === "budget_exceeded_failure") {
-    return { status: "budget_exceeded_failure" };
+  if (state.status === "budget_exceeded_failure" || state.status === "needs_budget_approval") {
+    return { status: state.status };
   }
 
   const day = state.currentDay;
   const totalSpent = state.days.reduce((s, d) => s + d.cost, 0);
   const isOver = totalSpent > state.totalBudget;
   const overBy = isOver ? totalSpent - state.totalBudget : 0;
+
+  if (state.status === "strict_budget_replan") {
+    return {
+      spentSoFar: totalSpent,
+      overBudgetBy: overBy,
+      status: "strict_budget_replan",
+    };
+  }
 
   if (isOver) {
     return {
@@ -416,17 +436,33 @@ export async function replanDayNode(
   const replanAttempts = { ...state.replanAttempts, [day]: attempts };
 
   if (attempts > 3) {
+    // Calculate a conservative required budget:
+    // current spend on days planned so far + avg-cost-per-day * remaining days
+    const spentOnPlannedDays = state.days
+      .filter((d) => d.day !== day)
+      .reduce((s, d) => s + d.cost, 0);
+    const avgDayCost = state.days.length > 0
+      ? state.days.reduce((s, d) => s + d.cost, 0) / state.days.length
+      : state.totalBudget / state.totalDays;
+    const remainingDays = state.totalDays - (state.days.filter((d) => d.day !== day).length);
+    const requiredBudget = Math.ceil(spentOnPlannedDays + avgDayCost * remainingDays);
+
     return {
       replanAttempts,
-      status: "budget_exceeded_failure",
+      requiredBudget,
+      status: "needs_budget_approval",
       progressLog: [
-        log("replan_day", day,
-          `Max replan attempts (3) reached for Day ${day}. Cannot fit within budget.`),
+        log(
+          "replan_day", day,
+          `Max replan attempts (3) reached for Day ${day}. ` +
+          `Estimated minimum required budget: ₹${requiredBudget}. Requesting user approval.`,
+        ),
       ],
       agentDecisions: [
         decision(
           "replan_day", day,
-          `Autonomous replanning exhausted after 3 attempts. Budget constraint cannot be satisfied for Day ${day}.`,
+          `Autonomous replanning exhausted. Calculated minimum trip cost: ₹${requiredBudget}. ` +
+          `Pausing for user budget approval.`,
         ),
       ],
     };
@@ -461,6 +497,8 @@ Day ${day} in ${city} is over budget by ₹${reduceBy.toFixed(0)} (attempt ${att
 
 ${buildUserContextBlock(state)}
 
+⚠ CRITICAL RULE — ACTIVITIES: Even in replan mode, you MUST keep EXACTLY 3 to 4 activities per day. Replace expensive activities with cheaper ones from the list — do NOT drop below 3 activities.
+
 Current Day ${day} plan (₹${currentPlan.cost.toFixed(0)}):
 - Stay: ${currentPlan.stay?.name} (₹${currentPlan.stay?.pricePerNight})
 - Guide: ${currentPlan.guide?.name ?? "None"} (₹${currentPlan.guide?.pricePerDay ?? 0})
@@ -470,22 +508,29 @@ Current Day ${day} plan (₹${currentPlan.cost.toFixed(0)}):
 REPLAN RULES:
 1. Reduce total cost by at least ₹${reduceBy.toFixed(0)}.
 2. Always prefer local options (isLocal: true). Never swap local for expensive chain.
-3. Remove the guide first. Then swap expensive activities for cheaper ones. Then downgrade stay.
-4. Return updated schedule matching new activityIds.
+3. Try to remove the guide first. Then swap expensive activities for cheaper ones from the pool. Then downgrade stay last.
+4. Keep EXACTLY 3–4 activities even after replanning — just pick cheaper ones.
+5. Recalculate activitiesCost as SUM of all selected activity prices.
+6. Return updated schedule matching new activityIds.
+${state.status === "strict_budget_replan" ? `
+⚠ STRICT BUDGET MODE (user declined increase): You MUST fit within the original budget of ₹${state.totalBudget}.
+Mandatory cuts: skip the guide entirely (set guideId: null), pick the cheapest available stay (budget category),
+choose only the 3 cheapest available activities. There are no exceptions.
+` : ""}
 
-Available stays:
+Available stays (STATIC):
 ${JSON.stringify(stays, null, 2)}
 
-Available guides:
+Available guides (STATIC):
 ${JSON.stringify(guides, null, 2)}
 
-Available transport:
+Available transport (STATIC):
 ${JSON.stringify(transport, null, 2)}
 
-Available activities:
+Available activities (DYNAMIC — Geoapify API — pick 3–4 cheaper ones):
 ${JSON.stringify(activities, null, 2)}
 
-Return ONLY valid JSON:
+Return ONLY valid JSON (no extra text):
 {
   "stayId": "string",
   "stayCost": number,
@@ -493,11 +538,15 @@ Return ONLY valid JSON:
   "guideCost": number,
   "transportId": "string",
   "transportCost": number,
-  "activityIds": ["string"],
+  "activityIds": ["id1", "id2", "id3"],
   "activitiesCost": number,
-  "schedule": [{"time":"09:00","activityId":"string","duration":"2 hours"}],
+  "schedule": [
+    {"time":"09:00","activityId":"id1","duration":"2 hours"},
+    {"time":"12:00","activityId":"id2","duration":"2 hours"},
+    {"time":"15:00","activityId":"id3","duration":"2 hours"}
+  ],
   "totalComputedCost": number,
-  "note": "Explain what was changed and why."
+  "note": "Explain what was changed and why to reduce cost."
 }`;
 
   try {
@@ -1400,4 +1449,20 @@ export async function generateItineraryNode(
       ),
     ],
   };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NODE HITL — humanBudgetApprovalNode  (Human-in-the-Loop interrupt point)
+// This node is never executed — the graph is compiled with interruptBefore
+// targeting this node, so execution pauses here and awaits user input.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function humanBudgetApprovalNode(
+  _state: TravelState,
+): Promise<Partial<TravelState>> {
+  // This body is intentionally unreachable — the LangGraph interrupt fires
+  // before this node executes. The route POST /api/plan/resume-budget
+  // resumes the graph after the user responds.
+  return {};
 }

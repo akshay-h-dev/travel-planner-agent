@@ -120,7 +120,7 @@ export class GeoapifyProvider {
       return null;
     }
 
-    const first = data.results[0];
+    const first = data.results[0]!;
     return { lat: first.lat, lon: first.lon };
   }
 

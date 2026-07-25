@@ -39,6 +39,7 @@ import {
   interpretFeedbackNode,
   applyFeedbackNode,
   generateItineraryNode,
+  humanBudgetApprovalNode,
 } from "./nodes.js";
 
 // ─── Routing functions ────────────────────────────────────────────────────────
@@ -46,12 +47,18 @@ import {
 /** After checkBudget: replan this day | advance to next | go validate */
 function routeAfterBudgetCheck(
   state: TravelState,
-): "replanDay" | "advanceDay" | "validateItinerary" | "generateItinerary" {
+): "replanDay" | "advanceDay" | "validateItinerary" | "generateItinerary" | "humanBudgetApproval" {
   if (state.status === "budget_exceeded_failure") return "generateItinerary";
-  if (state.status === "replanning") return "replanDay";
+  if (state.status === "needs_budget_approval") return "humanBudgetApproval";
+  if (state.status === "replanning" || state.status === "strict_budget_replan") return "replanDay";
   if (state.status === "validating") return "validateItinerary";
   if (state.status === "planning") return "advanceDay";
   return "generateItinerary";
+}
+
+function routeAfterHumanApproval(state: TravelState): "checkBudget" | "replanDay" {
+  // Always replan the day after human intervention to satisfy user expectations
+  return "replanDay";
 }
 
 /** After validation: fix autonomously | finalize | ask user | apply pending feedback */
@@ -89,15 +96,16 @@ function routeAfterFeedback(
 
 const workflow = new StateGraph(TravelStateAnnotation)
   // ── Nodes ────────────────────────────────────────────────────────────────
-  .addNode("planDay",              planDayNode)
-  .addNode("checkBudget",          checkBudgetNode)
-  .addNode("replanDay",            replanDayNode)
-  .addNode("advanceDay",           advanceDayNode)
-  .addNode("validateItinerary",    validateItineraryNode)
-  .addNode("autonomousFixNode",    autonomousFixNode)
-  .addNode("interpretFeedbackNode", interpretFeedbackNode)
-  .addNode("applyFeedbackNode",    applyFeedbackNode)
-  .addNode("generateItinerary",    generateItineraryNode)
+  .addNode("planDay",                 planDayNode)
+  .addNode("checkBudget",             checkBudgetNode)
+  .addNode("replanDay",               replanDayNode)
+  .addNode("advanceDay",              advanceDayNode)
+  .addNode("validateItinerary",       validateItineraryNode)
+  .addNode("autonomousFixNode",       autonomousFixNode)
+  .addNode("interpretFeedbackNode",   interpretFeedbackNode)
+  .addNode("applyFeedbackNode",       applyFeedbackNode)
+  .addNode("generateItinerary",       generateItineraryNode)
+  .addNode("humanBudgetApproval",     humanBudgetApprovalNode)
 
   // ── Edges ─────────────────────────────────────────────────────────────────
   // Entry point
@@ -108,10 +116,18 @@ const workflow = new StateGraph(TravelStateAnnotation)
 
   // Budget check fans out to: replan / advance / validate / done
   .addConditionalEdges("checkBudget", routeAfterBudgetCheck, {
-    replanDay:         "replanDay",
-    advanceDay:        "advanceDay",
-    validateItinerary: "validateItinerary",
-    generateItinerary: "generateItinerary",
+    replanDay:            "replanDay",
+    advanceDay:           "advanceDay",
+    validateItinerary:    "validateItinerary",
+    generateItinerary:    "generateItinerary",
+    humanBudgetApproval:  "humanBudgetApproval",
+  })
+
+  // After resuming, conditionally route: if strict mode, replan forcefully.
+  // If approved (budget increased), go to checkBudget to re-evaluate the current plan.
+  .addConditionalEdges("humanBudgetApproval", routeAfterHumanApproval, {
+    checkBudget: "checkBudget",
+    replanDay: "replanDay"
   })
 
   // Replan loops back to budget check
@@ -144,9 +160,12 @@ const workflow = new StateGraph(TravelStateAnnotation)
   // Final node → END
   .addEdge("generateItinerary", END);
 
-// Compile with MemorySaver for per-request checkpointing
+// Compile with MemorySaver for per-request checkpointing.
+// interruptBefore: ["humanBudgetApproval"] pauses the graph before that
+// node runs so the frontend can display the budget approval modal.
 export const compiledGraph = workflow.compile({
   checkpointer: new MemorySaver(),
+  interruptBefore: ["humanBudgetApproval"],
 });
 
 // Re-export state types for consumers

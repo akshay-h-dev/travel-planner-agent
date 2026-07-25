@@ -34,18 +34,16 @@ import type {
   GetFlightsParams,
   NormalizedActivity,
   NormalizedFlight,
-  FlightSegment,
 } from "./interfaces/travel-provider.interface.js";
 
-// Re-export public types so callers only need one import path
 export type {
   ITravelDataProvider,
   NormalizedActivity,
   NormalizedFlight,
-  FlightSegment,
   GetActivitiesParams,
   GetFlightsParams,
-} from "./interfaces/travel-provider.interface.js";
+};
+export type { FlightSegment } from "./interfaces/travel-provider.interface.js";
 
 class TravelDataProvider implements ITravelDataProvider {
   private readonly geoapify: GeoapifyProvider | null;
