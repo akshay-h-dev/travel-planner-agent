@@ -56,7 +56,7 @@ function routeAfterBudgetCheck(
   return "generateItinerary";
 }
 
-function routeAfterHumanApproval(state: TravelState): "checkBudget" | "replanDay" {
+function routeAfterHumanApproval(_state: TravelState): "checkBudget" | "replanDay" {
   // Always replan the day after human intervention to satisfy user expectations
   return "replanDay";
 }

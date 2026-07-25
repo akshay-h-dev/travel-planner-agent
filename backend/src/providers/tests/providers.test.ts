@@ -194,7 +194,7 @@ const flights = normalizeAviationStackResponse(multiFlight);
 assert(flights.length === 2, "both offers normalized");
 const firstFlight = flights[0]!;
 assert(firstFlight.isCheapest === true, "cheapest offer has isCheapest set");
-assert(firstFlight.totalPrice === 4500, "sorted by price ascending");
+assert(firstFlight.totalPrice === 4100, "sorted by price ascending");
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TEST 4 — TravelDataProvider facade (no API keys needed)

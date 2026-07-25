@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Compass, Moon, Sun, Menu, X, User, LogOut, Briefcase } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Compass, Moon, Sun, Menu, X } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
 
 export const Navbar: React.FC = () => {
-  const { user, logout, theme, toggleTheme } = useTrip();
+  const { theme, toggleTheme } = useTrip();
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Close dropdown when clicking anywhere outside it
   useEffect(() => {
@@ -23,12 +22,6 @@ export const Navbar: React.FC = () => {
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showDropdown]);
-
-  const handleLogout = () => {
-    logout();
-    setShowDropdown(false);
-    navigate("/");
-  };
 
   const isActive = (path: string) => {
     return location.pathname === path;

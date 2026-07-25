@@ -64,9 +64,43 @@ function filterTransportByPreference(
   return filtered.length > 0 ? filtered : transport;
 }
 
-/** Build the activity pool from API data only. */
-function mergeActivities(apiActivities: NormalizedActivity[]): AnyActivity[] {
-  return buildActivityPool(apiActivities);
+/**
+ * Build the activity pool for the LLM prompt.
+ *
+ * Priority:
+ *   1. API activities (Geoapify) when available — sorted by rating then price, capped at 20.
+ *   2. Local JSON dataset fallback when the API key is not configured or returns nothing —
+ *      converts Activity → NormalizedActivity so the downstream prompt sees the same shape.
+ */
+function mergeActivities(
+  apiActivities: NormalizedActivity[],
+  city: string,
+  preferences: string[],
+): AnyActivity[] {
+  if (apiActivities.length > 0) {
+    return buildActivityPool(apiActivities);
+  }
+
+  // Fallback: pull from the local JSON dataset
+  const localActivities = preferences.length > 0
+    ? dataService.getActivitiesByCityAndPreferences(city, preferences)
+    : dataService.getActivitiesByCity(city);
+
+  // Convert Activity → NormalizedActivity so the prompt builder sees a uniform shape
+  const normalized: NormalizedActivity[] = localActivities.map((a) => ({
+    id: a.id,
+    name: a.name,
+    city: a.city,
+    price: a.price,
+    duration: a.duration,
+    rating: a.rating,
+    category: a.category,
+    description: a.description,
+    isLocal: a.isLocal,
+    source: "local_dataset" as const,
+  }));
+
+  return buildActivityPool(normalized);
 }
 
 /** User context block injected into every LLM prompt. */
@@ -190,7 +224,7 @@ export async function planDayNode(
     radiusKm: 15,
     limit: 20,
   });
-  const activities = mergeActivities(apiActivities);
+  const activities = mergeActivities(apiActivities, city, preferences);
 
   const { text: flightText, flight, flightCost } =
     await buildFlightContext(state, isFirstDay);
@@ -488,7 +522,7 @@ export async function replanDayNode(
     radiusKm: 15,
     limit: 20,
   });
-  const activities = mergeActivities(apiActs);
+  const activities = mergeActivities(apiActs, city, state.preferences);
 
   const reduceBy = state.overBudgetBy;
 
@@ -1034,6 +1068,8 @@ export async function autonomousFixNode(
         radiusKm: 15,
         limit: 20,
       }),
+      state.city,
+      state.preferences,
     );
     const stays = dataService.getHomestaysByCity(state.city);
     const guides = dataService.getGuidesByCity(state.city);
@@ -1266,6 +1302,8 @@ export async function applyFeedbackNode(
       radiusKm: 15,
       limit: 20,
     }),
+    city,
+    state.preferences,
   );
   const stays = dataService.getHomestaysByCity(city);
   const guides = dataService.getGuidesByCity(city);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, Clock, Award, ArrowLeftRight, MapPin, Activity as ActivityIcon, Coffee, Camera } from "lucide-react";
+import { Star, Clock, Award, ArrowLeftRight, Activity as ActivityIcon, Coffee, Camera } from "lucide-react";
 import type { Activity } from "../../types";
 import { formatCurrency } from "../../utils/format";
 

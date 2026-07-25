@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Compass, Mail, Send, MessageCircle, GitBranch, Heart } from "lucide-react";
+import { Compass, Mail, Send, MessageCircle, GitBranch } from "lucide-react";
 import { useTrip } from "../../context/TripContext";
 
 export const Footer: React.FC = () => {

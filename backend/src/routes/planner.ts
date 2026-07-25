@@ -174,6 +174,7 @@ function buildInitialState(body: PlanRequest, cityName: string) {
     feedbackInstructions: "",
     agentDecisions: [],
     progressLog: [],
+    requiredBudget: 0,
     status: "planning" as const,
   };
 }
