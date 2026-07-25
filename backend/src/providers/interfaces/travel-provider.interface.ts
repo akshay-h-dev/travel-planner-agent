@@ -35,7 +35,7 @@ export interface NormalizedActivity {
   /** True when operated by a verified local business. */
   isLocal: boolean;
   /** Source of this record — useful for debugging. */
-  source: "opentripmap" | "local_dataset";
+  source: "geoapify" | "local_dataset";
   /** Optional geo-coordinates. */
   coordinates?: { lat: number; lon: number };
   /** Optional opening hours string returned by the API. */
@@ -71,7 +71,7 @@ export interface FlightSegment {
  * An offer may contain multiple segments (connecting flights).
  */
 export interface NormalizedFlight {
-  /** Globally unique offer id (provider-prefixed, e.g. "amadeus_1"). */
+  /** Globally unique offer id (provider-prefixed, e.g. "avstack_1"). */
   id: string;
   /** Total price for ALL travelers in INR. */
   totalPrice: number;
@@ -90,7 +90,7 @@ export interface NormalizedFlight {
   /** True when this is the cheapest offer in the result set. */
   isCheapest: boolean;
   /** Source of this record. */
-  source: "amadeus";
+  source: "aviationstack";
 }
 
 // ─── Query Parameter Types ───────────────────────────────────────────────────

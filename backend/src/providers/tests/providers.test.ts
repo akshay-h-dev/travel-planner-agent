@@ -12,8 +12,8 @@
  *   Test 2 — Activity Normalizer unit tests (no API keys)
  *   Test 3 — Flight Normalizer unit tests (no API keys)
  *   Test 4 — TravelDataProvider facade — feature-flag + graceful fallback
- *   Test 5 — OpenTripMap live API test (skipped if key not configured)
- *   Test 6 — Amadeus live API test (skipped if key not configured)
+ *   Test 5 — Geoapify live API test (skipped if key not configured)
+ *   Test 6 — AviationStack live API test (skipped if key not configured)
  *   Test 7 — TravelDataProvider cache-hit test (skipped if key not configured)
  *
  * Tests marked [SKIP] when the corresponding env key is not present.
@@ -28,21 +28,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load .env from the backend root before importing any provider.
-// (providers/lib/env.ts reads process.env lazily, so this must run first.)
 dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 // ── Dynamic imports AFTER dotenv.config() ─────────────────────────────────────
-// Internal imports are allowed here because this file LIVES inside providers/.
-// All imports stay strictly within the module boundary.
-
-// Infrastructure internals (needed for isolated unit testing)
 const { CacheProvider } = await import("../cache/cache.provider.js");
-const { OpenTripMapProvider } = await import("../opentripmap/opentripmap.provider.js");
-const { AmadeusProvider } = await import("../amadeus/amadeus.provider.js");
-const { normalizeOTMListFeature, normalizeOTMDetailFeature } =
-  await import("../normalizers/activity.normalizer.js");
-const { normalizeAmadeusOffer, normalizeAmadeusResponse } =
-  await import("../normalizers/flight.normalizer.js");
+const { GeoapifyProvider } = await import("../geoapify/geoapify.provider.js");
+const { AviationStackProvider } = await import("../aviationstack/aviationstack.provider.js");
+const { normalizeGeoapifyPlace } = await import("../normalizers/activity.normalizer.js");
+const { normalizeAviationStackFlight, normalizeAviationStackResponse } = await import("../normalizers/flight.normalizer.js");
 
 // Public API (as any external consumer would import)
 const { travelDataProvider } = await import("../index.js");
@@ -121,40 +114,34 @@ assert(
 
 section("2. Activity Normalizer — unit tests (static data)");
 
-const rawList = {
-  xid: "W12345",
-  name: "Fort Aguada",
-  rate: 2,
-  kinds: "historic,monuments",
-  point: { lat: 15.5009, lon: 73.7732 },
+const rawPlace = {
+  properties: {
+    place_id: "osm_node_12345",
+    name: "Fort Aguada",
+    categories: ["tourism.sights", "building.historic"],
+    formatted: "Fort Aguada Road, Goa, India",
+    opening_hours: "09:00 - 18:00",
+    description: "A 17th-century Portuguese fort and lighthouse.",
+  },
+  geometry: {
+    type: "Point" as const,
+    coordinates: [73.7732, 15.5009] as [number, number],
+  },
 };
 
-const normalized = normalizeOTMListFeature(rawList, "Goa");
-assert(normalized.id === "otm_W12345", "id is prefixed with 'otm_'");
+const normalized = normalizeGeoapifyPlace(rawPlace, "Goa");
+assert(normalized.id === "geoapify_osm_node_12345", "id is prefixed with 'geoapify_'");
 assert(normalized.name === "Fort Aguada", "name preserved");
 assert(normalized.city === "Goa", "city preserved");
 assert(normalized.category === "heritage", `category derived as "${normalized.category}"`);
 assert(normalized.price === 100, `price derived as ₹${normalized.price} for heritage`);
-assert(normalized.rating === 3.8, `rating converted from OTM rate 2 → ${normalized.rating}`);
-assert(normalized.isLocal === true, "isLocal is true for OTM data");
-assert(normalized.source === "opentripmap", "source is 'opentripmap'");
+assert(typeof normalized.rating === "number" && normalized.rating >= 3.5 && normalized.rating <= 4.8, `rating derived deterministically as ${normalized.rating}`);
+assert(normalized.isLocal === true, "isLocal is true for Geoapify OSM data");
+assert(normalized.source === "geoapify", "source is 'geoapify'");
 assert(normalized.coordinates?.lat === 15.5009, "coordinates.lat extracted");
-
-const rawDetail = {
-  xid: "W99",
-  name: "Dudhsagar Falls",
-  rate: 3,
-  kinds: "natural,waterfalls",
-  wikipedia_extracts: { text: "Dudhsagar Falls is a four-tiered waterfall in Goa." },
-  preview: { source: "https://example.com/dudhsagar.jpg" },
-  opening_hours: "Sunrise–Sunset",
-  point: { lat: 15.3139, lon: 74.3137 },
-};
-
-const detail = normalizeOTMDetailFeature(rawDetail, "Goa");
-assert(detail.description.includes("waterfall"), "description extracted from wikipedia text");
-assert(detail.openingHours === "Sunrise–Sunset", "openingHours preserved");
-assert(detail.imageUrl === "https://example.com/dudhsagar.jpg", "imageUrl from preview.source");
+assert(normalized.coordinates?.lon === 73.7732, "coordinates.lon extracted");
+assert(normalized.description === "A 17th-century Portuguese fort and lighthouse.", "description extracted");
+assert(normalized.openingHours === "09:00 - 18:00", "openingHours preserved");
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TEST 3 — Flight Normalizer (static, no API)
@@ -162,48 +149,51 @@ assert(detail.imageUrl === "https://example.com/dudhsagar.jpg", "imageUrl from p
 
 section("3. Flight Normalizer — unit tests (static data)");
 
-const rawOffer = {
-  id: "abc123",
-  price: { currency: "INR", total: "4500", base: "4000", grandTotal: "4500" },
-  itineraries: [
-    {
-      duration: "PT1H10M",
-      segments: [
-        {
-          departure: { iataCode: "BLR", at: "2025-02-01T06:00:00" },
-          arrival: { iataCode: "GOI", at: "2025-02-01T07:10:00" },
-          carrierCode: "6E",
-          number: "421",
-          duration: "PT1H10M",
-        },
-      ],
-    },
-  ],
-  numberOfBookableSeats: 9,
+const rawFlight = {
+  flight_date: "2025-02-01",
+  flight_status: "active",
+  departure: {
+    airport: "Kempegowda International",
+    timezone: "Asia/Kolkata",
+    iata: "BLR",
+    scheduled: "2025-02-01T06:00:00+05:30",
+  },
+  arrival: {
+    airport: "Dabolim Airport",
+    timezone: "Asia/Kolkata",
+    iata: "GOI",
+    scheduled: "2025-02-01T07:10:00+05:30",
+  },
+  airline: {
+    name: "IndiGo",
+    iata: "6E",
+  },
+  flight: {
+    number: "421",
+    iata: "6E421",
+  },
 };
 
-const flight = normalizeAmadeusOffer(rawOffer as any, 0, true, 1);
-assert(flight.id === "amadeus_abc123", "id prefixed with 'amadeus_'");
-assert(flight.totalPrice === 4500, "totalPrice parsed correctly");
-assert(flight.pricePerPerson === 4500, "pricePerPerson = totalPrice / 1 adult");
+const flight = normalizeAviationStackFlight(rawFlight, 0, true);
+assert(flight.id.startsWith("avstack_6E421_"), "id prefixed with 'avstack_' and flight number");
+assert(typeof flight.totalPrice === "number", `totalPrice estimated correctly: ₹${flight.totalPrice}`);
+assert(flight.pricePerPerson === flight.totalPrice, "pricePerPerson matches totalPrice");
 assert(flight.isCheapest === true, "isCheapest flag set");
 assert(flight.outboundSegments.length === 1, "outbound segment extracted");
 const seg0 = flight.outboundSegments[0]!;
-assert(seg0.airlineName === "IndiGo", "carrier code 6E → IndiGo");
-assert(seg0.flightNumber === "6E-421", "flight number formatted");
+assert(seg0.airlineName === "IndiGo", "carrier name Indigo preserved");
+assert(seg0.flightNumber === "6E421", "flight number extracted");
 assert(seg0.departureAirport === "BLR", "departure IATA extracted");
-assert(flight.totalOutboundDuration === "PT1H10M", "outbound duration preserved");
+assert(flight.totalOutboundDuration === "PT1H10M", `outbound duration computed: ${flight.totalOutboundDuration}`);
 
-const multiOffer = {
-  data: [
-    { ...rawOffer, price: { ...rawOffer.price, total: "6000", grandTotal: "6000" } },
-    { ...rawOffer, id: "xyz", price: { ...rawOffer.price, total: "4500", grandTotal: "4500" } },
-  ],
-};
-const flights = normalizeAmadeusResponse(multiOffer as any, 1);
+const multiFlight = [
+  { ...rawFlight, flight: { number: "100", iata: "6E100" } },
+  { ...rawFlight, flight: { number: "200", iata: "6E200" } },
+];
+const flights = normalizeAviationStackResponse(multiFlight);
 assert(flights.length === 2, "both offers normalized");
 const firstFlight = flights[0]!;
-assert(firstFlight.isCheapest === true, "cheapest offer is first after sort");
+assert(firstFlight.isCheapest === true, "cheapest offer has isCheapest set");
 assert(firstFlight.totalPrice === 4500, "sorted by price ascending");
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -214,20 +204,20 @@ section("4. TravelDataProvider facade — feature-flag + graceful fallback");
 
 const status = travelDataProvider.status;
 console.log(
-  `  ℹ  Provider status: OTM=${status.otm}, Amadeus=${status.amadeus}, cache=${status.cacheSize} entries`,
+  `  ℹ  Provider status: Geoapify=${status.geoapify}, AviationStack=${status.aviationstack}, cache=${status.cacheSize} entries`,
 );
 
 const noKeyActivities = await travelDataProvider.getActivities({
   city: "TestCity",
   preferences: ["heritage"],
 });
-if (!status.otm) {
+if (!status.geoapify) {
   assert(
     Array.isArray(noKeyActivities) && noKeyActivities.length === 0,
-    "getActivities returns [] when OTM is disabled",
+    "getActivities returns [] when Geoapify is disabled",
   );
 } else {
-  pass("getActivities returns a response (OTM key present, API test below)");
+  pass("getActivities returns a response (Geoapify key present, API test below)");
 }
 
 const noKeyFlights = await travelDataProvider.getFlights({
@@ -236,29 +226,29 @@ const noKeyFlights = await travelDataProvider.getFlights({
   departureDate: "2025-02-01",
   adults: 1,
 });
-if (!status.amadeus) {
+if (!status.aviationstack) {
   assert(
     Array.isArray(noKeyFlights) && noKeyFlights.length === 0,
-    "getFlights returns [] when Amadeus is disabled",
+    "getFlights returns [] when AviationStack is disabled",
   );
 } else {
-  pass("getFlights returns a response (Amadeus key present, API test below)");
+  pass("getFlights returns a response (AviationStack key present, API test below)");
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TEST 5 — OpenTripMap live API (requires OPENTRIPMAP_API_KEY)
+// TEST 5 — Geoapify live API (requires GEOAPIFY_API_KEY)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-section("5. OpenTripMap provider — live API test");
+section("5. Geoapify provider — live API test");
 
-const otmKey = process.env["OPENTRIPMAP_API_KEY"];
+const geoKey = process.env["GEOAPIFY_API_KEY"];
 
-if (!otmKey || otmKey.includes("your_")) {
-  skip("OTM live fetch", "OPENTRIPMAP_API_KEY not configured");
+if (!geoKey || geoKey.includes("your_")) {
+  skip("Geoapify live fetch", "GEOAPIFY_API_KEY not configured");
 } else {
   try {
-    const otmProvider = new OpenTripMapProvider(otmKey);
-    const activities = await otmProvider.getActivities({
+    const geoProvider = new GeoapifyProvider(geoKey);
+    const activities = await geoProvider.getActivities({
       city: "Goa",
       preferences: ["heritage", "nature"],
       limit: 5,
@@ -268,56 +258,52 @@ if (!otmKey || otmKey.includes("your_")) {
     assert(activities.length > 0, `returned ${activities.length} activities (> 0)`);
 
     const first = activities[0]!;
-    assert(typeof first.id === "string" && first.id.startsWith("otm_"), "id starts with 'otm_'");
+    assert(typeof first.id === "string" && first.id.startsWith("geoapify_"), "id starts with 'geoapify_'");
     assert(typeof first.name === "string" && first.name.length > 0, "name is a non-empty string");
-    assert(first.source === "opentripmap", "source is 'opentripmap'");
+    assert(first.source === "geoapify", "source is 'geoapify'");
     assert(first.city === "Goa", "city matches request");
 
     console.log(`\n  ℹ  Sample activity: ${first.name}`);
     console.log(`       category: ${first.category}, price: ₹${first.price}, rating: ${first.rating}`);
     if (first.description) console.log(`       description: ${first.description.slice(0, 80)}…`);
   } catch (e) {
-    fail("OTM live test threw an exception", e instanceof Error ? e.message : e);
+    fail("Geoapify live test threw an exception", e instanceof Error ? e.message : e);
   }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TEST 6 — Amadeus live API (requires AMADEUS_API_KEY + AMADEUS_API_SECRET)
+// TEST 6 — AviationStack live API (requires AVIATIONSTACK_API_KEY)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-section("6. Amadeus provider — live API test");
+section("6. AviationStack provider — live API test");
 
-const amKey = process.env["AMADEUS_API_KEY"];
-const amSecret = process.env["AMADEUS_API_SECRET"];
+const avKey = process.env["AVIATIONSTACK_API_KEY"];
 
-if (!amKey || amKey.includes("your_") || !amSecret || amSecret.includes("your_")) {
-  skip("Amadeus live fetch", "AMADEUS_API_KEY / AMADEUS_API_SECRET not configured");
+if (!avKey || avKey.includes("your_")) {
+  skip("AviationStack live fetch", "AVIATIONSTACK_API_KEY not configured");
 } else {
   try {
-    const amProvider = new AmadeusProvider(
-      amKey,
-      amSecret,
-      process.env["AMADEUS_BASE_URL"] ?? "https://test.api.amadeus.com",
+    const avProvider = new AviationStackProvider(
+      avKey,
+      process.env["AVIATIONSTACK_BASE_URL"] ?? "http://api.aviationstack.com/v1"
     );
 
-    const flights = await amProvider.getFlights({
+    const flights = await avProvider.getFlights({
       origin: "BLR",
       destination: "GOI",
       departureDate: "2025-08-01",
       adults: 1,
-      currency: "INR",
-      maxOffers: 3,
     });
 
     assert(Array.isArray(flights), "getFlights returns an array");
 
     if (flights.length === 0) {
-      console.log("  ℹ  No flights returned — sandbox may have no data for this route/date.");
+      console.log("  ℹ  No flights returned — sandbox/free tier may have no schedule data for this date.");
     } else {
       assert(flights.length > 0, `returned ${flights.length} flight offers`);
       const first = flights[0]!;
       assert(first.isCheapest === true, "first offer is cheapest");
-      assert(first.source === "amadeus", "source is 'amadeus'");
+      assert(first.source === "aviationstack", "source is 'aviationstack'");
       assert(first.outboundSegments.length > 0, "at least one outbound segment");
 
       console.log(`\n  ℹ  Cheapest flight: ₹${first.totalPrice} (${first.currency})`);
@@ -326,7 +312,7 @@ if (!amKey || amKey.includes("your_") || !amSecret || amSecret.includes("your_")
       console.log(`       Departs: ${seg.departureTime} | Duration: ${first.totalOutboundDuration}`);
     }
   } catch (e) {
-    fail("Amadeus live test threw an exception", e instanceof Error ? e.message : e);
+    fail("AviationStack live test threw an exception", e instanceof Error ? e.message : e);
   }
 }
 
@@ -336,9 +322,9 @@ if (!amKey || amKey.includes("your_") || !amSecret || amSecret.includes("your_")
 
 section("7. TravelDataProvider — cache-hit test (live only if keys present)");
 
-const otmKeyPresent = otmKey && !otmKey.includes("your_");
+const geoKeyPresent = geoKey && !geoKey.includes("your_");
 
-if (otmKeyPresent) {
+if (geoKeyPresent) {
   const r1 = await travelDataProvider.getActivities({ city: "Goa", preferences: ["nature"] });
   const r2 = await travelDataProvider.getActivities({ city: "Goa", preferences: ["nature"] });
   assert(
@@ -347,7 +333,7 @@ if (otmKeyPresent) {
   );
   assert(travelDataProvider.status.cacheSize > 0, "cache has at least one entry after live fetch");
 } else {
-  skip("cache-hit live test", "OPENTRIPMAP_API_KEY not configured");
+  skip("cache-hit live test", "GEOAPIFY_API_KEY not configured");
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

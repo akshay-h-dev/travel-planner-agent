@@ -1,20 +1,12 @@
 /**
- * Flight Normalizer — Amadeus Flight Offers Search v2 → NormalizedFlight
+ * Flight Normalizer — AviationStack → NormalizedFlight
  *
- * Amadeus returns a complex nested JSON structure. This module flattens it
- * into the lean NormalizedFlight + FlightSegment interfaces so the rest of
- * the application never touches raw Amadeus JSON.
+ * This module converts the AviationStack flight record shape into the common
+ * NormalizedFlight + FlightSegment interfaces.
  *
- * Key transformations:
- *  - Currency conversion: Amadeus always returns in the currency requested.
- *    We request INR so no conversion is needed. If the API returns a different
- *    currency as a fallback, we tag the price with the actual currency and
- *    skip conversion (the agent prompt will mention the currency).
- *  - Airline name enrichment: Amadeus provides carrier codes (e.g. "6E").
- *    We maintain a small static lookup table for common Indian carriers.
- *    Unknown codes fall back to the code itself.
- *  - Duration: Amadeus uses ISO 8601 duration strings (e.g. "PT1H10M").
- *    We keep these as-is; the LLM can parse them naturally.
+ * Pricing:
+ *   AviationStack free tier does not return fare pricing. We estimate pricing
+ *   deterministically using IATA airport pairs and flight numbers.
  */
 
 import type {
@@ -22,50 +14,37 @@ import type {
   FlightSegment,
 } from "../interfaces/travel-provider.interface.js";
 
-// ─── Raw Amadeus shapes (v2 Flight Offers Search) ────────────────────────────
+// ─── Raw AviationStack shapes ────────────────────────────────────────────────
 
-export interface AmadeusPrice {
-  currency: string;
-  total: string;        // total for all travelers
-  base: string;         // base fare
-  grandTotal?: string;
+export interface AviationStackFlightRaw {
+  flight_date: string;
+  flight_status: string;
+  departure: {
+    airport: string;
+    timezone: string;
+    iata: string;
+    scheduled: string;
+    actual?: string | null;
+  };
+  arrival: {
+    airport: string;
+    timezone: string;
+    iata: string;
+    scheduled: string;
+    actual?: string | null;
+  };
+  airline: {
+    name: string;
+    iata: string;
+  };
+  flight: {
+    number: string;
+    iata: string;
+  };
 }
 
-export interface AmadeusSegment {
-  departure: { iataCode: string; at: string };
-  arrival: { iataCode: string; at: string };
-  carrierCode: string;
-  number: string;
-  duration: string;
-  aircraft?: { code: string };
-  numberOfStops?: number;
-}
+// ─── Airline name lookup (fallback) ──────────────────────────────────────────
 
-export interface AmadeusItinerary {
-  duration: string;
-  segments: AmadeusSegment[];
-}
-
-export interface AmadeusTravelerPricing {
-  travelerId: string;
-  price: { total: string; currency: string };
-}
-
-export interface AmadeusOffer {
-  id: string;
-  price: AmadeusPrice;
-  itineraries: AmadeusItinerary[];
-  travelerPricings?: AmadeusTravelerPricing[];
-  numberOfBookableSeats?: number;
-  lastTicketingDate?: string;
-}
-
-// ─── Airline name lookup ─────────────────────────────────────────────────────
-
-/**
- * Static lookup for common IATA carrier codes.
- * Extend this table as more airlines become relevant.
- */
 const AIRLINE_NAMES: Record<string, string> = {
   "6E": "IndiGo",
   "SG": "SpiceJet",
@@ -82,86 +61,110 @@ const AIRLINE_NAMES: Record<string, string> = {
   "LH": "Lufthansa",
 };
 
-function resolveAirlineName(code: string): string {
+function resolveAirlineName(code: string, rawName?: string): string {
+  if (rawName) return rawName;
   return AIRLINE_NAMES[code.toUpperCase()] ?? code;
 }
 
-// ─── Segment normalizer ───────────────────────────────────────────────────────
-
-function normalizeSegment(raw: AmadeusSegment): FlightSegment {
-  return {
-    departureAirport: raw.departure.iataCode,
-    arrivalAirport: raw.arrival.iataCode,
-    departureTime: raw.departure.at,
-    arrivalTime: raw.arrival.at,
-    duration: raw.duration,
-    carrierCode: raw.carrierCode,
-    airlineName: resolveAirlineName(raw.carrierCode),
-    flightNumber: `${raw.carrierCode}-${raw.number}`,
-  };
+/** Compute ISO 8601 duration between two datetime strings */
+function computeDurationISO(dep: string, arr: string): string {
+  try {
+    const depMs = new Date(dep).getTime();
+    const arrMs = new Date(arr).getTime();
+    if (isNaN(depMs) || isNaN(arrMs)) return "PT2H0M";
+    const diffMins = Math.max(0, Math.floor((arrMs - depMs) / 60000));
+    const hours = Math.floor(diffMins / 60);
+    const mins = diffMins % 60;
+    return `PT${hours}H${mins}M`;
+  } catch {
+    return "PT2H0M";
+  }
 }
 
-// ─── Offer normalizer ─────────────────────────────────────────────────────────
+/** Estimate flight price deterministically based on route and flight number */
+function estimateFlightPrice(dep: string, arr: string, flightNum: string): number {
+  const code = `${dep.toUpperCase()}->${arr.toUpperCase()}`;
+  const fares: Record<string, number> = {
+    "DEL->GOI": 5500,
+    "GOI->DEL": 5500,
+    "BLR->GOI": 3500,
+    "GOI->BLR": 3500,
+    "BOM->GOI": 3000,
+    "GOI->BOM": 3000,
+    "MAA->GOI": 3800,
+    "GOI->MAA": 3800,
+    "HYD->GOI": 3200,
+    "GOI->HYD": 3200,
+  };
+  const baseFare = fares[code] ?? 4500;
 
-/**
- * Normalize a single Amadeus flight offer.
- *
- * @param offer      Raw Amadeus offer object.
- * @param index      Position in the result array (used to flag cheapest).
- * @param isCheapest True when this offer is the cheapest in the set.
- * @param adults     Number of adult travelers (used to compute pricePerPerson).
- */
-export function normalizeAmadeusOffer(
-  offer: AmadeusOffer,
+  // Add deterministic variation (-700 to +700 INR)
+  let hash = 0;
+  for (let i = 0; i < flightNum.length; i++) {
+    hash = flightNum.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const variance = (Math.abs(hash) % 15) * 100 - 700;
+  return baseFare + variance;
+}
+
+// ─── Normalizers ─────────────────────────────────────────────────────────────
+
+export function normalizeAviationStackFlight(
+  raw: AviationStackFlightRaw,
   index: number,
-  isCheapest: boolean,
-  adults: number,
+  isCheapest: boolean
 ): NormalizedFlight {
-  const totalPrice = parseFloat(offer.price.grandTotal ?? offer.price.total);
-  const pricePerPerson = adults > 0 ? totalPrice / adults : totalPrice;
+  const dep = raw.departure?.iata ?? "ANY";
+  const arr = raw.arrival?.iata ?? "ANY";
+  const carrier = raw.airline?.iata ?? "ANY";
+  const flightNo = raw.flight?.iata ?? `${carrier}-${raw.flight?.number ?? index}`;
+  const depTime = raw.departure?.scheduled ?? raw.flight_date;
+  const arrTime = raw.arrival?.scheduled ?? raw.flight_date;
 
-  const outboundItinerary = offer.itineraries[0];
-  const returnItinerary = offer.itineraries[1]; // undefined for one-way
+  const duration = computeDurationISO(depTime, arrTime);
+  const estimatedPrice = estimateFlightPrice(dep, arr, flightNo);
+
+  const segment: FlightSegment = {
+    departureAirport: dep,
+    arrivalAirport: arr,
+    departureTime: depTime,
+    arrivalTime: arrTime,
+    duration,
+    carrierCode: carrier,
+    airlineName: resolveAirlineName(carrier, raw.airline?.name),
+    flightNumber: flightNo,
+  };
 
   return {
-    id: `amadeus_${offer.id ?? index}`,
-    totalPrice: Math.round(totalPrice),
-    pricePerPerson: Math.round(pricePerPerson),
-    currency: offer.price.currency,
-    availableSeats: offer.numberOfBookableSeats ?? 9,
-    outboundSegments: outboundItinerary
-      ? outboundItinerary.segments.map(normalizeSegment)
-      : [],
-    returnSegments: returnItinerary
-      ? returnItinerary.segments.map(normalizeSegment)
-      : [],
-    totalOutboundDuration: outboundItinerary?.duration ?? "PT0H",
+    id: `avstack_${flightNo}_${raw.flight_date}_${index}`,
+    totalPrice: Math.round(estimatedPrice),
+    pricePerPerson: Math.round(estimatedPrice),
+    currency: "INR",
+    availableSeats: 9,
+    outboundSegments: [segment],
+    returnSegments: [],
+    totalOutboundDuration: duration,
     isCheapest,
-    source: "amadeus",
+    source: "aviationstack",
   };
 }
 
-/**
- * Normalize an entire Amadeus Flight Offers Search response body.
- *
- * @param body   The parsed JSON body from the Amadeus API.
- * @param adults Number of adult travelers for per-person price calculation.
- * @returns Array of NormalizedFlight objects, cheapest first.
- */
-export function normalizeAmadeusResponse(
-  body: { data: AmadeusOffer[] },
-  adults: number,
+export function normalizeAviationStackResponse(
+  rawFlights: AviationStackFlightRaw[]
 ): NormalizedFlight[] {
-  if (!Array.isArray(body.data) || body.data.length === 0) return [];
+  if (!Array.isArray(rawFlights) || rawFlights.length === 0) return [];
 
-  // Amadeus already sorts by price ascending, but we verify and mark cheapest.
-  const sorted = [...body.data].sort(
-    (a, b) =>
-      parseFloat(a.price.grandTotal ?? a.price.total) -
-      parseFloat(b.price.grandTotal ?? b.price.total),
+  // Normalize all flights
+  const flights = rawFlights.map((f, idx) =>
+    normalizeAviationStackFlight(f, idx, false)
   );
 
-  return sorted.map((offer, idx) =>
-    normalizeAmadeusOffer(offer, idx, idx === 0, adults),
-  );
+  // Sort by price ascending to determine the cheapest
+  const sorted = [...flights].sort((a, b) => a.totalPrice - b.totalPrice);
+
+  if (sorted.length > 0) {
+    sorted[0].isCheapest = true;
+  }
+
+  return sorted;
 }

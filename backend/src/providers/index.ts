@@ -4,7 +4,7 @@
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║  RULE: This is the ONLY file that code outside `providers/` may import. ║
  * ║  Agent nodes, route handlers, and test scripts must import from here,   ║
- * ║  never from internal provider paths (cache/, amadeus/, opentripmap/…).  ║
+ * ║  never from internal provider paths (cache/, aviationstack/, geoapify/…).  ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  *
  * What is exported:
@@ -14,7 +14,7 @@
  *                             GetActivitiesParams, GetFlightsParams
  *
  * What is NOT exported (internal implementation details):
- *   - Individual provider classes (OpenTripMapProvider, AmadeusProvider)
+ *   - Individual provider classes (GeoapifyProvider, AviationStackProvider)
  *   - Cache implementation (CacheProvider, sharedCache)
  *   - Normalizer functions
  *   - Internal lib utilities (providerLogger, providerEnv)

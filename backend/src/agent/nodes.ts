@@ -6,7 +6,7 @@
  *   M2  checkBudgetNode           — computes cumulative cost, routes to replan or next day
  *   M2  replanDayNode             — LLM reduces cost for the current day (budget-driven)
  *   M2  advanceDayNode            — increments currentDay, loops back to planDayNode
- *   M3  provider integration      — OTM activities + Amadeus flights injected into prompts
+ *   M3  provider integration      — Geoapify activities + AviationStack flights injected into prompts
  *   M4  validateItineraryNode     — runs 6 validators, writes ValidationResult[]
  *   M5  autonomousFixNode         — LLM resolves fixable issues without user intervention
  *   M6  interpretFeedbackNode     — parses free-text user feedback into instructions + targets
@@ -29,8 +29,9 @@ import type {
 import { dataService } from "../services/dataService.js";
 import { travelDataProvider } from "../providers/index.js";
 import type { NormalizedActivity, NormalizedFlight } from "../providers/index.js";
-import type { Activity, Transport } from "../types/index.js";
+import type { Transport } from "../types/index.js";
 import { env } from "../config/env.js";
+import { buildActivityPool, buildDynamicTransportOptions } from "./dynamicData.js";
 
 // ─── LLM client ──────────────────────────────────────────────────────────────
 
@@ -63,14 +64,9 @@ function filterTransportByPreference(
   return filtered.length > 0 ? filtered : transport;
 }
 
-/** Merge OTM activities with local dataset — OTM entries lead. */
-function mergeActivities(
-  local: Activity[],
-  otm: NormalizedActivity[],
-): AnyActivity[] {
-  if (otm.length === 0) return local;
-  const otmNames = new Set(otm.map((a) => a.name.toLowerCase()));
-  return [...otm, ...local.filter((a) => !otmNames.has(a.name.toLowerCase()))];
+/** Build the activity pool from API data only. */
+function mergeActivities(apiActivities: NormalizedActivity[]): AnyActivity[] {
+  return buildActivityPool(apiActivities);
 }
 
 /** User context block injected into every LLM prompt. */
@@ -184,26 +180,17 @@ export async function planDayNode(
   const stays = dataService.getHomestaysByCity(city);
   const guides = dataService.getGuidesByCity(city);
   const transport = filterTransportByPreference(
-    dataService.getTransportByCity(city),
+    buildDynamicTransportOptions(city, state.localTransitTypes ?? []),
     state.localTransitTypes ?? [],
   );
 
-  const otmActivities = await travelDataProvider.getActivities({
+  const apiActivities = await travelDataProvider.getActivities({
     city,
     preferences,
     radiusKm: 15,
     limit: 20,
   });
-  const allLocal = dataService.getActivitiesByCity(city);
-  const prefLocal =
-    preferences.length > 0
-      ? dataService.getActivitiesByCityAndPreferences(city, preferences)
-      : [];
-  const localPool =
-    prefLocal.length > 0
-      ? [...prefLocal, ...allLocal.filter((a) => !prefLocal.some((p) => p.id === a.id))]
-      : allLocal;
-  const activities = mergeActivities(localPool, otmActivities);
+  const activities = mergeActivities(apiActivities);
 
   const { text: flightText, flight, flightCost } =
     await buildFlightContext(state, isFirstDay);
@@ -245,7 +232,7 @@ ${JSON.stringify(guides, null, 2)}
 Available transport:
 ${JSON.stringify(transport, null, 2)}
 
-Available activities (OTM-sourced first — preferred):
+Available activities (API-sourced first — preferred):
 ${JSON.stringify(activities, null, 2)}
 
 Return ONLY valid JSON:
@@ -323,9 +310,9 @@ Return ONLY valid JSON:
     if (idx >= 0) updatedDays[idx] = dayPlan;
     else updatedDays.push(dayPlan);
 
-    const actSource = otmActivities.length > 0
-      ? `${otmActivities.length} from OTM + ${localPool.length} local`
-      : `${localPool.length} local`;
+    const actSource = apiActivities.length > 0
+      ? `${apiActivities.length} from API`
+      : `0 from API`;
 
     return {
       days: updatedDays,
@@ -456,16 +443,16 @@ export async function replanDayNode(
   const stays = dataService.getHomestaysByCity(city);
   const guides = dataService.getGuidesByCity(city);
   const transport = filterTransportByPreference(
-    dataService.getTransportByCity(city),
+    buildDynamicTransportOptions(city, state.localTransitTypes ?? []),
     state.localTransitTypes ?? [],
   );
-  const otmActs = await travelDataProvider.getActivities({
+  const apiActs = await travelDataProvider.getActivities({
     city,
     preferences: state.preferences,
     radiusKm: 15,
     limit: 20,
   });
-  const activities = mergeActivities(dataService.getActivitiesByCity(city), otmActs);
+  const activities = mergeActivities(apiActs);
 
   const reduceBy = state.overBudgetBy;
 
@@ -846,7 +833,7 @@ function validateAvailability(state: TravelState): ValidationResult {
   if (
     state.transitTypes?.includes("flight") &&
     state.days.length > 0 &&
-    !state.days[0]!.flight
+    !state.days[0]?.flight
   ) {
     issues.push({
       day: 1,
@@ -892,6 +879,8 @@ function validateExperienceQuality(state: TravelState): ValidationResult {
     const d0 = state.days[i - 2]!;
     const d1 = state.days[i - 1]!;
     const d2 = state.days[i]!;
+
+    if (!d0 || !d1 || !d2) continue;
 
     const cats0 = d0.activities.map((a) => a.category);
     const cats1 = d1.activities.map((a) => a.category);
@@ -990,7 +979,6 @@ export async function autonomousFixNode(
       .join(". ");
 
     const activities = mergeActivities(
-      dataService.getActivitiesByCity(state.city),
       await travelDataProvider.getActivities({
         city: state.city,
         preferences: state.preferences,
@@ -1001,7 +989,7 @@ export async function autonomousFixNode(
     const stays = dataService.getHomestaysByCity(state.city);
     const guides = dataService.getGuidesByCity(state.city);
     const transport = filterTransportByPreference(
-      dataService.getTransportByCity(state.city),
+      buildDynamicTransportOptions(state.city, state.localTransitTypes ?? []),
       state.localTransitTypes ?? [],
     );
 
@@ -1223,7 +1211,6 @@ export async function applyFeedbackNode(
   const decisions: AgentDecision[] = [];
 
   const activities = mergeActivities(
-    dataService.getActivitiesByCity(city),
     await travelDataProvider.getActivities({
       city,
       preferences: state.preferences,
@@ -1234,7 +1221,7 @@ export async function applyFeedbackNode(
   const stays = dataService.getHomestaysByCity(city);
   const guides = dataService.getGuidesByCity(city);
   const transport = filterTransportByPreference(
-    dataService.getTransportByCity(city),
+    buildDynamicTransportOptions(city, state.localTransitTypes ?? []),
     state.localTransitTypes ?? [],
   );
 

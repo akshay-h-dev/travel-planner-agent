@@ -2,13 +2,13 @@ import type { Homestay, Guide, Transport, Activity } from "../types/index.js";
 import type { NormalizedActivity, NormalizedFlight } from "../providers/index.js";
 
 // ─── Activity union ──────────────────────────────────────────────────────────
-/** Any activity — from local JSON dataset or from the OpenTripMap API. */
+/** Any activity — from local JSON dataset or from the Geoapify Places API. */
 export type AnyActivity = Activity | NormalizedActivity;
 
 // ─── Day Plan ────────────────────────────────────────────────────────────────
 /**
  * A single day in the planned itinerary.
- * Activities may come from the local JSON dataset or from OTM; both types
+ * Activities may come from the local JSON dataset or from the Places API; both types
  * share the fields agents and routes use (id, name, price, rating, isLocal).
  */
 export interface DayPlan {

@@ -13,7 +13,6 @@ import {
 
 import { useTrip } from "../../context/TripContext";
 import { Timeline } from "../../components/timeline/Timeline";
-import { BudgetSummary } from "../../components/budget/BudgetSummary";
 import { Modal } from "../../components/common/Modal";
 import { Breadcrumb } from "../../components/common/Breadcrumb";
 
@@ -239,19 +238,6 @@ export const Results: React.FC = () => {
   ========================== */}
 
         <div className="space-y-6">
-
-          {/* Budget Summary */}
-
-          <div className="glass-card rounded-3xl p-6">
-
-            <h2 className="text-xl font-bold mb-5">
-              Budget Overview
-            </h2>
-
-            <BudgetSummary itinerary={currentItinerary} />
-
-          </div>
-
           {/* =========================
         Booking Status
     ========================== */}

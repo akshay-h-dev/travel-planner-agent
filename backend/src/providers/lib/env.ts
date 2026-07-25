@@ -20,14 +20,12 @@
  */
 
 export interface ProviderEnv {
-  /** OpenTripMap API key — undefined when not configured. */
-  OPENTRIPMAP_API_KEY: string | undefined;
-  /** Amadeus for Developers API key (client_id) — undefined when not configured. */
-  AMADEUS_API_KEY: string | undefined;
-  /** Amadeus for Developers API secret (client_secret) — undefined when not configured. */
-  AMADEUS_API_SECRET: string | undefined;
-  /** Amadeus API base URL — defaults to the sandbox environment. */
-  AMADEUS_BASE_URL: string;
+  /** Geoapify API key — undefined when not configured. */
+  GEOAPIFY_API_KEY: string | undefined;
+  /** AviationStack API key — undefined when not configured. */
+  AVIATIONSTACK_API_KEY: string | undefined;
+  /** AviationStack API base URL. */
+  AVIATIONSTACK_BASE_URL: string;
 }
 
 /**
@@ -44,12 +42,11 @@ function loadProviderEnv(): ProviderEnv {
   }
 
   return {
-    OPENTRIPMAP_API_KEY: optional("OPENTRIPMAP_API_KEY"),
-    AMADEUS_API_KEY: optional("AMADEUS_API_KEY"),
-    AMADEUS_API_SECRET: optional("AMADEUS_API_SECRET"),
-    AMADEUS_BASE_URL:
-      process.env["AMADEUS_BASE_URL"]?.trim() ||
-      "https://test.api.amadeus.com",
+    GEOAPIFY_API_KEY: optional("GEOAPIFY_API_KEY"),
+    AVIATIONSTACK_API_KEY: optional("AVIATIONSTACK_API_KEY"),
+    AVIATIONSTACK_BASE_URL:
+      process.env["AVIATIONSTACK_BASE_URL"]?.trim() ||
+      "http://api.aviationstack.com/v1",
   };
 }
 

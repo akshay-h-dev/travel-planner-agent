@@ -36,21 +36,20 @@ const envSchema = z.object({
     .min(1, "GROQ_API_KEY is required"),
 
   // ── Travel Data Provider APIs ────────────────────────────
-  /** OpenTripMap — tourist attractions.  Free tier: 5 000 req/day.
-   *  https://opentripmap.io/product */
-  OPENTRIPMAP_API_KEY: z.string().optional(),
+  /** Geoapify — tourist attractions.
+   *  https://myprojects.geoapify.com/ */
+  GEOAPIFY_API_KEY: z.string().optional(),
 
-  /** Amadeus for Developers — flights.  Free tier: 2 000 calls/month.
-   *  https://developers.amadeus.com */
-  AMADEUS_API_KEY: z.string().optional(),
-  AMADEUS_API_SECRET: z.string().optional(),
+  /** AviationStack — flights.
+   *  https://aviationstack.com/ */
+  AVIATIONSTACK_API_KEY: z.string().optional(),
 
-  /** Amadeus API base URL — use test URL for sandbox, prod for live.
-   *  Default: test (sandbox) environment. */
-  AMADEUS_BASE_URL: z
+  /** AviationStack API base URL.
+   *  Default: http://api.aviationstack.com/v1 */
+  AVIATIONSTACK_BASE_URL: z
     .string()
     .url()
-    .default("https://test.api.amadeus.com"),
+    .default("http://api.aviationstack.com/v1"),
 
   // ── Security ─────────────────────────────────────────────
   ALLOWED_ORIGINS: z

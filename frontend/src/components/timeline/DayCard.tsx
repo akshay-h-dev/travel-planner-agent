@@ -22,22 +22,22 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
 
       {/* Header Day */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center gap-2.5">
-          <div className="h-10 w-10 flex items-center justify-center rounded-2xl bg-primary/10 text-primary font-bold text-sm">
+        <div className="flex items-center gap-4">
+          <div className="h-14 w-14 flex items-center justify-center rounded-2xl bg-primary/10 text-primary font-bold text-xl shadow-sm">
             D{dayPlan.day}
           </div>
           <div>
-            <h3 className="font-heading font-extrabold text-base text-slate-800 dark:text-white">
+            <h3 className="font-heading font-extrabold text-xl md:text-2xl text-slate-800 dark:text-white">
               Day {dayPlan.day} Schedule
             </h3>
-            <p className="text-xs text-slate-400 font-medium">Itinerary Segment</p>
+            <p className="text-sm text-slate-500 font-medium mt-1">Itinerary Segment</p>
           </div>
         </div>
 
         {/* Cost Summary indicator */}
-        <div className="text-right">
-          <span className="text-xs text-slate-400 block font-medium">Daily Outflow</span>
-          <span className="font-heading font-extrabold text-sm text-primary dark:text-teal-400">
+        <div className="text-right bg-slate-50 dark:bg-slate-800/50 px-4 py-2 rounded-xl">
+          <span className="text-sm text-slate-500 block font-medium">Daily Outflow</span>
+          <span className="font-heading font-extrabold text-xl text-primary dark:text-teal-400">
             {formatCurrency(dayPlan.dailyCost)}
           </span>
         </div>
@@ -47,17 +47,16 @@ export const DayCard: React.FC<DayCardProps> = ({ dayPlan, travelers }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         {/* Left column: Activities list */}
-        <div className="lg:col-span-8 space-y-4">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-450 dark:text-slate-400">
+        <div className="lg:col-span-8 space-y-6">
+          <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Daily Activities
           </h4>
 
           <div className="space-y-3">
             {dayPlan.activities.map((act) => (
               <div key={act.id} className="relative">
-                <span className="absolute top-1/2 -left-3.5 transform -translate-y-1/2 w-1.5 h-10 bg-slate-205 dark:bg-slate-700/80 rounded-r-md block"></span>
-                <div className="text-[10px] font-bold text-primary dark:text-secondary uppercase select-none tracking-widest pl-1.5 mb-1 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 dark:bg-secondary"></span>
+                <div className="text-sm font-bold text-primary dark:text-secondary uppercase select-none tracking-widest mb-3 mt-6 first:mt-0 flex items-center gap-2 bg-primary/5 dark:bg-secondary/5 py-1.5 px-3 rounded-lg w-fit">
+                  <span className="w-2 h-2 rounded-full bg-primary dark:bg-secondary"></span>
                   {act.timeSlot}
                 </div>
                 <ActivityCard

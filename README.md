@@ -167,9 +167,8 @@ I --> J[Cost Breakdown + Local Vendors]
 | JSON | MVP Dataset |
 | SQLite | Lightweight Database |
 | PostgreSQL | Optional Storage |
-| Google Places API | Future Integration |
-| Amadeus API | Future Integration |
-| Maps APIs | Future Integration |
+| Geoapify Places API | Active Integration (Attractions) |
+| AviationStack API | Active Integration (Flights) |
 
 ---
 
