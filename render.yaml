@@ -2,6 +2,8 @@ services:
   - type: web
     name: tripway-api
     runtime: node
+    # nodeVersion tells Render which Node to use (must be 20+; vite@8 needs 22)
+    nodeVersion: 22.20.0
     region: singapore    # change to oregon / frankfurt to match your users
     plan: free           # upgrade to starter ($7/mo) to avoid spin-down
     rootDir: backend
@@ -11,8 +13,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: NODE_VERSION
-        value: 22.20.0
       - key: GROQ_API_KEY
         sync: false          # Render will prompt you to enter this in the dashboard
       - key: ALLOWED_ORIGINS
